@@ -11,7 +11,7 @@ var config = {
     storageBucket: "react-todo-7e0a3.appspot.com",
     messagingSenderId: "525493460858"
 };
-firebase.initializeApp(config);
+var app = firebase.initializeApp(config);
 
 class TodoApp extends Component {
     constructor(props) {
@@ -21,13 +21,33 @@ class TodoApp extends Component {
         this.state = { items: [], text: '' };
     }
     componentWillMount() {
-        this.firebaseRef = firebase.database().ref('todo');
-        this.firebaseRef.on('value', (snapshot) => {
-          this.items = snapshot.val().items;
-          this.setState({
-              items: this.items
-          });
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            var token = result.credential.accessToken;
+            // The signed-in user info.
+            var user = result.user;
+            this.firebaseRef = app.database().ref(`users/${user.uid}`);
+            this.firebaseRef.on('value', (snapshot) => {
+                const value = snapshot.val();
+                if (value && value.items) {
+                    this.items = value.items;
+                    this.setState({
+                        items: this.items
+                    });
+                }
+            });
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            console.error(error);
         });
+
     }
     componentWillUnmount() {
         this.firebaseRef.off();
@@ -36,9 +56,7 @@ class TodoApp extends Component {
     render() {
         return ( <
             div >
-            <
-            h1 > Warning!All users can see anything you write here! < /h1> <
-            h3 > TODO < /h3> <
+            <h3 > TODO < /h3> <
             TodoList items = { this.state.items }
             /> <
             form onSubmit = { this.handleSubmit } >
@@ -64,12 +82,12 @@ class TodoApp extends Component {
         };
 
         this.setState((prevState) => {
-                const newItems = prevState.items.concat(newItem);
-                this.firebaseRef.set({ items: newItems });
-                return {
-                    items: newItems,
-                    text: ''
-                };
+            const newItems = prevState.items.concat(newItem);
+            this.firebaseRef.set({ items: newItems });
+            return {
+                items: newItems,
+                text: ''
+            };
         });
     }
 }
