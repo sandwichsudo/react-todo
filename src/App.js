@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
+var firebase = require("firebase/app");
+require("firebase/auth");
+require("firebase/database");
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyDRO1DrTTjbCBoHHPdTBOZovnBccF-VTxc",
+    authDomain: "react-todo-7e0a3.firebaseapp.com",
+    databaseURL: "https://react-todo-7e0a3.firebaseio.com",
+    storageBucket: "react-todo-7e0a3.appspot.com",
+    messagingSenderId: "525493460858"
+};
+firebase.initializeApp(config);
 
 class TodoApp extends Component {
     constructor(props) {
@@ -9,13 +21,13 @@ class TodoApp extends Component {
         this.state = { items: [], text: '' };
     }
     componentWillMount() {
-        this.firebaseRef = new Firebase("https://ReactFireTodoApp.firebaseio.com/items/"); //eslint-disable-line no-undef
-        this.firebaseRef.on("child_added", function(dataSnapshot) {
-            this.items.push(dataSnapshot.val());
-            this.setState({
-                items: this.items
-            });
-        }.bind(this));
+        this.firebaseRef = firebase.database().ref('todo');
+        this.firebaseRef.on('value', (snapshot) => {
+          this.items = snapshot.val().items;
+          this.setState({
+              items: this.items
+          });
+        });
     }
     componentWillUnmount() {
         this.firebaseRef.off();
@@ -24,8 +36,8 @@ class TodoApp extends Component {
     render() {
         return ( <
             div >
-            <h1>Warning! All users can see anything you write here!</h1>
             <
+            h1 > Warning!All users can see anything you write here! < /h1> <
             h3 > TODO < /h3> <
             TodoList items = { this.state.items }
             /> <
@@ -46,10 +58,19 @@ class TodoApp extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.firebaseRef.push({
-            text: this.state.text
+        var newItem = {
+            text: this.state.text,
+            id: Date.now()
+        };
+
+        this.setState((prevState) => {
+                const newItems = prevState.items.concat(newItem);
+                this.firebaseRef.set({ items: newItems });
+                return {
+                    items: newItems,
+                    text: ''
+                };
         });
-        this.setState({ text: "" });
     }
 }
 
