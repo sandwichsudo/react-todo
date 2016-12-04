@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
+import Basket from './views/authenticated/basket/Basket';
 import './App.css';
 var firebase = require("firebase/app");
-require("firebase/auth");
-require("firebase/database");
-// Initialize Firebase
-var config = {
-    apiKey: "AIzaSyDRO1DrTTjbCBoHHPdTBOZovnBccF-VTxc",
-    authDomain: "react-todo-7e0a3.firebaseapp.com",
-    databaseURL: "https://react-todo-7e0a3.firebaseio.com",
-    storageBucket: "react-todo-7e0a3.appspot.com",
-    messagingSenderId: "525493460858"
-};
-var app = firebase.initializeApp(config);
 
 class TodoApp extends Component {
     constructor(props) {
@@ -24,17 +14,12 @@ class TodoApp extends Component {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 this.getInitialData(user.uid);
-            } else {
-                var provider = new firebase.auth.GoogleAuthProvider();
-                firebase.auth().signInWithPopup(provider).catch(function(error) {
-                    console.error(error);
-                });
             }
         });
     }
 
     getInitialData(uid) {
-        this.firebaseRef = app.database().ref(`users/${uid}`);
+        this.firebaseRef = firebase.database().ref(`users/${uid}`);
         this.firebaseRef.on('value', (snapshot) => {
             const value = snapshot.val();
             if (value && value.items) {
@@ -54,12 +39,12 @@ class TodoApp extends Component {
         return ( <
             div >
             <h3 > TODO < /h3> <
-            TodoList items = { this.state.items }
+            Basket items={ this.state.items }
             /> <
-            form onSubmit = { this.handleSubmit } >
+            form onSubmit={ this.handleSubmit } >
             <
-            input onChange = { this.handleChange }
-            value = { this.state.text }
+            input onChange={ this.handleChange }
+            value={ this.state.text }
             /> <
             button > { 'Add #' + (this.state.items.length + 1) } < /button> < /
             form > <
@@ -86,19 +71,6 @@ class TodoApp extends Component {
                 text: ''
             };
         });
-    }
-}
-
-class TodoList extends Component {
-    render() {
-        return ( <
-            ul > {
-                this.props.items.map(item => ( <
-                    li key = { item.id } > { item.text } < /li>
-                ))
-            } <
-            /ul>
-        );
     }
 }
 
