@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 var firebase = require("firebase/app");
+import { browserHistory } from 'react-router';
 
 class Login extends Component {
     constructor(props) {
@@ -12,7 +13,13 @@ class Login extends Component {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 console.log("user in onAuthStateChanged", user);
+                browserHistory.push('/')
             }
+        }, (err) => {
+            console.error(err);
+        });
+        firebase.auth().getRedirectResult().catch(function(error) {
+          console.error(error);
         });
     }
 
