@@ -7,6 +7,7 @@ class Login extends Component {
         super(props);
         this.googleLogin = this.googleLogin.bind(this);
         this.facebookLogin = this.facebookLogin.bind(this);
+        this.state = { usualProvider: 'something' };
     }
 
     componentWillMount() {
@@ -18,8 +19,13 @@ class Login extends Component {
         }, (err) => {
             console.error(err);
         });
-        firebase.auth().getRedirectResult().catch(function(error) {
+        firebase.auth().getRedirectResult().catch((error) => {
           console.error(error);
+          firebase.auth().fetchProvidersForEmail(error.email).then((emails) => {
+              console.log(emails);
+              this.setState({ usualProvider: emails[0] });
+          });
+
         });
     }
 
@@ -50,8 +56,10 @@ class Login extends Component {
             <button type="submit">Continue</button>
             <button onClick={this.googleLogin}>Login with google</button>
             <button onClick={this.facebookLogin}>Login with facebook</button>
+            <div className="loader">Loading</div>
+            <h2>You usually use {this.state.usualProvider} to log in.</h2>
 
-            </form>
+             </form>
         );
     }
 }
