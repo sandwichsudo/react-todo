@@ -10,5 +10,6 @@ export default (
   <Router history={browserHistory}>
       <Route path="/login" component={Login} />
       <Route path="/" component={App} />
+      <Route path="/index.html" component={App} />
   </Router>
 );
