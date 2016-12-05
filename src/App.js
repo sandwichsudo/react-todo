@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import Basket from './views/authenticated/basket/Basket';
 import './App.css';
 var firebase = require("firebase/app");
@@ -16,6 +17,8 @@ class TodoApp extends Component {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 this.getInitialData(user.uid);
+            } else {
+                browserHistory.push('/login')
             }
         });
     }
@@ -34,7 +37,9 @@ class TodoApp extends Component {
     }
 
     componentWillUnmount() {
-        this.firebaseRef.off();
+        if (this.firebaseRef) {
+            this.firebaseRef.off();
+        }
     }
 
     render() {
