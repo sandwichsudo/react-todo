@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Basket from './views/authenticated/basket/Basket';
 import './App.css';
 var firebase = require("firebase/app");
+// Components
+import Header from './components/header/Header.js';
 
 class TodoApp extends Component {
     constructor(props) {
@@ -38,6 +40,7 @@ class TodoApp extends Component {
     render() {
         return ( <
             div >
+            <Header></Header>
             <h3 > TODO < /h3> <
             Basket items={ this.state.items }
             /> <
