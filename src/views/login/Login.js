@@ -14,12 +14,12 @@ class Login extends Component {
     }
 
     componentWillMount() {
-        firebase.auth().onAuthStateChanged((user) => {
+        this.fireBaseListener = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 console.log("user in onAuthStateChanged", user);
                 browserHistory.push('/')
             } else {
-                this.setState({ loading: false });
+                  this.setState({ loading: false });
             }
         }, (err) => {
             console.error(err);
@@ -44,6 +44,10 @@ class Login extends Component {
         e.preventDefault();
         var provider = new firebase.auth.FacebookAuthProvider();
         firebase.auth().signInWithRedirect(provider);
+    }
+
+    componentWillUnmount() {
+        this.fireBaseListener && this.fireBaseListener();
     }
 
     render() {

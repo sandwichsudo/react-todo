@@ -11,13 +11,13 @@ class TodoApp extends Component {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = { items: [], text: '' };
-        this.user = null;
+        this.state = { items: [], text: '', loading: true, user: null };
     }
     componentWillMount() {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 this.getInitialData(user.uid);
+                this.setState({ user, loading: false });
             } else {
                 browserHistory.push('/login')
             }
@@ -67,8 +67,9 @@ class TodoApp extends Component {
     render() {
         return (
             <div>
-            <Header></Header>
-                <main className="main-container">
+            <Header user={ this.state.user } ></Header>
+            {this.state.loading && <div className="loader">Loading</div>}
+            {!this.state.loading && <main className="main-container">
                     <Basket items={ this.state.items }/>
                     <form onSubmit={ this.handleSubmit } >
                         <input
@@ -78,7 +79,7 @@ class TodoApp extends Component {
                         />
                     <button className="primary-button"> { 'Add #' + (this.state.items.length + 1) } </button>
                     </form >
-                </main>
+                </main>}
             </div>
         );
     }

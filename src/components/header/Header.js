@@ -18,7 +18,7 @@ class Header extends Component {
             <header className="header">
                  <h1 className="app-title"><Coffee className="icon" />
                  <span className="app-title-text">TuckShop</span></h1>
-                <button className="button header-button" onClick={this.logout}>Logout</button>
+                { this.props.user && <button className="button header-button" onClick={this.logout}>Logout {this.props.user.displayName.split(' ')[0]}</button> }
             </header> );
     }
 }
