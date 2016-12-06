@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import './Basket.css';
 
 class Basket extends Component {
     render() {
-        return ( <
-            ul > {
-                this.props.items.map(item => ( <
-                    li key = { item.id } > { item.text } < /li>
+        return (
+            <ul className="basket-list"> {
+                this.props.items.map(item => (
+                    <li key={ item.id } > { item.text } </li>
                 ))
-            } <
-            /ul>
+            }
+            </ul>
         );
     }
 }

@@ -1,0 +1,22 @@
+.header {
+  background-color: $primary-color;
+  border-top: 25px solid $primary-color-dark;
+  color: $primary-color-text;
+  padding: $gutter $top-pad;
+  position: relative;
+
+  .icon {
+    font-size: 30px;
+    margin-right: 4px;
+  }
+}
+
+.app-title {
+  font-size: 22px;
+  margin: 0;
+}
+
+.app-title-text {
+  display: inline;
+  vertical-align: middle;
+}

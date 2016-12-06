@@ -1,30 +1,26 @@
-.App {
-  text-align: center;
+@import './config/vars';
+
+@import './views/authenticated/basket/basket';
+
+@import './components/header/header';
+@import './components/button/button';
+@import './components/form/form';
+
+body {
+  min-width: $min-width;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+body, h1, h2, h3, h4, label, button {
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 300;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.main-container {
+  padding: $container-pad;
 }
 
 .loader {
-  color: #ffffff;
+  color: $primary-color-dark;
   font-size: 90px;
   text-indent: -9999em;
   overflow: hidden;

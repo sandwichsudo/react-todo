@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import Basket from './views/authenticated/basket/Basket';
-import './App.css';
+import './App.scss';
 var firebase = require("firebase/app");
 // Components
 import Header from './components/header/Header.js';
@@ -12,6 +12,7 @@ class TodoApp extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = { items: [], text: '' };
+        this.user = null;
     }
     componentWillMount() {
         firebase.auth().onAuthStateChanged((user) => {
@@ -42,24 +43,6 @@ class TodoApp extends Component {
         }
     }
 
-    render() {
-        return ( <
-            div >
-            <Header></Header>
-            <h3 > TODO < /h3> <
-            Basket items={ this.state.items }
-            /> <
-            form onSubmit={ this.handleSubmit } >
-            <
-            input onChange={ this.handleChange }
-            value={ this.state.text }
-            /> <
-            button > { 'Add #' + (this.state.items.length + 1) } < /button> < /
-            form > <
-            /div>
-        );
-    }
-
     handleChange(e) {
         this.setState({ text: e.target.value });
     }
@@ -79,6 +62,25 @@ class TodoApp extends Component {
                 text: ''
             };
         });
+    }
+
+    render() {
+        return (
+            <div>
+            <Header></Header>
+                <main className="main-container">
+                    <Basket items={ this.state.items }/>
+                    <form onSubmit={ this.handleSubmit } >
+                        <input
+                            className="input"
+                            onChange={ this.handleChange }
+                            value={ this.state.text }
+                        />
+                    <button className="primary-button"> { 'Add #' + (this.state.items.length + 1) } </button>
+                    </form >
+                </main>
+            </div>
+        );
     }
 }
 
