@@ -107,6 +107,11 @@ module.exports = {
         loader: 'babel',
 
       },
+      {
+          test: /\.(js|jsx)$/,
+          include: paths.reactIcons,
+          loader: 'babel',
+      },
       // The notation here is somewhat confusing.
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -156,6 +161,11 @@ module.exports = {
           limit: 10000,
           name: 'static/media/[name].[hash:8].[ext]'
         }
+      },
+      {
+          test: /\.scss$/,
+          include: paths.appSrc,
+          loaders: ["style", "css", "sass"]
       }
     ]
   },
