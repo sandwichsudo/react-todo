@@ -1,8 +1,8 @@
-// import * as types from '../actions/action-types';
-//
-// export function userProfileSuccess(userProfile) {
-//   return {
-//     type: USER_AUTH_SUCCESS,
-//     userProfile
-//   };
-// }
+import { ADD_PRODUCT_TO_BASKET_SUCCESS } from '../actions/action-types';
+
+export function addProductToBasketSuccess(newProduct) {
+  return {
+    type: ADD_PRODUCT_TO_BASKET_SUCCESS,
+    newProduct
+  };
+}

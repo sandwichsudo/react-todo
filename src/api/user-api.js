@@ -1,14 +1,11 @@
-// import store from '../store';
-// import { userProfileSuccess } from '../actions/user-actions';
-//
-// /**
-//  * Get all users
-//  */
-//
-// export function getUser() {
-//   return axios.get('http://localhost:3001/users')
-//     .then(response => {
-//       store.dispatch(getUsersSuccess(response.data));
-//       return response;
-//     });
-// }
+var firebase = require('firebase/app');
+import store from '../store';
+import { addProductToBasketSuccess } from '../actions/user-actions';
+
+export default {
+    addProductToBasket: (userId, newProduct) => {
+        let firebaseRef = firebase.database().ref().child(`users/${userId}/items`);
+        firebaseRef.push(newProduct);
+        store.dispatch(addProductToBasketSuccess(userId, newProduct));
+    }
+}

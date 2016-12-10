@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Basket from '../../../components/basket/Basket';
+import BasketWrap from '../../../components/basket/BasketWrap';
 import { connect } from 'react-redux';
 // Components
 
@@ -8,15 +8,10 @@ class Home extends Component {
         return (
             <div>
                 <h2>You have chosen the following items:</h2>
-                { this.props.user.items && <Basket items={ this.props.user.items }/> }
+                <BasketWrap/>
             </div>
         );
     }
 }
-const mapStateToProps = function(store) {
-  return {
-    user: store.userReducer.user
-  };
-}
 
-export default connect(mapStateToProps)(Home);
+export default Home;

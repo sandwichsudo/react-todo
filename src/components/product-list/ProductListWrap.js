@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import ProductList from './ProductList';
+import UserApi from '../../api/user-api';
 
 class ProductListWrap extends Component {
     constructor(props) {
@@ -10,7 +11,7 @@ class ProductListWrap extends Component {
     }
 
     handleSubmit(product) {
-        console.log('Adding product', product);
+        UserApi.addProductToBasket(this.props.user.uid, product);
     }
 
     render() {
@@ -24,7 +25,8 @@ class ProductListWrap extends Component {
 }
 const mapStateToProps = function(store) {
   return {
-    productList: store.productsReducer.productList
+    productList: store.productsReducer.productList,
+    user: store.userReducer.user,
   };
 }
 
