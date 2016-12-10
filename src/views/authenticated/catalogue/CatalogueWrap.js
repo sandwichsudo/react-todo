@@ -1,33 +1,18 @@
 import React, { Component } from 'react';
-var firebase = require("firebase/app");
 import Catalogue from './Catalogue';
+import { connect } from 'react-redux';
+import ProductsApi from '../../../api/products-api';
 
 class CatalogueWrap extends Component {
     constructor(props) {
         super(props);
-        this.getInitialData();
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = { products: [], text: ''};
+        this.state = { text: '' };
     }
 
-    getInitialData() {
-        this.firebaseRef = firebase.database().ref(`products`);
-        this.firebaseRef.on('value', (snapshot) => {
-            const value = snapshot.val();
-            if (value) {
-                this.products = value;
-                this.setState({
-                    products: this.products
-                });
-            }
-        });
-    }
-
-    componentWillUnmount() {
-        if (this.firebaseRef) {
-            this.firebaseRef.off();
-        }
+    componentDidMount() {
+       ProductsApi.getProducts();
     }
 
     handleChange(e) {
@@ -41,11 +26,9 @@ class CatalogueWrap extends Component {
             id: Date.now()
         };
 
+        ProductsApi.addProduct(newItem);
         this.setState((prevState) => {
-            const newItems = prevState.products.concat(newItem);
-            this.firebaseRef.set(newItems);
             return {
-                products: newItems,
                 text: ''
             };
         });
@@ -54,7 +37,8 @@ class CatalogueWrap extends Component {
     render() {
         return (
             <Catalogue
-                products={this.state.products}
+                productList={this.props.productList}
+                user={this.props.user}
                 handleSubmit={this.handleSubmit}
                 handleChange={this.handleChange}
                 text={this.state.text}
@@ -62,5 +46,11 @@ class CatalogueWrap extends Component {
         );
     }
 }
+const mapStateToProps = function(store) {
+  return {
+     productList: store.productsReducer.productList,
+     user: store.userReducer.user
+  };
+}
 
-export default CatalogueWrap;
+export default connect(mapStateToProps)(CatalogueWrap);

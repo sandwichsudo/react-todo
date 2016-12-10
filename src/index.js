@@ -2,10 +2,10 @@ import Router from './router';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { Provider } from 'react-redux';
-import store from './reducers/store';
+import store from './store';
 //import Basket from './views/authenticated/basket/Basket.js';
 
-var firebase = require("firebase/app");
+var firebase = require('firebase/app');
 require("firebase/auth");
 require("firebase/database");
 // Initialize Firebase

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-var firebase = require("firebase/app");
+var firebase = require('firebase/app');
 import { browserHistory } from 'react-router';
 import FaFacebookOfficial from 'react-icons/fa/facebook-official';
 import FaGooglePlusSquare from 'react-icons/fa/google-plus-square';

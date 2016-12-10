@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-var firebase = require("firebase/app");
+var firebase = require('firebase/app');
 import { browserHistory } from 'react-router';
 import Coffee from 'react-icons/io/coffee';
 import { connect } from 'react-redux';
