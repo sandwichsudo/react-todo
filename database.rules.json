@@ -5,6 +5,10 @@
               ".read": "auth.uid === $uid",
               ".write": "auth.uid === $uid"
           }
+      },
+      "products": {
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+        ".read": "true"
       }
   }
 }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 var firebase = require("firebase/app");
 import { browserHistory } from 'react-router';
-import Header from '../../components/header/Header.js';
 import FaFacebookOfficial from 'react-icons/fa/facebook-official';
 import FaGooglePlusSquare from 'react-icons/fa/google-plus-square';
 
@@ -53,28 +52,25 @@ class Login extends Component {
     render() {
         return (
             <div>
-                <Header></Header>
-                <main className="main-container">
-                    {!this.state.loading &&
-                    <form>
-                    <h2>Login or sign up</h2>
-                        <label>
-                            <span className="label">Email</span>
-                            <input className="input"/>
-                        </label>
-                        <label>
-                            <span className="label">Password</span>
-                            <input type="password" className="input"/>
-                        </label>
-                        <div className="button-wrap">
-                            <button type="submit" className="primary-button">Continue</button>
-                            <button className="social-button" title="Login with Google" onClick={this.googleLogin}><FaGooglePlusSquare className="icon"></FaGooglePlusSquare></button>
-                            <button className="social-button" title="Login with Facebook" onClick={this.facebookLogin}><FaFacebookOfficial className="icon"></FaFacebookOfficial></button>
-                        </div>
-                        {this.state.usualProvider && <h3>Hmm.. looks like you usually log in with {this.state.usualProvider}. Why not use that instead?</h3>}
-                     </form>}
-                     {this.state.loading && <div className="loader">Loading</div>}
-                 </main>
+                {!this.state.loading &&
+                <form>
+                <h2>Login or sign up</h2>
+                    <label>
+                        <span className="label">Email</span>
+                        <input className="input"/>
+                    </label>
+                    <label>
+                        <span className="label">Password</span>
+                        <input type="password" className="input"/>
+                    </label>
+                    <div className="button-wrap">
+                        <button type="submit" className="primary-button">Continue</button>
+                        <button className="social-button" title="Login with Google" onClick={this.googleLogin}><FaGooglePlusSquare className="icon"></FaGooglePlusSquare></button>
+                        <button className="social-button" title="Login with Facebook" onClick={this.facebookLogin}><FaFacebookOfficial className="icon"></FaFacebookOfficial></button>
+                    </div>
+                    {this.state.usualProvider && <h3>Hmm.. looks like you usually log in with {this.state.usualProvider}. Why not use that instead?</h3>}
+                 </form>}
+                 {this.state.loading && <div className="loader">Loading</div>}
              </div>
         );
     }

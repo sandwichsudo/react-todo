@@ -4,15 +4,13 @@ import Basket from './views/authenticated/basket/Basket';
 import './App.scss';
 var firebase = require("firebase/app");
 // Components
-import Header from './components/header/Header.js';
 
 class TodoApp extends Component {
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = { items: [], text: '', loading: true, user: null };
+        this.state = { loading: true, user: null, items: [] };
     }
+
     componentWillMount() {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
@@ -43,42 +41,13 @@ class TodoApp extends Component {
         }
     }
 
-    handleChange(e) {
-        this.setState({ text: e.target.value });
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        var newItem = {
-            text: this.state.text,
-            id: Date.now()
-        };
-
-        this.setState((prevState) => {
-            const newItems = prevState.items.concat(newItem);
-            this.firebaseRef.set({ items: newItems });
-            return {
-                items: newItems,
-                text: ''
-            };
-        });
-    }
-
     render() {
         return (
             <div>
-            <Header user={ this.state.user } ></Header>
-            {this.state.loading && <div className="loader">Loading</div>}
-            {!this.state.loading && <main className="main-container">
+                {this.state.loading && <div className="loader">Loading</div>}
+                {!this.state.loading && <main className="main-container">
+                    <h2>You have chosen the following items:</h2>
                     <Basket items={ this.state.items }/>
-                    <form onSubmit={ this.handleSubmit } >
-                        <input
-                            className="input"
-                            onChange={ this.handleChange }
-                            value={ this.state.text }
-                        />
-                    <button className="primary-button"> { 'Add #' + (this.state.items.length + 1) } </button>
-                    </form >
                 </main>}
             </div>
         );

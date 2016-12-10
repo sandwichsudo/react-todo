@@ -3,7 +3,8 @@ TODO:
 -Get routing in and make sign in page and list page.-
 -Change to redirect rather than popup.-
 -Add SASS and make basic layout.-
-Make non user data - a product list that is not editable by users.
+Make admin user type
+Make non user data - a product list that is only editable by admin users.
 Make a total which is user data, but not editable. This can be the total number of items a user has in their list.
 Make admin user type able to see peoples totals.
 Change the users list to be built up by choosing products.
