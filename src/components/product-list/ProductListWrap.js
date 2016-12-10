@@ -9,8 +9,8 @@ class ProductListWrap extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit() {
-        console.log('Adding product');
+    handleSubmit(product) {
+        console.log('Adding product', product);
     }
 
     render() {

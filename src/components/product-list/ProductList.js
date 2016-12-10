@@ -6,7 +6,7 @@ export default function(props) {
         <ul className="product-list"> { props.productList &&
             Object.keys(props.productList).map(key => (
                 <li key={ key } >
-                    <button onClick={props.handleSubmit}>{ props.productList[key].text }</button>
+                    <button onClick={ () => { props.handleSubmit(props.productList[key]) } }>{ props.productList[key].text }</button>
                 </li>
             ))
         }
