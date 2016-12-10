@@ -23,7 +23,9 @@ class Login extends Component {
         }, (err) => {
             console.error(err);
         });
-        firebase.auth().getRedirectResult().catch((error) => {
+        firebase.auth().getRedirectResult().then((data) => {
+            console.log(data);
+        }).catch((error) => {
           console.error(error);
           firebase.auth().fetchProvidersForEmail(error.email).then((emails) => {
               console.log(emails);

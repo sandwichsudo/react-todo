@@ -1,28 +1,17 @@
 import React, { Component } from 'react';
 var firebase = require("firebase/app");
 import Catalogue from './Catalogue';
-import { browserHistory } from 'react-router';
 
 class CatalogueWrap extends Component {
     constructor(props) {
         super(props);
+        this.getInitialData();
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = { products: [], text: '', loading: true, user: null };
+        this.state = { products: [], text: ''};
     }
 
-    componentWillMount() {
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                this.getInitialData(user.uid);
-                this.setState({ user, loading: false });
-            } else {
-                browserHistory.push('/login')
-            }
-        });
-    }
-
-    getInitialData(uid) {
+    getInitialData() {
         this.firebaseRef = firebase.database().ref(`products`);
         this.firebaseRef.on('value', (snapshot) => {
             const value = snapshot.val();
@@ -65,7 +54,6 @@ class CatalogueWrap extends Component {
     render() {
         return (
             <Catalogue
-                loading={this.state.loading}
                 products={this.state.products}
                 handleSubmit={this.handleSubmit}
                 handleChange={this.handleChange}

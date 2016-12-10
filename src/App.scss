@@ -1,6 +1,6 @@
 @import './config/vars';
 
-@import './views/authenticated/basket/basket';
+@import './components/basket/Basket';
 
 @import './components/header/header';
 @import './components/button/button';
@@ -8,6 +8,8 @@
 
 body {
   min-width: $min-width;
+  margin: 0;
+  padding: 0;
 }
 
 body, h1, h2, h3, h4, label, button {
