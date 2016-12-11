@@ -5,9 +5,10 @@ import {
     LOGOUT_SUCCESS,
 } from '../actions/action-types';
 
-export function addProductToBasketSuccess(newProduct) {
+export function addProductToBasketSuccess(uid, newProduct) {
     return {
         type: ADD_PRODUCT_TO_BASKET_SUCCESS,
+        uid,
         newProduct
     };
 }

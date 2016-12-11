@@ -7,7 +7,7 @@ export default function(props) {
             Object.keys(props.productList).map(key => (
                 <li key={ key } >
                     <button onClick={ () => { props.handleSubmit(props.productList[key]) } }>
-                        { props.productList[key].prodName }: £{ props.productList[key].prodCost }
+                        { props.productList[key].prodName }: £ { props.productList[key].prodCost }
                     </button>
                 </li>
             ))

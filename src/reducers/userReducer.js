@@ -11,10 +11,18 @@ const initialUserState = {
 
 export default function(state = initialUserState, action) {
   switch(action.type) {
-      case USER_AUTH_SUCCESS:
-          return Object.assign({}, state, { user: action.user });
-      case ADD_PRODUCT_TO_BASKET_SUCCESS:
-          return Object.assign({}, state, { items: action.newProduct } );
+      case USER_AUTH_SUCCESS: {
+          let total = 0;
+          let items = action.user.items ? action.user.items : {};
+          Object.keys(items).map(key => {
+              total+= Number(items[key].prodCost);
+          });
+          return Object.assign({}, state, { user: action.user, total });
+      }
+      case ADD_PRODUCT_TO_BASKET_SUCCESS: {
+          //does nothing?
+          return Object.assign({}, state );
+      }
       case LOGOUT_SUCCESS:
           return Object.assign({}, state, { user: {} });
   }

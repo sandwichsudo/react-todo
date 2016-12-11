@@ -9,9 +9,9 @@ import {
 
 const createUser = (user) => {
     user.items = [];
-    let { email, displayName, photo = '', uid } = user;
+    let { email, displayName, photoURL = '', uid } = user;
     displayName = displayName.indexOf(' ') != -1 ? displayName.split(' ')[0] : displayName;
-    const newUser = { email, displayName, photo };
+    const newUser = { email, displayName, photoURL };
     firebase.database().ref(`users/${uid}`).set(newUser);
 };
 
@@ -26,6 +26,7 @@ const authenticateUser = (userOb) => {
         }
     });
 
+    // BEWARE! this runs on ANY update to the users properties!
     firebaseRef.on('value', (snapshot) => {
         const user = snapshot.val();
         if (user) {
@@ -71,9 +72,9 @@ export default {
           console.error('Failed to create user.', error);
         });
     },
-    addProductToBasket: (userId, newProduct) => {
-        let firebaseRef = firebase.database().ref().child(`users/${userId}/items`);
+    addProductToBasket: (uid, newProduct) => {
+        let firebaseRef = firebase.database().ref().child(`users/${uid}/items`);
         firebaseRef.push(newProduct);
-        store.dispatch(addProductToBasketSuccess(userId, newProduct));
+        store.dispatch(addProductToBasketSuccess(uid, newProduct));
     }
 }
