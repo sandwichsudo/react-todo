@@ -3,8 +3,25 @@ import { browserHistory } from 'react-router';
 import store from '../store';
 import { addProductToBasketSuccess, userAuthSuccess } from '../actions/user-actions';
 
+const createUser = (user) => {
+    user.items = [];
+    let { email, displayName, photo = '', uid } = user;
+    displayName = displayName.indexOf(' ') != -1 ? displayName.split(' ')[0] : displayName;
+    const newUser = { email, displayName, photo };
+    firebase.database().ref(`users/${uid}`).set(newUser);
+};
+
 const authenticateUser = (userOb) => {
+
     let firebaseRef = firebase.database().ref(`users/${userOb.uid}`);
+
+    // check if it is a new user
+    firebaseRef.once('value').then((snapshot) => {
+        if (!snapshot.val()) {
+            createUser(userOb);
+        }
+    });
+
     firebaseRef.on('value', (snapshot) => {
         const user = snapshot.val();
         if (user) {
@@ -24,14 +41,6 @@ const onAuth = () => {
     });
 }
 
-const createUser = (user) => {
-    console.log('Creating user ', user.email);
-    user.items = [];
-    let { email, displayName, photo = '', uid } = user;
-    displayName = displayName ? displayName.slice(' ')[0] : email.slice('.')[0];
-    const newUser = { email, displayName, photo };
-    const firebaseRef = firebase.database().ref(`users/${uid}`).set(newUser);
-};
 
 export default {
     authenticateUser,
@@ -43,7 +52,6 @@ export default {
             let modifiedUserOb = Object.assign({}, user);
             modifiedUserOb.displayName = modifiedUserOb.email.split('.')[0];
             createUser(modifiedUserOb);
-            console.log(user);
         })
         .catch(function(error) {
           console.error('Failed to create user.', error);

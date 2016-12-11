@@ -13,15 +13,11 @@ class LoginWrap extends Component {
     }
 
     componentWillMount() {
-        firebase.auth().getRedirectResult().then((data) => {
-            console.log(data);
-        }).catch((error) => {
+        firebase.auth().getRedirectResult().catch((error) => {
           console.error(error);
           firebase.auth().fetchProvidersForEmail(error.email).then((emails) => {
-              console.log(emails);
               this.setState({ usualProvider: emails[0] });
           });
-
         });
     }
 
