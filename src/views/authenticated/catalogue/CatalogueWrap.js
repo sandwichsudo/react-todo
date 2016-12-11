@@ -6,30 +6,37 @@ import ProductsApi from '../../../api/products-api';
 class CatalogueWrap extends Component {
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this);
+        this.handleProdNameChange = this.handleProdNameChange.bind(this);
+        this.handleProdCostChange = this.handleProdCostChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = { text: '' };
+        this.state = { prodCost: '', prodName: '' };
     }
 
     componentDidMount() {
        ProductsApi.getProducts();
     }
 
-    handleChange(e) {
-        this.setState({ text: e.target.value });
+    handleProdCostChange(e) {
+        this.setState({ prodCost: e.target.value });
+    }
+
+    handleProdNameChange(e) {
+        this.setState({ prodName: e.target.value });
     }
 
     handleSubmit(e) {
         e.preventDefault();
         var newItem = {
-            text: this.state.text,
+            prodName: this.state.prodName,
+            prodCost: this.state.prodCost,
             id: Date.now()
         };
 
         ProductsApi.addProduct(newItem);
         this.setState((prevState) => {
             return {
-                text: ''
+                prodName: '',
+                prodCost: '',
             };
         });
     }
@@ -40,8 +47,10 @@ class CatalogueWrap extends Component {
                 productList={this.props.productList}
                 user={this.props.user}
                 handleSubmit={this.handleSubmit}
-                handleChange={this.handleChange}
-                text={this.state.text}
+                handleProdCostChange={this.handleProdCostChange}
+                handleProdNameChange={this.handleProdNameChange}
+                prodCost={this.state.prodCost}
+                prodName={this.state.prodName}
                 />
         );
     }

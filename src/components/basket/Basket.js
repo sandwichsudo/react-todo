@@ -10,7 +10,7 @@ export default function(props) {
                         props.items &&
                             Object.keys(props.items).map(key => (
                                 <li key={ key } >
-                                    <span>{ props.items[key].text }</span>
+                                    { props.items[key].prodName }: £{ props.items[key].prodCost }
                                 </li>
                             ))
                     }

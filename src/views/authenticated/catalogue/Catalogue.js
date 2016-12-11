@@ -10,11 +10,23 @@ export default function(props) {
             { props.user && props.user.isAdmin && <div>
                 <p>As an admin, you can add more items to the catalogue:</p>
                 <form onSubmit={ props.handleSubmit } >
-                    <input
-                        className="input"
-                        onChange={ props.handleChange }
-                        value={ props.text }
-                    />
+                    <label>
+                        <span className="label">Product name</span>
+                        <input
+                            className="input"
+                            onChange={ props.handleProdNameChange }
+                            value={ props.prodName }
+                        />
+                    </label>
+                    <label>
+                        <span className="label">Product cost</span>
+                        <input
+                            className="input"
+                            type="number"
+                            onChange={ props.handleProdCostChange }
+                            value={ props.prodCost }
+                        />
+                    </label>
                 <button className="primary-button">Add</button>
                 </form >
             </div>}
