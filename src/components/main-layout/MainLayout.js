@@ -21,12 +21,12 @@ class MainLayout extends Component {
         return (
             <div>
                 <Header></Header>
-                <nav className="primary-aside">
+                {this.props.user.email && <nav className="primary-aside">
                   <ul>
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/catalogue">Catalogue</Link></li>
                   </ul>
-                </nav>
+                </nav>}
                 <main className="main-container">
                     {this.props.children}
                 </main>

@@ -1,7 +1,8 @@
 import {
     ADD_PRODUCT_TO_BASKET_SUCCESS,
     USER_AUTH_SUCCESS,
-    USER_CREATED_SUCCESS
+    USER_CREATED_SUCCESS,
+    LOGOUT_SUCCESS,
 } from '../actions/action-types';
 
 export function addProductToBasketSuccess(newProduct) {
@@ -22,5 +23,11 @@ export function createUserSuccess(user) {
     return {
         type: USER_CREATED_SUCCESS,
         user
+    };
+}
+
+export function logoutSuccess() {
+    return {
+        type: LOGOUT_SUCCESS,
     };
 }

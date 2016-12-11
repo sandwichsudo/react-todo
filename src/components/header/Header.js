@@ -3,15 +3,11 @@ var firebase = require('firebase/app');
 import { browserHistory } from 'react-router';
 import Coffee from 'react-icons/io/coffee';
 import { connect } from 'react-redux';
+import UserApi from '../../api/user-api';
 
 class Header extends Component {
     logout() {
-        firebase.auth().signOut().then(() => {
-          // Sign-out successful.
-          browserHistory.push('/login');
-      }, (error) => {
-          console.error(error);
-        });
+        UserApi.logout();
     }
 
     render() {

@@ -1,7 +1,11 @@
 var firebase = require('firebase/app');
 import { browserHistory } from 'react-router';
 import store from '../store';
-import { addProductToBasketSuccess, userAuthSuccess } from '../actions/user-actions';
+import {
+    addProductToBasketSuccess,
+    userAuthSuccess,
+    logoutSuccess,
+} from '../actions/user-actions';
 
 const createUser = (user) => {
     user.items = [];
@@ -41,11 +45,21 @@ const onAuth = () => {
     });
 }
 
+const logout = () => {
+    firebase.auth().signOut().then(() => {
+      // Sign-out successful.
+      store.dispatch(logoutSuccess());
+      browserHistory.push('/login');
+    }, (error) => {
+      console.error(error);
+    });
+}
 
 export default {
     authenticateUser,
     createUser,
     onAuth,
+    logout,
     createUserFromPassword: (email, password) => {
         firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((user) => {
