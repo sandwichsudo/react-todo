@@ -1,3 +1,5 @@
+Demo: https://react-todo-7e0a3.firebaseapp.com/
+
 TODO:
 * Work out how to cache database data for offline use.
 * ~~Get routing in and make sign in page and list page.~~
@@ -6,10 +8,13 @@ TODO:
 * ~~Make admin user type~~
 * ~~Make non user data - a product list that is only editable by admin users.~~~
 * ~~Change the users list to be built up by choosing products.~~
-* Make a total which is user data, but not editable. This can be the total number of items a user has in their list.
+* Add prices to the products
+* Display total owed by user
 * Make admin user type able to see a list of users and their totals.
-* Change the total to be a function of the chosen products - add up the cost of each.
-
+* Notification popup when you add to basket
+* Create proper user menu (drop down with avatar)
+* proper loading state
+* random animation when loading
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 

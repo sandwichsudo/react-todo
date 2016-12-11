@@ -1,6 +1,7 @@
 import {
     USER_AUTH_SUCCESS,
     ADD_PRODUCT_TO_BASKET_SUCCESS,
+    USER_CREATED_SUCCESS
 } from '../actions/action-types';
 
 const initialUserState = {

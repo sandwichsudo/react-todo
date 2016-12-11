@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
-import store from '../../store';
 import { connect } from 'react-redux';
-import { USER_AUTH_SUCCESS } from '../../actions/action-types';
+import UserApi from '../../api/user-api';
 // Components
 import Header from '../header/Header.js';
 var firebase = require('firebase/app');
@@ -11,21 +10,9 @@ class MainLayout extends Component {
     componentDidMount() {
         firebase.auth().onAuthStateChanged((userOb) => {
             if (userOb) {
-                this.firebaseRef = firebase.database().ref(`users/${userOb.uid}`);
-                this.firebaseRef.on('value', (snapshot) => {
-                    const user = snapshot.val();
-                    if (user) {
-                        let modifiedUserOb = Object.assign({}, userOb);
-                        modifiedUserOb.displayName = modifiedUserOb.displayName.split(' ')[0];
-                        store.dispatch({
-                          type: USER_AUTH_SUCCESS,
-                          user: {...user, ...modifiedUserOb}
-                        });
-                    }
-                });
-
+                UserApi.authenticateUser(userOb);
             } else {
-                browserHistory.push('/login')
+                browserHistory.push('/login');
             }
         });
     }
