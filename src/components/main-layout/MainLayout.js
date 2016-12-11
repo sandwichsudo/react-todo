@@ -8,13 +8,7 @@ var firebase = require('firebase/app');
 
 class MainLayout extends Component {
     componentDidMount() {
-        firebase.auth().onAuthStateChanged((userOb) => {
-            if (userOb) {
-                UserApi.authenticateUser(userOb);
-            } else {
-                browserHistory.push('/login');
-            }
-        });
+        UserApi.onAuth();
     }
 
     componentWillUnmount() {

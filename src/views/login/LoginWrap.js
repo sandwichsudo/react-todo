@@ -38,7 +38,7 @@ class LoginWrap extends Component {
     }
 
     emailPasswordLogin() {
-        const email = 'gilly.ames@travelex.com';
+        const email = `test.${Date.now()}@gmail.com`;
         const password = 'Password!'
         userApi.createUserFromPassword(email, password);
     }

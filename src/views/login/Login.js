@@ -16,7 +16,7 @@ export default function(props) {
                     <input type="password" className="input"/>
                 </label>
                 <div className="button-wrap">
-                    <button type="button" onClick={props.emailPasswordLogin} className="primary-button">Continue</button>
+                    <button type="button" onClick={props.emailPasswordLogin} className="primary-button">Create Test User</button>
                     <button className="social-button" title="Login with Google" onClick={props.googleLogin}>
                         <FaGooglePlusSquare className="icon"></FaGooglePlusSquare>
                     </button>
