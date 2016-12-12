@@ -8,8 +8,9 @@ TODO:
 * ~~Make admin user type~~
 * ~~Make non user data - a product list that is only editable by admin users.~~~
 * ~~Change the users list to be built up by choosing products.~~
-* Add prices to the products
-* Display total owed by user
+* ~~Add prices to the products~~
+* ~~Display total owed by user~~
+* Make loader work again
 * Make admin user type able to see a list of users and their totals.
 * Notification popup when you add to basket
 * Create proper user menu (drop down with avatar)
