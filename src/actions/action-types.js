@@ -11,3 +11,6 @@ export const ADD_PRODUCT = 'ADD_PRODUCT';
 //ui actions
 export const VIEW_LOADED = 'VIEW_LOADED';
 export const START_VIEW_LOADING = 'START_VIEW_LOADING';
+
+// admin actions
+export const USERS_LIST_SUCCESS = 'USERS_LIST_SUCCESS';

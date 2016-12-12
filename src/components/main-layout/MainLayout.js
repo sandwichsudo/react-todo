@@ -30,6 +30,7 @@ class MainLayout extends Component {
                                   <ul>
                                     <li><Link to="/">Home</Link></li>
                                     <li><Link to="/catalogue">Catalogue</Link></li>
+                                    {this.props.user.isAdmin && <li><Link to="/admin">Admin</Link></li> }
                                   </ul>
                                 </nav>
                             }
