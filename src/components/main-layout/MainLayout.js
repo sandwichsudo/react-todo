@@ -1,34 +1,42 @@
 import React, { Component } from 'react';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import UserApi from '../../api/user-api';
 // Components
 import Header from '../header/Header.js';
-var firebase = require('firebase/app');
+import LoaderWrap from '../loader/LoaderWrap.js';
 
 class MainLayout extends Component {
     componentDidMount() {
         UserApi.onAuth();
     }
 
-    componentWillUnmount() {
-        if (this.firebaseRef) {
-            this.firebaseRef.off();
-        }
-    }
+    // TODO: do something about this!
+    // componentWillUnmount() {
+    //     if (this.firebaseRef) {
+    //         this.firebaseRef.off();
+    //     }
+    // }
 
     render() {
         return (
             <div>
-                <Header></Header>
-                {this.props.user.email && <nav className="primary-aside">
-                  <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/catalogue">Catalogue</Link></li>
-                  </ul>
-                </nav>}
+                <Header/>
                 <main className="main-container">
-                    {this.props.children}
+                    <LoaderWrap/>
+                    { !this.props.loading &&
+                        <div>
+                            {this.props.user.email &&
+                                <nav className="primary-aside">
+                                  <ul>
+                                    <li><Link to="/">Home</Link></li>
+                                    <li><Link to="/catalogue">Catalogue</Link></li>
+                                  </ul>
+                                </nav>
+                            }
+                            {this.props.children}
+                        </div>
+                    }
                 </main>
             </div>
         );
@@ -37,7 +45,8 @@ class MainLayout extends Component {
 
 const mapStateToProps = function(store) {
   return {
-    user: store.userReducer.user
+    user: store.userReducer.user,
+    loading: store.uiReducer.loading
   };
 }
 

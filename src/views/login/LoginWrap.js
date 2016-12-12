@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 var firebase = require('firebase/app');
-import { browserHistory } from 'react-router';
 import userApi from '../../api/user-api';
 import Login from './Login';
 

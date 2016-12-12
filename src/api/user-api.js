@@ -7,6 +7,10 @@ import {
     logoutSuccess,
 } from '../actions/user-actions';
 
+import {
+    viewLoadedSuccess
+} from '../actions/ui-actions';
+
 const createUser = (user) => {
     user.items = [];
     let { email, displayName, photoURL = '', uid } = user;
@@ -30,6 +34,7 @@ const authenticateUser = (userOb) => {
     firebaseRef.on('value', (snapshot) => {
         const user = snapshot.val();
         if (user) {
+            store.dispatch(viewLoadedSuccess());
             store.dispatch(userAuthSuccess(Object.assign({...userOb, ...user})));
         }
     });
