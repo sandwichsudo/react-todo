@@ -1,21 +1,20 @@
 Demo: https://react-todo-7e0a3.firebaseapp.com/
 
 TODO:
-* Work out how to cache database data for offline use.
-* ~~Get routing in and make sign in page and list page.~~
-* ~~Change to redirect rather than popup.~~
-* ~~Add SASS and make basic layout.~~
-* ~~Make admin user type~~
-* ~~Make non user data - a product list that is only editable by admin users.~~~
-* ~~Change the users list to be built up by choosing products.~~
-* ~~Add prices to the products~~
-* ~~Display total owed by user~~
-* Make loader work again
-* Make admin user type able to see a list of users and their totals.
-* Notification popup when you add to basket
-* Create proper user menu (drop down with avatar)
-* proper loading state
-* random animation when loading
+- [ ] Work out how to cache database data for offline use.
+- [x] Get routing in and make sign in page and list page.
+- [x] Change to redirect rather than popup.
+- [x] Add SASS and make basic layout.
+- [x] Make admin user type
+- [x] Make non user data - a product list that is only editable by admin users.
+- [x] Change the users list to be built up by choosing products.
+- [x] Add prices to the products
+- [x] Display total owed by user
+- [x] Make loader work again
+- [ ] Make admin user type able to see a list of users and their totals.
+- [ ] Notification popup when you add to basket
+- [ ] Create proper user menu (drop down with avatar)
+- [ ] random animation when loading
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 

@@ -4,7 +4,7 @@ import {
 } from '../actions/action-types';
 
 const initialUIState = {
-  loading: false
+  loading: true
 }
 
 export default function(state = initialUIState, action) {

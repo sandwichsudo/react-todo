@@ -24,8 +24,7 @@ class MainLayout extends Component {
                 <Header/>
                 <main className="main-container">
                     <LoaderWrap/>
-                    { !this.props.loading &&
-                        <div>
+                    <div className={ this.props.loading ? "hidden" : ""}>
                             {this.props.user.email &&
                                 <nav className="primary-aside">
                                   <ul>
@@ -35,8 +34,7 @@ class MainLayout extends Component {
                                 </nav>
                             }
                             {this.props.children}
-                        </div>
-                    }
+                    </div>
                 </main>
             </div>
         );
