@@ -2,7 +2,7 @@
   "rules": {
       "users": {
           "$uid": {
-              ".read": "auth.uid === $uid",
+              ".read": "auth.uid === $uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
               ".write": "auth.uid === $uid"
           }
       },
