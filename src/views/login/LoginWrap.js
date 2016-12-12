@@ -8,11 +8,14 @@ class LoginWrap extends Component {
         super(props);
         this.googleLogin = this.googleLogin.bind(this);
         this.facebookLogin = this.facebookLogin.bind(this);
-        this.state = { usualProvider: '', loading: true };
+        this.state = { usualProvider: ''};
     }
 
     componentWillMount() {
-        firebase.auth().getRedirectResult().catch((error) => {
+        console.log('componentWillMount');
+        firebase.auth().getRedirectResult().then((data) => {
+            console.log('componentWillMount getRedirectResult then', data);
+        }).catch((error) => {
           console.error(error);
           firebase.auth().fetchProvidersForEmail(error.email).then((emails) => {
               this.setState({ usualProvider: emails[0] });
@@ -45,7 +48,6 @@ class LoginWrap extends Component {
     render() {
         return (
             <Login
-                loading={this.state.loading}
                 emailPasswordLogin={this.emailPasswordLogin}
                 usualProvider={this.usualProvider}
                 googleLogin={this.googleLogin}
