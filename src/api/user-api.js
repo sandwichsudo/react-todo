@@ -15,7 +15,7 @@ import {
 const createUser = (user) => {
     user.items = [];
     let { email, displayName, photoURL = '', uid } = user;
-    displayName = displayName.indexOf(' ') != -1 ? displayName.split(' ')[0] : displayName;
+    displayName = displayName.indexOf(' ') !== -1 ? displayName.split(' ')[0] : displayName;
     const newUser = { email, displayName, photoURL };
     firebase.database().ref(`users/${uid}`).set(newUser);
 };

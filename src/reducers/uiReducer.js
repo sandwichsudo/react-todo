@@ -19,6 +19,6 @@ export default function(state = initialUIState, action) {
            stateCopy.loading = true;
            return stateCopy;
       }
+      default: return state;
   }
-  return state;
 }

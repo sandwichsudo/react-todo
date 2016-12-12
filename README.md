@@ -1,7 +1,6 @@
 Demo: https://react-todo-7e0a3.firebaseapp.com/
 
 TODO:
-- [ ] Work out how to cache database data for offline use.
 - [x] Get routing in and make sign in page and list page.
 - [x] Change to redirect rather than popup.
 - [x] Add SASS and make basic layout.
@@ -12,9 +11,13 @@ TODO:
 - [x] Display total owed by user
 - [x] Make loader work again
 - [x] Make admin user type able to see a list of users and their totals.
+- [ ] Work out how to cache database data for offline use.
 - [ ] Notification popup when you add to basket
 - [ ] Create proper user menu (drop down with avatar)
 - [ ] random animation when loading
+- [ ] add button to remove items from basket
+- [ ] proper icons - fav icon and for splash screen
+- [ ] link up form inputs on login
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
