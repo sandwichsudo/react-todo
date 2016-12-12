@@ -1,8 +1,9 @@
 {
   "rules": {
       "users": {
+          ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
           "$uid": {
-              ".read": "auth.uid === $uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
+              ".read": "auth.uid === $uid",
               ".write": "auth.uid === $uid"
           }
       },

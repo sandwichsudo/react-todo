@@ -11,7 +11,7 @@ TODO:
 - [x] Add prices to the products
 - [x] Display total owed by user
 - [x] Make loader work again
-- [ ] Make admin user type able to see a list of users and their totals.
+- [x] Make admin user type able to see a list of users and their totals.
 - [ ] Notification popup when you add to basket
 - [ ] Create proper user menu (drop down with avatar)
 - [ ] random animation when loading
