@@ -13,18 +13,20 @@ class LoginWrap extends Component {
     }
 
     componentWillMount() {
-        console.log('componentWillMount');
-        firebase.auth().getRedirectResult().then((data) => {
-            console.log('componentWillMount getRedirectResult then', data.user);
-            if (data.user) {
+        firebase.auth().getRedirectResult().then(() => {
+            // if user is logged in we will be redirected soon
+            if (firebase.auth().currentUser) {
                 UserApi.startLoading();
             } else {
                 UserApi.loaded();
             }
         }).catch((error) => {
           console.error(error);
+          UserApi.loaded();
           firebase.auth().fetchProvidersForEmail(error.email).then((emails) => {
-              this.setState({ usualProvider: emails[0] });
+              const usualEmail = emails[0];
+              const account = usualEmail.indexOf('google.com') > -1 ? 'Google' : 'Facebook';
+              this.setState({ usualProvider: account });
           });
         });
     }
@@ -60,7 +62,7 @@ class LoginWrap extends Component {
         return (
             <Login
                 emailPasswordLogin={this.emailPasswordLogin}
-                usualProvider={this.usualProvider}
+                usualProvider={this.state.usualProvider}
                 googleLogin={this.googleLogin}
                 facebookLogin={this.facebookLogin}
             />

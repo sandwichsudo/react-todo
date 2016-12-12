@@ -24,7 +24,7 @@ export default function(props) {
                         <FaFacebookOfficial className="icon"></FaFacebookOfficial>
                     </button>
                 </div>
-                {props.usualProvider && <h3>Hmm.. looks like you usually log in with {props.usualProvider}. Why not use that instead?</h3>}
+                {props.usualProvider && <h3>Hmm.. looks like you usually log in with your {props.usualProvider} account. Why not use that instead?</h3>}
             </form>}
         </div>
     );

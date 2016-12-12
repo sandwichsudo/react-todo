@@ -64,7 +64,6 @@ const logout = () => {
     firebase.auth().signOut().then(() => {
       // Sign-out successful.
       store.dispatch(logoutSuccess());
-      browserHistory.push('/login');
     }, (error) => {
       console.error(error);
     });
