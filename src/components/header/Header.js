@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Coffee from 'react-icons/io/coffee';
+import MdAccountCircle from 'react-icons/md/account-circle';
 import { connect } from 'react-redux';
 import UserApi from '../../api/user-api';
 
@@ -15,7 +16,14 @@ class Header extends Component {
                  <span className="app-title-text">TuckShop</span></h1>
                  { this.props.user.displayName &&
                      <button className="button header-button" onClick={this.logout}>
-                         Logout <img className="profile-photo" alt="profile photo" src={this.props.user.photoURL}/>{this.props.user.photoUrl}
+                         Logout
+                         { !this.props.user.photoURL && <MdAccountCircle
+                             className="profile-photo"
+                             /> }
+                         { this.props.user.photoURL && <img
+                             className="profile-photo"
+                             alt="account profile"
+                             src={this.props.user.photoURL}/> }
                      </button>
                  }
             </header> );

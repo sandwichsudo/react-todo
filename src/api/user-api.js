@@ -1,16 +1,12 @@
 var firebase = require('firebase/app');
 import { browserHistory } from 'react-router';
 import store from '../store';
+import UiApi from './ui-api';
 import {
     addProductToBasketSuccess,
     userAuthSuccess,
     logoutSuccess,
 } from '../actions/user-actions';
-
-import {
-    viewLoadedSuccess,
-    startViewLoading
-} from '../actions/ui-actions';
 
 const createUser = (user) => {
     user.items = [];
@@ -19,14 +15,6 @@ const createUser = (user) => {
     const newUser = { email, displayName, photoURL };
     firebase.database().ref(`users/${uid}`).set(newUser);
 };
-
-const loaded = () => {
-    store.dispatch(viewLoadedSuccess());
-}
-
-const startLoading = () => {
-    store.dispatch(startViewLoading());
-}
 
 const authenticateUser = (userOb) => {
 
@@ -43,7 +31,7 @@ const authenticateUser = (userOb) => {
     firebaseRef.on('value', (snapshot) => {
         const user = snapshot.val();
         if (user) {
-            loaded();
+            UiApi.loaded();
             store.dispatch(userAuthSuccess(Object.assign({...userOb, ...user})));
         }
     });
@@ -74,8 +62,6 @@ export default {
     createUser,
     onAuth,
     logout,
-    loaded,
-    startLoading,
     createUserFromPassword: (email, password) => {
         firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((user) => {
