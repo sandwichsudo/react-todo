@@ -11,6 +11,14 @@
   }
 }
 
+.home-link {
+    color: white;
+    text-decoration: none;
+    &:hover {
+      text-decoration: none;
+    }
+}
+
 .app-title {
   font-size: 22px;
   margin: 0;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import Coffee from 'react-icons/io/coffee';
 import MdAccountCircle from 'react-icons/md/account-circle';
 import { connect } from 'react-redux';
@@ -12,8 +13,8 @@ class Header extends Component {
     render() {
         return (
             <header className="header">
-                 <h1 className="app-title"><Coffee className="icon" />
-                 <span className="app-title-text">TuckShop</span></h1>
+                 <Link to="/" className="home-link"><h1 className="app-title"><Coffee className="icon" />
+                 <span className="app-title-text">TuckShop</span></h1></Link>
                  { this.props.user.displayName &&
                      <button className="button header-button" onClick={this.logout}>
                          Logout
