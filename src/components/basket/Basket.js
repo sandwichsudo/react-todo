@@ -31,7 +31,7 @@ const Basket = props => (
 
 Basket.propTypes = {
     items: React.PropTypes.object,
-    handleRemoveProduct: React.PropTypes.function,
+    handleRemoveProduct: React.PropTypes.func,
 };
 
 Basket.defaultProps = {
