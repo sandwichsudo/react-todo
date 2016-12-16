@@ -1,9 +1,25 @@
 .label, .input {
   display: block;
-  width: 100%;
+ // width: 100%;
   margin-bottom: 15px;
 }
 
 .input {
-  height: 40px;
+  height: 50px;
+  padding: 0 15px;
+  box-sizing: border-box;
 }
+
+%placeholder {
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  color: $color-silver;
+}
+
+// input::-moz-placeholder {@extend %placeholder; } /* firefox 19+ */
+// input:-ms-input-placeholder {@extend %placeholder; } /* ie */
+// input:-moz-placeholder {@extend %placeholder; }
+input::-webkit-input-placeholder { @extend %placeholder; }

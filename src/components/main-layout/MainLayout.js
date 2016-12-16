@@ -22,23 +22,32 @@ class MainLayout extends Component {
     render() {
         return (
             <div>
-                <Header/>
-                <main className="main-container">
-                    <LoaderWrap/>
-                    <div className={ this.props.loading ? "hidden" : ""}>
-                            {this.props.user.email &&
-                                <nav className="primary-aside">
-                                  <ul>
-                                    <li><Link to="/">Home</Link></li>
-                                    <li><Link to="/catalogue">Catalogue</Link></li>
-                                    {this.props.user.isAdmin && <li><Link to="/admin">Admin</Link></li> }
-                                  </ul>
-                                </nav>
-                            }
-                            {this.props.children}
+                {this.props.user.email &&
+                    <div>
+                        <Header/>
+                        <main className="main-container">
+                            <LoaderWrap/>
+                            <div className={ this.props.loading ? "hidden" : ""}>
+                                    {this.props.user.email &&
+                                        <nav className="primary-aside">
+                                          <ul>
+                                            <li><Link to="/">Home</Link></li>
+                                            <li><Link to="/catalogue">Catalogue</Link></li>
+                                            {this.props.user.isAdmin && <li><Link to="/admin">Admin</Link></li> }
+                                          </ul>
+                                        </nav>
+                                    }
+                                    {this.props.children}
+                            </div>
+                            <NotificationWrap/>
+                        </main>
                     </div>
-                    <NotificationWrap/>
-                </main>
+                }
+                {!this.props.user.email &&
+                    <main className="login-screen">
+                        {this.props.children}
+                    </main>
+                }
             </div>
         );
     }

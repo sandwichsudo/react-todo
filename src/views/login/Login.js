@@ -1,27 +1,31 @@
 import React from 'react';
-import FaFacebookOfficial from 'react-icons/fa/facebook-official';
-import FaGooglePlusSquare from 'react-icons/fa/google-plus-square';
+import Facebook from 'react-icons/io/social-facebook';
+import Google from 'react-icons/fa/google-plus';
 
 export default function(props) {
     return (
-        <div>
+        <div className="form-wrap">
             {<form>
-                <h2>Login or sign up</h2>
+                <h1 className="title">Tuckshop</h1>
+                <h2 className="subtitle">Hungry? login now</h2>
                 <label>
-                    <span className="label">Email</span>
-                    <input className="input"/>
+                    <span className="hidden-label">Email</span>
+                    <input className="input email-input" placeholder="Email"/>
                 </label>
                 <label>
-                    <span className="label">Password</span>
-                    <input type="password" className="input"/>
+                    <span className="hidden-label">Password</span>
+                    <input type="password" className="input password-input" placeholder="Password"/>
                 </label>
                 <div className="button-wrap">
                     <button type="button" onClick={props.emailPasswordLogin} className="primary-button">Create Test User</button>
-                    <button className="social-button" title="Login with Google" onClick={props.googleLogin}>
-                        <FaGooglePlusSquare className="icon"></FaGooglePlusSquare>
+                    <div className="divider"><span className="or">OR</span></div>
+                    <button className="social-button primary-button" onClick={props.facebookLogin}>
+                        <Facebook className="icon"></Facebook>
+                        Sign in with Facebook
                     </button>
-                    <button className="social-button" title="Login with Facebook" onClick={props.facebookLogin}>
-                        <FaFacebookOfficial className="icon"></FaFacebookOfficial>
+                    <button className="social-button primary-button" onClick={props.googleLogin}>
+                        <Google className="icon"></Google>
+                        Sign in with Google
                     </button>
                 </div>
                 {props.usualProvider && <h3>Hmm.. looks like you usually log in with your {props.usualProvider} account. Why not use that instead?</h3>}

@@ -8,16 +8,20 @@
 @import './components/loader/loader';
 @import './components/notification/notification';
 
+@import './views/login/login';
 
 body {
   min-width: $min-width;
   margin: 0;
   padding: 0;
+  font-size: 16px;
+  font-family: $font-family-default;
 }
 
 body, h1, h2, h3, h4, label, button {
-    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: $font-family-default;
     font-weight: 300;
+    margin-top : 0;
 }
 
 .main-container {
@@ -27,4 +31,16 @@ body, h1, h2, h3, h4, label, button {
 
 .hidden {
   display: none;
+}
+
+.visuallyhidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px; width: 1px;
+  margin: -1px; padding: 0; border: 0;
+}
+
+.hidden-label {
+    @extend .visuallyhidden;
 }

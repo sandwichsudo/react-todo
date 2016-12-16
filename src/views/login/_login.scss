@@ -1,0 +1,88 @@
+.login-screen {
+  padding: 27px;
+  height: calc(100vh - 70px);
+  background: url('/images/tuck-shop-bg.svg')
+    repeat-x 0 27px;
+  background-size: 375px 613px;
+  &:before {
+      content: "";
+      background: $accent-color;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      position: absolute;
+      z-index: -1;
+  }
+
+  .input {
+      width: calc(100%);
+  }
+}
+
+.title {
+    text-transform: uppercase;
+    font-size: 25px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: 6.2px;
+    text-align: center;
+    margin-top: 106px;
+    margin-bottom: 88px;
+    color: $primary-color-text;
+}
+
+.subtitle {
+    font-size: 16px;
+    font-weight: 100;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: 2.7px;
+    text-align: center;
+    color: $primary-color-text;
+    margin-bottom: 20px;
+}
+
+.email-input {
+  margin-bottom: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border: 0;
+}
+
+.password-input {
+  margin-bottom: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border: {
+      top: 1px solid $pale-grey-color;
+      bottom: 0;
+      left: 0;
+      right: 0;
+  }
+}
+
+.divider {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    .or {
+      line-height: 65px;
+      display:block;
+      color: $primary-color-text;
+      font-size: 12px;
+      letter-spacing: 3px;
+      &:before, &:after {
+         content: '';
+         width: 42%;
+         border-bottom: 1px solid $primary-color-text;
+         display: block;
+         position: absolute;
+         top: 33px;
+      }
+      &:after {
+        right: 0;
+      }
+    }
+}
