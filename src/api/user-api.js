@@ -4,6 +4,7 @@ import store from '../store';
 import UiApi from './ui-api';
 import {
     addProductToBasketSuccess,
+    removeProductFromBasketSuccess,
     userAuthSuccess,
     logoutSuccess,
 } from '../actions/user-actions';
@@ -57,6 +58,16 @@ const logout = () => {
     });
 }
 
+const removeProductFromBasket = (uid, key) => {
+    let firebaseRef = firebase.database().ref().child(`users/${uid}/items/${key}`).remove();
+    firebaseRef
+        .then(() => {})
+        .catch((e) => {
+            console.error(e);
+        });
+    store.dispatch(removeProductFromBasketSuccess(uid, key));
+};
+
 export default {
     authenticateUser,
     createUser,
@@ -80,5 +91,6 @@ export default {
         UiApi.showNewNotification({
             message:'Product added to basket!',
         });
-    }
+    },
+    removeProductFromBasket,
 }
