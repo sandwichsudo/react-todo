@@ -1,4 +1,9 @@
-import { createStore, combineReducers } from 'redux';
+import {
+    createStore,
+    combineReducers,
+    applyMiddleware
+} from 'redux';
+import reduxLogger from 'redux-logger';
 import userReducer from './reducers/userReducer';
 import productsReducer from './reducers/productsReducer';
 import uiReducer from './reducers/uiReducer';
@@ -12,6 +17,7 @@ const reducers = combineReducers({
   adminReducer,
 });
 
-const store = createStore(reducers);
+const logger = reduxLogger();
+const store = createStore(reducers, applyMiddleware(logger));
 
 export default store;
