@@ -15,7 +15,7 @@ export default (
           <Route path="/" component={CatalogueWrap} />
           <Route path="/shop" component={CatalogueWrap} />
           <Route path="/index.html" component={CatalogueWrap} />
-          <Route path="/basket" component={Basket} />
+          <Route path="/tab" component={Basket} />
           <Route path="/admin" component={AdminWrap} />
       </Route>
   </Router>
