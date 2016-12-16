@@ -22,11 +22,11 @@ class MainLayout extends Component {
     render() {
         return (
             <div>
+                <LoaderWrap/>
                 {this.props.user.email &&
                     <div>
                         <Header/>
                         <main className="main-container">
-                            <LoaderWrap/>
                             <div className={ this.props.loading ? "hidden" : ""}>
                                     {this.props.user.email &&
                                         <nav className="primary-aside">
@@ -44,7 +44,7 @@ class MainLayout extends Component {
                     </div>
                 }
                 {!this.props.user.email &&
-                    <main className="login-screen">
+                    <main className={"login-screen "+(this.props.loading ? "hidden" : "")}>
                         {this.props.children}
                     </main>
                 }
