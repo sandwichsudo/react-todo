@@ -2,7 +2,8 @@ import {
     VIEW_LOADED,
     START_VIEW_LOADING,
     NEW_NOTIFICATION,
-    CLOSE_NOTIFICATION
+    CLOSE_NOTIFICATION,
+    ROUTE_CHANGE,
 } from '../actions/action-types';
 
 export function viewLoadedSuccess() {
@@ -27,5 +28,12 @@ export function showNotification(notification) {
 export function closeNotification() {
     return {
         type: CLOSE_NOTIFICATION,
+    };
+}
+
+export function routeChange(title) {
+    return {
+        type: ROUTE_CHANGE,
+        title,
     };
 }

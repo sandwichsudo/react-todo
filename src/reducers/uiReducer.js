@@ -2,12 +2,14 @@ import {
     VIEW_LOADED,
     START_VIEW_LOADING,
     NEW_NOTIFICATION,
-    CLOSE_NOTIFICATION
+    CLOSE_NOTIFICATION,
+    ROUTE_CHANGE
 } from '../actions/action-types';
 
 const initialUIState = {
   loading: true,
   notification: {},
+  title: 'Tuck Shop',
 }
 
 export default function(state = initialUIState, action) {
@@ -31,6 +33,11 @@ export default function(state = initialUIState, action) {
            let stateCopy = Object.assign({}, state);
            stateCopy.notification = initialUIState.notification;
            return stateCopy;
+      }
+      case ROUTE_CHANGE: {
+          let stateCopy = Object.assign({}, state);
+          stateCopy.title = action.title;
+          return stateCopy;
       }
       default: return state;
   }

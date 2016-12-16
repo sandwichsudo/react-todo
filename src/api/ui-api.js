@@ -1,10 +1,12 @@
 import store from '../store';
+import { browserHistory } from 'react-router';
 
 import {
     viewLoadedSuccess,
     startViewLoading,
     showNotification,
     closeNotification,
+    routeChange,
 } from '../actions/ui-actions';
 
 const loaded = () => {
@@ -24,9 +26,18 @@ const showNewNotification = (notification) => {
     window.setTimeout(hideNotification, 3000);
 }
 
+const onRouteChange = (data) => {
+    let title = browserHistory.getCurrentLocation().pathname.replace('/', '');
+    if (!title) {
+        title = 'Shop';
+    }
+    store.dispatch(routeChange(title));
+}
+
 export default {
     loaded,
     startLoading,
     showNewNotification,
-    hideNotification
+    hideNotification,
+    onRouteChange
 }

@@ -1,7 +1,7 @@
 .header {
-  background-color: $primary-color;
+  background-color: $header-bg-color;
   color: $primary-color-text;
-  padding: $gutter $top-pad;
+  padding: $top-pad $gutter;
   position: relative;
 
   .icon {
@@ -19,8 +19,14 @@
 }
 
 .app-title {
-  font-size: 22px;
   margin: 0;
+  text-transform: uppercase;;
+  text-align: center;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.0;
+  letter-spacing: 4px;
+  font-size: 16px;
 }
 
 .app-title-text {
