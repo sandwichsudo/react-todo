@@ -24,6 +24,6 @@ export default function(state = initialProductState, action) {
           productListCopy[index] = action.newProduct;
           return Object.assign({}, state, { productList: productListCopy } );
       }
+      default: return state;
   }
-  return state;
 }

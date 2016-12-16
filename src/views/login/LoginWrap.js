@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 var firebase = require('firebase/app');
 import userApi from '../../api/user-api';
 import Login from './Login';
-import UserApi from '../../api/user-api';
+import UiApi from '../../api/ui-api';
 
 class LoginWrap extends Component {
     constructor(props) {
@@ -16,13 +16,13 @@ class LoginWrap extends Component {
         firebase.auth().getRedirectResult().then(() => {
             // if user is logged in we will be redirected soon
             if (firebase.auth().currentUser) {
-                UserApi.startLoading();
+                UiApi.startLoading();
             } else {
-                UserApi.loaded();
+                UiApi.loaded();
             }
         }).catch((error) => {
           console.error(error);
-          UserApi.loaded();
+          UiApi.loaded();
           firebase.auth().fetchProvidersForEmail(error.email).then((emails) => {
               const usualEmail = emails[0];
               const account = usualEmail.indexOf('google.com') > -1 ? 'Google' : 'Facebook';
@@ -34,20 +34,20 @@ class LoginWrap extends Component {
     googleLogin(e) {
         e.preventDefault();
         var provider = new firebase.auth.GoogleAuthProvider();
-        UserApi.startLoading();
+        UiApi.startLoading();
         firebase.auth().signInWithRedirect(provider);
     }
 
     facebookLogin(e) {
         e.preventDefault();
-        UserApi.startLoading();
+        UiApi.startLoading();
 
         var provider = new firebase.auth.FacebookAuthProvider();
         firebase.auth().signInWithRedirect(provider);
     }
 
     emailPasswordLogin() {
-        UserApi.startLoading();
+        UiApi.startLoading();
 
         const email = `test.${Date.now()}@gmail.com`;
         const password = 'Password!'

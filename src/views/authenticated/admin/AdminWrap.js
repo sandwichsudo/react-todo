@@ -17,9 +17,11 @@ class AdminWrap extends Component {
         const items = user.items;
         let total = 0;
         if (items) {
-            Object.keys(items).map(key => {
-                total+= Number(items[key].prodCost);
-            });
+            for (const key in items) {
+                if (items.hasOwnProperty(key)) {
+                    total+= Number(items[key].prodCost);
+                }
+            }
         }
         return total;
     }

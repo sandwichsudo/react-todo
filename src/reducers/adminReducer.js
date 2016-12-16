@@ -13,6 +13,6 @@ export default function(state = initialAdminState, action) {
           usersListCopy = Object.assign(usersListCopy, action.usersList);
           return Object.assign({}, state, { usersList: usersListCopy });
       }
+      default: return state;
   }
-  return state;
 }

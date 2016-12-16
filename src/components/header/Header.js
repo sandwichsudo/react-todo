@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-var firebase = require('firebase/app');
-import { browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import Coffee from 'react-icons/io/coffee';
+import MdAccountCircle from 'react-icons/md/account-circle';
 import { connect } from 'react-redux';
 import UserApi from '../../api/user-api';
 
@@ -13,11 +13,18 @@ class Header extends Component {
     render() {
         return (
             <header className="header">
-                 <h1 className="app-title"><Coffee className="icon" />
-                 <span className="app-title-text">TuckShop</span></h1>
+                 <Link to="/" className="home-link"><h1 className="app-title"><Coffee className="icon" />
+                 <span className="app-title-text">TuckShop</span></h1></Link>
                  { this.props.user.displayName &&
                      <button className="button header-button" onClick={this.logout}>
-                         Logout {this.props.user.displayName}
+                         Logout
+                         { !this.props.user.photoURL && <MdAccountCircle
+                             className="profile-photo"
+                             /> }
+                         { this.props.user.photoURL && <img
+                             className="profile-photo"
+                             alt="account profile"
+                             src={this.props.user.photoURL}/> }
                      </button>
                  }
             </header> );

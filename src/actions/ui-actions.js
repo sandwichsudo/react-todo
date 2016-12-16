@@ -1,6 +1,8 @@
 import {
     VIEW_LOADED,
-    START_VIEW_LOADING
+    START_VIEW_LOADING,
+    NEW_NOTIFICATION,
+    CLOSE_NOTIFICATION
 } from '../actions/action-types';
 
 export function viewLoadedSuccess() {
@@ -12,5 +14,18 @@ export function viewLoadedSuccess() {
 export function startViewLoading() {
     return {
         type: START_VIEW_LOADING,
+    };
+}
+
+export function showNotification(notification) {
+    return {
+        type: NEW_NOTIFICATION,
+        notification,
+    };
+}
+
+export function closeNotification() {
+    return {
+        type: CLOSE_NOTIFICATION,
     };
 }

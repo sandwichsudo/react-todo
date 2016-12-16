@@ -1,0 +1,24 @@
+.notification {
+  background-color: $black-color;
+  color: $primary-color-text;
+  padding: 15px 25px;
+  border-radius: 2px;
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 80px);
+  transition-property: all;
+  transition-duration: 0.4s;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  &.off-screen {
+      bottom: -100px;
+  }
+}
+
+.notification-icon {
+  background-color: $accent-color;
+  border-radius: 30px;
+  padding: 5px;
+  margin-right: 20px;
+  font-size: 20px;
+  color: $black-color;
+}
