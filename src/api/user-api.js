@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router';
 import store from '../store';
 import {
     addProductToBasketSuccess,
+    removeProductFromBasketSuccess,
     userAuthSuccess,
     logoutSuccess,
 } from '../actions/user-actions';
@@ -69,6 +70,16 @@ const logout = () => {
     });
 }
 
+const removeProductFromBasket = (uid, key) => {
+    let firebaseRef = firebase.database().ref().child(`users/${uid}/items/${key}`).remove();
+    firebaseRef
+        .then(() => {})
+        .catch((e) => {
+            console.error(e);
+        });
+    store.dispatch(removeProductFromBasketSuccess(uid, key));
+};
+
 export default {
     authenticateUser,
     createUser,
@@ -91,5 +102,6 @@ export default {
         let firebaseRef = firebase.database().ref().child(`users/${uid}/items`);
         firebaseRef.push(newProduct);
         store.dispatch(addProductToBasketSuccess(uid, newProduct));
-    }
+    },
+    removeProductFromBasket,
 }
