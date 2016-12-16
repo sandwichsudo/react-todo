@@ -5,6 +5,7 @@ import UserApi from '../../api/user-api';
 // Components
 import Header from '../header/Header.js';
 import LoaderWrap from '../loader/LoaderWrap.js';
+import NotificationWrap from '../notification/NotificationWrap.js';
 
 class MainLayout extends Component {
     componentDidMount() {
@@ -36,6 +37,7 @@ class MainLayout extends Component {
                             }
                             {this.props.children}
                     </div>
+                    <NotificationWrap/>
                 </main>
             </div>
         );
@@ -45,7 +47,7 @@ class MainLayout extends Component {
 const mapStateToProps = function(store) {
   return {
     user: store.userReducer.user,
-    loading: store.uiReducer.loading
+    loading: store.uiReducer.loading,
   };
 }
 

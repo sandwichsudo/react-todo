@@ -77,5 +77,8 @@ export default {
         let firebaseRef = firebase.database().ref().child(`users/${uid}/items`);
         firebaseRef.push(newProduct);
         store.dispatch(addProductToBasketSuccess(uid, newProduct));
+        UiApi.showNewNotification({
+            message:'Product added to basket!',
+        });
     }
 }
