@@ -34,9 +34,9 @@ const authenticateUser = (userOb) => {
         if (user) {
             UiApi.loaded();
             store.dispatch(userAuthSuccess(Object.assign({...userOb, ...user})));
+            browserHistory.push('/');
         }
     });
-    browserHistory.push('/');
 };
 
 const onAuth = () => {

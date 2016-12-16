@@ -16,7 +16,7 @@ class LoginWrap extends Component {
         firebase.auth().getRedirectResult().then(() => {
             // if user is logged in we will be redirected soon
             if (firebase.auth().currentUser) {
-                UiApi.startLoading();
+            //    UiApi.startLoading();
             } else {
                 UiApi.loaded();
             }
