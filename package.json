@@ -59,7 +59,8 @@
   "dependencies": {
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
-    "react-icons": "^2.2.1"
+    "react-icons": "^2.2.1",
+    "redux-logger": "^2.7.4"
   },
   "scripts": {
     "start": "node scripts/start.js",
