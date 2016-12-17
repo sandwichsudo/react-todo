@@ -12,12 +12,14 @@ TODO:
 - [x] Make loader work again
 - [x] Make admin user type able to see a list of users and their totals.
 - [ ] Work out how to cache database data for offline use.
-- [ ] Notification popup when you add to basket
+- [ ] Notification popup when you add to basket (ui improvements needed)
 - [ ] Create proper user menu (drop down with avatar)
 - [ ] random animation when loading
-- [ ] add button to remove items from basket
+- [x] add button to remove items from basket
 - [ ] proper icons - fav icon and for splash screen
 - [ ] link up form inputs on login
+- [ ] barcode/product lookup integration (http://www.upcitemdb.com/api/explorer#!/lookup/get_trial_lookup)
+- [ ] Nav - non admin screen not good
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
