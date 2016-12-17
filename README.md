@@ -12,7 +12,7 @@ TODO:
 - [x] Make loader work again
 - [x] Make admin user type able to see a list of users and their totals.
 - [ ] Work out how to cache database data for offline use.
-- [ ] Notification popup when you add to basket (ui improvements needed)
+- [x] Notification popup when you add to basket (ui improvements needed)
 - [ ] Create proper user menu (drop down with avatar)
 - [ ] random animation when loading
 - [x] add button to remove items from basket
