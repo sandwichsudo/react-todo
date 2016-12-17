@@ -6,4 +6,7 @@ module.exports = {
     handler: 'cacheFirst',
     urlPattern: /[.]mp3$/,
   }],
+  staticFileGlobsIgnorePatterns: [/js.map/],
+  navigateFallback: 'index.html',
+  navigateFallbackWhitelist: [/^\/login/, /^\/shop/, /^\/tab/, /^\/admin/]
 };

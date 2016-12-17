@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import MdAccountCircle from 'react-icons/md/account-circle';
 import { connect } from 'react-redux';
 import UserApi from '../../api/user-api';
@@ -23,6 +22,8 @@ class Header extends Component {
                          { this.props.user.photoURL && <img
                              className="profile-photo"
                              alt="account profile"
+                             width="35"
+                             height="35"
                              src={this.props.user.photoURL}/> }
                      </button>
                  }
