@@ -6,28 +6,10 @@ const Basket = props => (
         <div>
             { !!Object.keys(props.items).length &&
                 <div>
-                        <ul className="product-list"> { props.productList &&
-                            Object.keys(props.items).map(key => (
-                                <li key={ key } >
-                                    <div className="product-wrapper">
-                                        <div className="product-info">
-                                            <span className="product-name">{ props.productList[key].prodName }</span>
-                                            <span className="cost">£ { Number(props.productList[key].prodCost).toFixed(2) } / Unit</span>
-                                            <div className="product-button-wrap">
-                                                <button className="secondary-button" onClick={ () => { props.handleSubmit(props.productList[key]) } }>
-                                                    Add
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            ))
-                        }
-                        </ul>
-                    <ul className="product-list"> {
+                    <ul className="list"> {
                         Object.keys(props.items).map(key => (
                             <li key={ key } >
-                                <div className="product-wrapper">
+                                <div className="list-item-wrapper">
                                     <span className="product-name">{ props.items[key].prodName }</span>
                                     <span className="cost">£ { Number(props.items[key].prodCost).toFixed(2) }</span>
                                     <button onClick={ () => props.handleRemoveProduct(key) }>
