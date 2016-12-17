@@ -20,7 +20,9 @@ TODO:
 - [ ] link up form inputs on login
 - [ ] barcode/product lookup integration (http://www.upcitemdb.com/api/explorer#!/lookup/get_trial_lookup)
 - [x] Nav - non admin screen not good
-
+- [x] Cache basic routes (working on web)
+- [ ] Add 'Clear tab' button
+- [ ] Add activity log - product added to tab, product removed from tab, tab cleared, amount owed before and after. 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
