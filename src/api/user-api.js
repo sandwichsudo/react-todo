@@ -89,7 +89,7 @@ export default {
         firebaseRef.push(newProduct);
         store.dispatch(addProductToBasketSuccess(uid, newProduct));
         UiApi.showNewNotification({
-            message:'Product added to basket!',
+            message:`${newProduct.prodName} added to your tab!`,
         });
     },
     removeProductFromBasket,
