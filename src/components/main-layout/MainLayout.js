@@ -39,7 +39,9 @@ class MainLayout extends Component {
                                     }
                                     {this.props.children}
                             </div>
-                            <NotificationWrap/>
+                            <div className="main-container">
+                                <NotificationWrap />
+                            </div>
                         </main>
                     </div>
                 }

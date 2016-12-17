@@ -1,5 +1,5 @@
 .notification {
-  background-color: $black-color;
+  background-color: $accent-color;
   color: $primary-color-text;
   padding: 15px 25px;
   border-radius: 2px;
@@ -15,10 +15,10 @@
 }
 
 .notification-icon {
-  background-color: $accent-color;
+  background-color: $primary-color-text;
   border-radius: 30px;
   padding: 5px;
   margin-right: 20px;
   font-size: 20px;
-  color: $black-color;
+  color: $accent-color;
 }
