@@ -5,9 +5,8 @@ import ProductListWrap from '../../../components/product-list/ProductListWrap';
 export default function(props) {
     return (
         <div>
-            <h2>You can select any of the following items:</h2>
             { props.productList && <ProductListWrap/> }
-            { props.user && props.user.isAdmin && <div>
+            { props.user && props.user.isAdmin && <div className="main-container">
                 <p>As an admin, you can add more items to the catalogue:</p>
                 <form onSubmit={ props.handleSubmit } >
                     <label>

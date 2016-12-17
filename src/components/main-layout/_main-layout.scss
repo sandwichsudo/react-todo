@@ -1,0 +1,33 @@
+.primary-aside {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
+    ul {
+        list-style: none;
+        width: 100%;
+        display: block;
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        display: inline-block;
+        width: 33.3%;
+    }
+    a {
+        text-decoration: none;
+        text-align: center;
+        display: block;
+        text-transform: uppercase;
+        padding: 17px;
+        background: white;
+        color: $color-steel-two;
+        &:hover {
+            background-color: $pale-grey-color;
+        }
+        &.active {
+            color: $accent-color;
+        }
+    }
+}

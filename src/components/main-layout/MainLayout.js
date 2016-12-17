@@ -26,14 +26,14 @@ class MainLayout extends Component {
                 {this.props.user.email &&
                     <div>
                         <Header/>
-                        <main className="main-container">
+                        <main>
                             <div className={ this.props.loading ? "hidden" : ""}>
                                     {this.props.user.email &&
                                         <nav className="primary-aside">
                                           <ul>
-                                            <li><Link to="/tab">Tab</Link></li>
-                                            <li><Link to="/shop">Shop</Link></li>
-                                            {this.props.user.isAdmin && <li><Link to="/admin">Admin</Link></li> }
+                                            <li><Link to="/tab" activeClassName="active">Tab</Link></li>
+                                            <li><Link to="/shop" activeClassName="active">Shop</Link></li>
+                                            {this.props.user.isAdmin && <li><Link to="/admin" activeClassName="active">Admin</Link></li> }
                                           </ul>
                                         </nav>
                                     }

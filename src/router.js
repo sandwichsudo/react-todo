@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, browserHistory, Redirect } from 'react-router';
 import UiApi from './api/ui-api';
 
 // Pages
@@ -11,10 +11,11 @@ import AdminWrap from './views/authenticated/admin/AdminWrap.js';
 export default (
   <Router history={browserHistory} onUpdate={UiApi.onRouteChange}>
       <Route component={MainLayout}>
+          <Redirect from="/" to="/shop" />
+          <Redirect path="/index.html" to="/shop" />
+
           <Route path="/login" component={LoginWrap} />
-          <Route path="/" component={CatalogueWrap} />
           <Route path="/shop" component={CatalogueWrap} />
-          <Route path="/index.html" component={CatalogueWrap} />
           <Route path="/tab" component={Basket} />
           <Route path="/admin" component={AdminWrap} />
       </Route>

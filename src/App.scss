@@ -7,6 +7,8 @@
 @import './components/form/form';
 @import './components/loader/loader';
 @import './components/notification/notification';
+@import './components/product-list/product-list';
+@import './components/main-layout/main-layout';
 
 @import './views/login/login';
 
@@ -43,4 +45,9 @@ body, h1, h2, h3, h4, label, button {
 
 .hidden-label {
     @extend .visuallyhidden;
+}
+
+main {
+    display: block;
+    padding-bottom: 60px; //make room for nav
 }
