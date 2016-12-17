@@ -7,7 +7,7 @@ export default function(props) {
             Object.keys(props.productList).map(key => (
                 <li key={ key } >
                     <div className="product-wrapper">
-                        <img className="product-image" width="90" height="90" src="http://img.tesco.com/Groceries/pi/328/7622210360328/IDShot_225x225.jpg" alt="product image"></img>
+                        <img className="product-image" width="90" height="90" src={props.productList[key].prodImg} alt="product"></img>
                         <div className="product-info">
                             <span className="product-name">{ props.productList[key].prodName }</span>
                             <span className="cost">£ { Number(props.productList[key].prodCost).toFixed(2) } / Unit</span>
