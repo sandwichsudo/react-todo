@@ -24,7 +24,7 @@ const Basket = props => (
             }
             { !Object.keys(props.items).length &&
                 <div>
-                    <h2>No items in your basket! Add some here: </h2>
+                    <h2>No items in your tab! Add some here: </h2>
                     <Link to="/shop">Shop</Link>
                 </div>
             }

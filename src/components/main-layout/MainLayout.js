@@ -10,7 +10,14 @@ import NotificationWrap from '../notification/NotificationWrap.js';
 
 class MainLayout extends Component {
     componentDidMount() {
-        UserApi.onAuth();
+        console.log('inside componentDidMount of MainLayout');
+        if (this.props.user && this.props.user.email) {
+            // go to /shop
+            console.log('this.props.user.email is truthy, we have a user, doing nothing');
+        } else {
+            console.log('this.props.user.email is falsey, calling UserApi.onAuth');
+            UserApi.onAuth();
+        }
     }
 
     // TODO: do something about this!

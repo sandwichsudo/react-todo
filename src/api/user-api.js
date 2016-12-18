@@ -5,7 +5,7 @@ import UiApi from './ui-api';
 import {
     addProductToBasketSuccess,
     removeProductFromBasketSuccess,
-    userAuthSuccess,
+    userFetchSuccess,
     logoutSuccess,
 } from '../actions/user-actions';
 
@@ -17,33 +17,43 @@ const createUser = (user) => {
     firebase.database().ref(`users/${uid}`).set(newUser);
 };
 
-const authenticateUser = (userOb) => {
+const fetchUser = (userOb) => {
 
     let firebaseRef = firebase.database().ref(`users/${userOb.uid}`);
-
+    console.log('fetching user');
     // check if it is a new user
     firebaseRef.once('value').then((snapshot) => {
-        if (!snapshot.val()) {
+        const user = snapshot.val();
+        if (!user) {
+            console.log(`no user with id ${userOb.uid} found, creating user`);
             createUser(userOb);
+        } else {
+            console.log('got user!');
+            UiApi.loaded();
+            store.dispatch(userFetchSuccess(Object.assign({...userOb, ...user})));
         }
+        browserHistory.push('/');
     });
 
     // BEWARE! this runs on ANY update to the users properties!
-    firebaseRef.on('value', (snapshot) => {
-        const user = snapshot.val();
-        if (user) {
-            UiApi.loaded();
-            store.dispatch(userAuthSuccess(Object.assign({...userOb, ...user})));
-        }
-    });
-    browserHistory.push('/');
+    // firebaseRef.on('value', (snapshot) => {
+    //     const user = snapshot.val();
+    //     if (user) {
+    //         UiApi.loaded();
+    //         store.dispatch(userFetchSuccess(Object.assign({...userOb, ...user})));
+    //     }
+    // });
 };
 
 const onAuth = () => {
+    console.log('Setting up listener for auth state change');
     firebase.auth().onAuthStateChanged((userOb) => {
+        console.log('Auth state changed');
         if (userOb) {
-            authenticateUser(userOb);
+            console.log('got user object from state change, authenticating..');
+            fetchUser(userOb);
         } else {
+            console.log('null user object, sending to login');
             browserHistory.push('/login');
         }
     });
@@ -68,29 +78,33 @@ const removeProductFromBasket = (uid, key) => {
     store.dispatch(removeProductFromBasketSuccess(uid, key));
 };
 
+const createUserFromPassword = (email, password) => {
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((user) => {
+        let modifiedUserOb = Object.assign({}, user);
+        modifiedUserOb.displayName = modifiedUserOb.email.split('.')[0];
+        createUser(modifiedUserOb);
+    })
+    .catch(function(error) {
+      console.error('Failed to create user.', error);
+    });
+};
+
+const addProductToBasket = (uid, newProduct) => {
+    let firebaseRef = firebase.database().ref().child(`users/${uid}/items`);
+    firebaseRef.push(newProduct);
+    store.dispatch(addProductToBasketSuccess(uid, newProduct));
+    UiApi.showNewNotification({
+        message:`${newProduct.prodName} added to your tab!`,
+    });
+};
+
 export default {
-    authenticateUser,
+    fetchUser,
     createUser,
     onAuth,
     logout,
-    createUserFromPassword: (email, password) => {
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((user) => {
-            let modifiedUserOb = Object.assign({}, user);
-            modifiedUserOb.displayName = modifiedUserOb.email.split('.')[0];
-            createUser(modifiedUserOb);
-        })
-        .catch(function(error) {
-          console.error('Failed to create user.', error);
-        });
-    },
-    addProductToBasket: (uid, newProduct) => {
-        let firebaseRef = firebase.database().ref().child(`users/${uid}/items`);
-        firebaseRef.push(newProduct);
-        store.dispatch(addProductToBasketSuccess(uid, newProduct));
-        UiApi.showNewNotification({
-            message:`${newProduct.prodName} added to your tab!`,
-        });
-    },
+    createUserFromPassword,
+    addProductToBasket,
     removeProductFromBasket,
 }

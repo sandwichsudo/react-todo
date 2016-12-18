@@ -6,7 +6,9 @@ import {
 } from '../actions/action-types';
 
 const initialUserState = {
-  user: {}
+  user: {
+      items: {}
+  }
 }
 
 export default function(state = initialUserState, action) {
@@ -21,8 +23,16 @@ export default function(state = initialUserState, action) {
           }
           return Object.assign({}, state, { user: action.user, total });
       case ADD_PRODUCT_TO_BASKET_SUCCESS:
-          return Object.assign({}, state);//does nothing?
+          let stateCopy = Object.assign({}, state);
+          const index = Object.keys(stateCopy.user.items).length;
+          const hasItems = index !== 0;
+          if (hasItems) {
+              stateCopy.user.items[index] = action.newProduct;
+          } else {
+              stateCopy.user.items =  {0: action.newProduct };
+          }
 
+          return stateCopy;
       case REMOVE_PRODUCT_FROM_BASKET_SUCCESS: {
           const items = {};
           Object.entries(state.user.items).forEach((item) => {

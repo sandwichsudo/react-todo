@@ -22,7 +22,7 @@ export function removeProductFromBasketSuccess(uid, key) {
     };
 }
 
-export function userAuthSuccess(user) {
+export function userFetchSuccess(user) {
     return {
         type: USER_AUTH_SUCCESS,
         user
