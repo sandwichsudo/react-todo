@@ -51,7 +51,7 @@
 .close-button {
     border:0;
     font-size: 24px;
-    background: white;
+    background: inherit;
     position: absolute;
     right: $gutter;
     top: 10px;
@@ -61,5 +61,17 @@
     }
     &:active {
         background-color: $hover-state-color;
+    }
+}
+
+.notification-close-button {
+    @extend .close-button;
+    color: white;
+    &:active, &:focus {
+        color: white;
+        outline: none;
+    }
+    &:active {
+        background-color: inherit;
     }
 }

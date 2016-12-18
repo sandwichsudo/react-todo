@@ -8,7 +8,8 @@ import {
 const initialUserState = {
   user: {
       items: {}
-  }
+  },
+  total: 0
 }
 
 export default function(state = initialUserState, action) {
@@ -31,7 +32,7 @@ export default function(state = initialUserState, action) {
           } else {
               stateCopy.user.items =  {0: action.newProduct };
           }
-
+          stateCopy.total = Number(stateCopy.total) + Number(action.newProduct.prodCost);
           return stateCopy;
       case REMOVE_PRODUCT_FROM_BASKET_SUCCESS: {
           const items = {};
