@@ -1,11 +1,11 @@
 .notification {
   background-color: $accent-color;
   color: $primary-color-text;
-  padding: 15px 25px;
+  padding: 15px 45px 15px 60px;
   border-radius: 2px;
   position: fixed;
   bottom: 0;
-  width: calc(100% - 80px);
+  width: calc(100% - 130px);
   transition-property: all;
   transition-duration: 0.4s;
   transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
@@ -18,7 +18,14 @@
   background-color: $primary-color-text;
   border-radius: 30px;
   padding: 5px;
-  margin-right: 20px;
   font-size: 20px;
   color: $accent-color;
+  background-color: #FFFFFF;
+  border-radius: 30px;
+  padding: 5px;
+  font-size: 20px;
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  margin-top: -15px;
 }
