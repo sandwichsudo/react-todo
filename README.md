@@ -11,9 +11,8 @@ TODO:
 - [x] Display total owed by user
 - [x] Make loader work again
 - [x] Make admin user type able to see a list of users and their totals.
-- [ ] Work out how to cache database data for offline use.
 - [x] Notification popup when you add to basket (ui improvements needed)
-- [ ] Create proper user menu (drop down with avatar)
+- [x] Create proper user menu (drop down with avatar)
 - [ ] random animation when loading
 - [x] add button to remove items from basket
 - [x] proper icons - fav icon
@@ -22,7 +21,19 @@ TODO:
 - [x] Nav - non admin screen not good
 - [x] Cache basic routes (working on web)
 - [ ] Add 'Clear tab' button
-- [ ] Add activity log - product added to tab, product removed from tab, tab cleared, amount owed before and after. 
+- [ ] Add activity log - product added to tab, product removed from tab, tab cleared, amount owed before and after.
+- [ ] Work out how to cache database data for offline use:
+
+looking into caching firebase requests:
+
+-could add 'isOffline' to ui store so that we can show messages when the user tries to do things currently unsupported in offline mode.
+
+Looks like the main issue on mobile is the onAuth change state doesn't trigger, so you're stuck with no user object. need to explore caching the redux store. https://github.com/rt2zz/redux-persist
+
+Could then cache the products list.
+
+Question is how we would sync the cached versions with firebase. And when? Would probably need an 'offline changes' store which would keep track of 'stuff to add' and 'stuff to remove'
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>

@@ -34,15 +34,6 @@ const fetchUser = (userOb) => {
         }
         browserHistory.push('/');
     });
-
-    // BEWARE! this runs on ANY update to the users properties!
-    // firebaseRef.on('value', (snapshot) => {
-    //     const user = snapshot.val();
-    //     if (user) {
-    //         UiApi.loaded();
-    //         store.dispatch(userFetchSuccess(Object.assign({...userOb, ...user})));
-    //     }
-    // });
 };
 
 const onAuth = () => {
