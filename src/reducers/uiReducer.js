@@ -3,13 +3,15 @@ import {
     START_VIEW_LOADING,
     NEW_NOTIFICATION,
     CLOSE_NOTIFICATION,
-    ROUTE_CHANGE
+    ROUTE_CHANGE,
+    TOGGLE_PROFILE_MENU
 } from '../actions/action-types';
 
 const initialUIState = {
   loading: true,
   notification: {},
   title: 'Tuck Shop',
+  profileMenuOpen: false
 }
 
 export default function(state = initialUIState, action) {
@@ -37,6 +39,11 @@ export default function(state = initialUIState, action) {
       case ROUTE_CHANGE: {
           let stateCopy = Object.assign({}, state);
           stateCopy.title = action.title;
+          return stateCopy;
+      }
+      case TOGGLE_PROFILE_MENU: {
+          let stateCopy = Object.assign({}, state);
+          stateCopy.profileMenuOpen = !state.profileMenuOpen;
           return stateCopy;
       }
       default: return state;

@@ -3,8 +3,9 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import UserApi from '../../api/user-api';
 // Components
-import Header from '../header/Header.js';
+import HeaderWrap from '../header/HeaderWrap.js';
 import LoaderWrap from '../loader/LoaderWrap.js';
+import MenuWrap from '../menu/MenuWrap.js';
 import NotificationWrap from '../notification/NotificationWrap.js';
 
 class MainLayout extends Component {
@@ -25,24 +26,27 @@ class MainLayout extends Component {
                 <LoaderWrap/>
                 {this.props.user.email &&
                     <div>
-                        <Header/>
-                        <main>
-                            <div className={ this.props.loading ? "hidden" : ""}>
-                                    {this.props.user.email &&
-                                        <nav className="primary-aside">
-                                          <ul>
-                                            <li><Link to="/tab" activeClassName="active">Tab</Link></li>
-                                            <li><Link to="/shop" activeClassName="active">Shop</Link></li>
-                                            {this.props.user.isAdmin && <li><Link to="/admin" activeClassName="active">Admin</Link></li> }
-                                          </ul>
-                                        </nav>
-                                    }
-                                    {this.props.children}
-                            </div>
-                            <div className="main-container">
-                                <NotificationWrap />
-                            </div>
-                        </main>
+                        { this.props.profileMenuOpen && <MenuWrap></MenuWrap>}
+                        <div className={this.props.profileMenuOpen ? "masked" : ""}>
+                            <HeaderWrap/>
+                            <main>
+                                <div className={ this.props.loading ? "hidden" : ""}>
+                                        {this.props.user.email &&
+                                            <nav className="primary-aside">
+                                              <ul>
+                                                <li><Link to="/tab" activeClassName="active">Tab</Link></li>
+                                                <li><Link to="/shop" activeClassName="active">Shop</Link></li>
+                                                {this.props.user.isAdmin && <li><Link to="/admin" activeClassName="active">Admin</Link></li> }
+                                              </ul>
+                                            </nav>
+                                        }
+                                        {this.props.children}
+                                </div>
+                                <div className="main-container">
+                                    <NotificationWrap />
+                                </div>
+                            </main>
+                        </div>
                     </div>
                 }
                 {!this.props.user.email &&
@@ -61,6 +65,7 @@ const mapStateToProps = function(store) {
   return {
     user: store.userReducer.user,
     loading: store.uiReducer.loading,
+    profileMenuOpen: store.uiReducer.profileMenuOpen,
   };
 }
 

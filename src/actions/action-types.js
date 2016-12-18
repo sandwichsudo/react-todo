@@ -18,3 +18,4 @@ export const ROUTE_CHANGE = 'ROUTE_CHANGE';
 
 // admin actions
 export const USERS_LIST_SUCCESS = 'USERS_LIST_SUCCESS';
+export const TOGGLE_PROFILE_MENU = 'TOGGLE_PROFILE_MENU';

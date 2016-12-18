@@ -22,7 +22,7 @@
         background: white;
         color: $color-steel-two;
         &:hover {
-            background-color: $pale-grey-color;
+            background-color: $hover-state-color;
         }
         &.active {
             color: $accent-color;

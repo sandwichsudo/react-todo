@@ -7,6 +7,7 @@ import {
     showNotification,
     closeNotification,
     routeChange,
+    toggleProfileMenu,
 } from '../actions/ui-actions';
 
 const loaded = () => {
@@ -34,10 +35,15 @@ const onRouteChange = (data) => {
     store.dispatch(routeChange(title));
 }
 
+const onToggleProfileMenu = () => {
+    store.dispatch(toggleProfileMenu());
+}
+
 export default {
     loaded,
     startLoading,
     showNewNotification,
     hideNotification,
-    onRouteChange
+    onRouteChange,
+    onToggleProfileMenu
 }

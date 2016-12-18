@@ -1,0 +1,27 @@
+.menu-button {
+    border: none;
+    display:block;
+    background: white;
+    font-size: 18px;
+    width: 100%;
+    padding: 18px;
+    &:hover {
+        background-color: $hover-state-color;
+        color: $accent-color;
+    }
+}
+
+.profile-menu {
+    margin: 0;
+    list-style: none;
+    padding: 50px 0 0;
+}
+
+.profile-nav {
+    background: white;
+    display: block;
+    position: absolute;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}

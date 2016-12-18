@@ -4,6 +4,7 @@ import {
     NEW_NOTIFICATION,
     CLOSE_NOTIFICATION,
     ROUTE_CHANGE,
+    TOGGLE_PROFILE_MENU,
 } from '../actions/action-types';
 
 export function viewLoadedSuccess() {
@@ -35,5 +36,11 @@ export function routeChange(title) {
     return {
         type: ROUTE_CHANGE,
         title,
+    };
+}
+
+export function toggleProfileMenu() {
+    return {
+        type: TOGGLE_PROFILE_MENU,
     };
 }
