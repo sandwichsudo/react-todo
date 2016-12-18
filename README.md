@@ -20,8 +20,9 @@ TODO:
 - [ ] barcode/product lookup integration (http://www.upcitemdb.com/api/explorer#!/lookup/get_trial_lookup)
 - [x] Nav - non admin screen not good
 - [x] Cache basic routes (working on web)
-- [ ] Add 'Clear tab' button
+- [x] Add 'Clear tab' button
 - [ ] Add activity log - product added to tab, product removed from tab, tab cleared, amount owed before and after.
+- [ ] Collapse individual product entries into same row
 - [ ] Work out how to cache database data for offline use:
 
 looking into caching firebase requests:

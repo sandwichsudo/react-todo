@@ -3,6 +3,7 @@ import {
     ADD_PRODUCT_TO_BASKET_SUCCESS,
     REMOVE_PRODUCT_FROM_BASKET_SUCCESS,
     LOGOUT_SUCCESS,
+    CLEAR_TAB_SUCCESS
 } from '../actions/action-types';
 
 const initialUserState = {
@@ -47,9 +48,14 @@ export default function(state = initialUserState, action) {
               },
           };
       }
-
       case LOGOUT_SUCCESS:
           return Object.assign({}, state, { user: { items: {}}});
+      case CLEAR_TAB_SUCCESS: {
+          let stateCopy = Object.assign({}, state);
+          stateCopy.user.items = {};
+          stateCopy.total = 0;
+          return stateCopy;
+      }
       default: return state;
   }
 }

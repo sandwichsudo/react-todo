@@ -7,6 +7,7 @@ import {
     removeProductFromBasketSuccess,
     userFetchSuccess,
     logoutSuccess,
+    clearTabSuccess,
 } from '../actions/user-actions';
 
 const createUser = (user) => {
@@ -60,7 +61,6 @@ const logout = () => {
 }
 
 const removeProductFromBasket = (uid, key) => {
-    console.log('key', key);
     firebase.database().ref().child(`users/${uid}/items/${key}`).remove()
         .then(() => {
             store.dispatch(removeProductFromBasketSuccess(uid, key));
@@ -91,6 +91,20 @@ const addProductToBasket = (uid, newProduct) => {
     });
 };
 
+const clearTab = (total, uid) => {
+    firebase.database().ref().child(`users/${uid}/items`)
+    .remove()
+    .then(() => {
+        store.dispatch(clearTabSuccess());
+        UiApi.showNewNotification({
+            message:`Thanks for clearing £${total} from your tab!`,
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+    })
+};
+
 export default {
     fetchUser,
     createUser,
@@ -99,4 +113,5 @@ export default {
     createUserFromPassword,
     addProductToBasket,
     removeProductFromBasket,
+    clearTab
 }
