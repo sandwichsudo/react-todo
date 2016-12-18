@@ -6,11 +6,12 @@ import {
     LOGOUT_SUCCESS,
 } from '../actions/action-types';
 
-export function addProductToBasketSuccess(uid, newProduct) {
+export function addProductToBasketSuccess(uid, newProduct, key) {
     return {
         type: ADD_PRODUCT_TO_BASKET_SUCCESS,
         uid,
-        newProduct
+        newProduct,
+        key
     };
 }
 

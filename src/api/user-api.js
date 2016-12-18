@@ -69,13 +69,14 @@ const logout = () => {
 }
 
 const removeProductFromBasket = (uid, key) => {
-    let firebaseRef = firebase.database().ref().child(`users/${uid}/items/${key}`).remove();
-    firebaseRef
-        .then(() => {})
+    console.log('key', key);
+    let firebaseRef = firebase.database().ref().child(`users/${uid}/items/${key}`).remove()
+        .then(() => {
+            store.dispatch(removeProductFromBasketSuccess(uid, key));
+        })
         .catch((e) => {
             console.error(e);
         });
-    store.dispatch(removeProductFromBasketSuccess(uid, key));
 };
 
 const createUserFromPassword = (email, password) => {
@@ -92,8 +93,8 @@ const createUserFromPassword = (email, password) => {
 
 const addProductToBasket = (uid, newProduct) => {
     let firebaseRef = firebase.database().ref().child(`users/${uid}/items`);
-    firebaseRef.push(newProduct);
-    store.dispatch(addProductToBasketSuccess(uid, newProduct));
+    const key = firebaseRef.push(newProduct).key;
+    store.dispatch(addProductToBasketSuccess(uid, newProduct, key));
     UiApi.showNewNotification({
         message:`${newProduct.prodName} added to your tab!`,
     });

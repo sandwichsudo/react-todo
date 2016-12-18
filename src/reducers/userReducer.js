@@ -25,13 +25,9 @@ export default function(state = initialUserState, action) {
           return Object.assign({}, state, { user: action.user, total });
       case ADD_PRODUCT_TO_BASKET_SUCCESS:
           let stateCopy = Object.assign({}, state);
-          const index = Object.keys(stateCopy.user.items).length;
-          const hasItems = index !== 0;
-          if (hasItems) {
-              stateCopy.user.items[index] = action.newProduct;
-          } else {
-              stateCopy.user.items =  {0: action.newProduct };
-          }
+          stateCopy.user.items = stateCopy.user.items ? stateCopy.user.items : {};
+          const key = action.key;
+          stateCopy.user.items[key] = action.newProduct;
           stateCopy.total = Number(stateCopy.total) + Number(action.newProduct.prodCost);
           return stateCopy;
       case REMOVE_PRODUCT_FROM_BASKET_SUCCESS: {
@@ -53,7 +49,7 @@ export default function(state = initialUserState, action) {
       }
 
       case LOGOUT_SUCCESS:
-          return Object.assign({}, state, { user: {}});
+          return Object.assign({}, state, { user: { items: {}}});
       default: return state;
   }
 }
