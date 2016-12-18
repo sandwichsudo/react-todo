@@ -61,7 +61,7 @@ const logout = () => {
 
 const removeProductFromBasket = (uid, key) => {
     console.log('key', key);
-    let firebaseRef = firebase.database().ref().child(`users/${uid}/items/${key}`).remove()
+    firebase.database().ref().child(`users/${uid}/items/${key}`).remove()
         .then(() => {
             store.dispatch(removeProductFromBasketSuccess(uid, key));
         })

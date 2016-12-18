@@ -20,6 +20,7 @@ const Basket = props => (
                         ))
                     }
                     </ul>
+                    <button className="primary-button">Clear your tab</button>
                 </div>
             }
             { !Object.keys(props.items).length &&
