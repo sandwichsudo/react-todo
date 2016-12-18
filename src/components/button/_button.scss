@@ -67,6 +67,8 @@
 .notification-close-button {
     @extend .close-button;
     color: white;
+    top: 50%;
+    margin-top: -20px;
     &:active, &:focus {
         color: white;
         outline: none;

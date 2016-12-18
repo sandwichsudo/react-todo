@@ -14,15 +14,8 @@ export default function(state = initialProductState, action) {
           return Object.assign({}, state, { productList: productListCopy });
       }
       case ADD_PRODUCT: {
-          const hasList = !!state.productList;
-          let index = 0;
-          let productListCopy = {};
-          if (hasList) {
-              productListCopy = state.productList ? Object.assign({}, state.productList) : initialProductState;
-              index = Object.keys(state.productList).length;
-          }
-          productListCopy[index] = action.newProduct;
-          return Object.assign({}, state, { productList: productListCopy } );
+          let stateCopy = Object.assign({}, state);
+          return stateCopy;
       }
       default: return state;
   }
