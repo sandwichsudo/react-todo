@@ -3,12 +3,12 @@
   "short_name": "TuckShop",
   "icons": [
       {
-          "src": "\/android-chrome-192x192.png?v=aljz590GL6",
+          "src": "\/images\/icons\/android-chrome-192x192.png?v=aljz590GL6",
           "sizes": "192x192",
           "type": "image\/png"
       },
       {
-          "src": "\/android-chrome-512x512.png?v=aljz590GL6",
+          "src": "\/images\/icons\/android-chrome-512x512.png?v=aljz590GL6",
           "sizes": "512x512",
           "type": "image\/png"
       }
