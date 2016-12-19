@@ -8,6 +8,24 @@
   margin: 55px 20px 0;
 }
 
+.basket-empty {
+  display: flex;
+  height: calc(100vh - (48px + 60px + 53px));
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  &-text {
+    margin: {
+      top: 1em;
+    }
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    color: $secondary-text-color;
+    text-transform: uppercase;
+  }
+}
+
 .basket-item {
   &-wrapper {
     display: flex;
