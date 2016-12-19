@@ -31,7 +31,7 @@ class LoginWrap extends Component {
                 //    UiApi.startLoading();
                 } else {
                     console.log('firebase.auth().currentUser is falsey');
-                    UiApi.loaded();
+                   UiApi.loaded();
                 }
             }).catch((error) => {
               console.error(error);
