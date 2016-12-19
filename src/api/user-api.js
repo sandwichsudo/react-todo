@@ -96,8 +96,9 @@ const clearTab = (total, uid) => {
     .remove()
     .then(() => {
         store.dispatch(clearTabSuccess());
+        const formattedTotal = Number(total).toFixed(2);
         UiApi.showNewNotification({
-            message:`Thanks for clearing £${total} from your tab!`,
+            message:`Thanks for clearing £${formattedTotal} from your tab!`,
         });
     })
     .catch((err) => {
