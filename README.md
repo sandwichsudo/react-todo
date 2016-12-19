@@ -13,7 +13,7 @@ TODO:
 - [x] Make admin user type able to see a list of users and their totals.
 - [x] Notification popup when you add to basket (ui improvements needed)
 - [x] Create proper user menu (drop down with avatar)
-- [ ] random animation when loading
+- [x] animation when loading
 - [x] add button to remove items from basket
 - [x] proper icons - fav icon
 - [ ] link up form inputs on login
@@ -23,6 +23,7 @@ TODO:
 - [x] Add 'Clear tab' button
 - [ ] Add activity log - product added to tab, product removed from tab, tab cleared, amount owed before and after.
 - [ ] Collapse individual product entries into same row
+- [ ] Offline screen
 - [ ] Work out how to cache database data for offline use:
 
 looking into caching firebase requests:

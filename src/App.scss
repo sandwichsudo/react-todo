@@ -78,6 +78,9 @@ main {
     }
 }
 
+.full-height {
+ height: 100%;
+}
 
 @import './components/header/header';
 @import './components/button/button';

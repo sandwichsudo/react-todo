@@ -1,8 +1,9 @@
 .login-screen {
   padding: 27px;
-  height: calc(100vh - 70px);
+  height: 100%;
+  position: absolute;
   background: url("./views/login/tuck-shop-bg.svg")
-    repeat-x 0 27px;
+    repeat 0 0;
   background-size: 375px 613px;
   &:before {
       content: "";
