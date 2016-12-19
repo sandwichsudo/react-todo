@@ -82,6 +82,16 @@ main {
  height: 100%;
 }
 
+.in-app-title {
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 0.8;
+    color: #0e535f;
+    margin: 30px 0;
+}
+
 @import './components/header/header';
 @import './components/button/button';
 @import './components/form/form';
@@ -95,3 +105,4 @@ main {
 
 
 @import './views/login/login';
+@import './views/authenticated/admin/admin';

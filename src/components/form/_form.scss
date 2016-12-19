@@ -24,3 +24,10 @@
 // input:-ms-input-placeholder {@extend %placeholder; } /* ie */
 // input:-moz-placeholder {@extend %placeholder; }
 input::-webkit-input-placeholder { @extend %placeholder; }
+
+.admin-form{
+    .input {
+        border: 1px solid $accent-color;
+        border-radius: 10px;
+    }
+}
