@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import BasketItem from './BasketItem';
+import BasketEmpty from './BasketEmpty';
 
 const Basket = props => (
         <div>
@@ -25,10 +26,7 @@ const Basket = props => (
                 </div>
             }
             { !Object.keys(props.items).length &&
-                <div>
-                    <h2>No items in your tab! Add some here: </h2>
-                    <Link to="/shop">Shop</Link>
-                </div>
+                <BasketEmpty />
             }
         </div>
 );
