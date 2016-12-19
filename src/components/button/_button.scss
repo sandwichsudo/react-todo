@@ -77,3 +77,13 @@
         background-color: inherit;
     }
 }
+
+.button-wire {
+  @extend %button;
+  min-height: 44px;
+  min-width:  44px;
+  border: 1px solid $accent-color;
+  border-radius: 10px;
+  background-color: transparent;
+  color: $accent-color;
+}
