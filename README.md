@@ -23,6 +23,7 @@ TODO:
 - [x] Add 'Clear tab' button
 - [ ] Add activity log - product added to tab, product removed from tab, tab cleared, amount owed before and after.
 - [ ] Collapse individual product entries into same row
+- [ ] Offline screen
 - [ ] Work out how to cache database data for offline use:
 
 looking into caching firebase requests:
