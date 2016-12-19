@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import FaMinusCircle from 'react-icons/fa/minus-circle';
+import BasketItem from './BasketItem';
 
 const Basket = props => (
         <div>
@@ -8,22 +8,19 @@ const Basket = props => (
                 <div>
                     <ul className="list"> {
                         Object.keys(props.items).map(key => (
-                            <li key={ key } >
-                                <div className="list-item-wrapper">
-                                    <span className="product-name">{ props.items[key].prodName }</span>
-                                    <span className="cost">£ { Number(props.items[key].prodCost).toFixed(2) }</span>
-                                    <button onClick={ () => props.handleRemoveProduct(key) }>
-                                        <FaMinusCircle />
-                                    </button>
-                                </div>
-                            </li>
+                            <BasketItem
+                                item={props.items[key]}
+                                index={key}
+                                key={key}
+                                handleRemoveProduct={props.handleRemoveProduct}
+                            />
                         ))
                     }
                     </ul>
                     <button
                         onClick={props.clearTab}
-                        className="primary-button">
-                        Clear your tab
+                        className="button-wire clear-tab">
+                        Clear tab
                     </button>
                 </div>
             }

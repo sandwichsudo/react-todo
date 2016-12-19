@@ -5,6 +5,7 @@
   border-radius: 2px;
   position: fixed;
   bottom: 0;
+  z-index: 1001;
   width: calc(100% - 130px);
   transition-property: all;
   transition-duration: 0.4s;

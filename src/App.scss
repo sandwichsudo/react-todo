@@ -78,21 +78,20 @@ main {
     }
 }
 
-
 .full-height {
- height: 100%;    
+ height: 100%;
 }
-
-@import './components/basket/Basket';
 
 @import './components/header/header';
 @import './components/button/button';
 @import './components/form/form';
 @import './components/loader/loader';
 @import './components/notification/notification';
+@import './components/basket/basket';
 @import './components/product-list/product-list';
 @import './components/main-layout/main-layout';
 @import './components/menu/menu';
+@import './components/total/total';
 
 
 @import './views/login/login';

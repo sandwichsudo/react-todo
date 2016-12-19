@@ -2,3 +2,66 @@
   margin: 0 15px 15px;
   padding: 0;
 }
+
+.clear-tab {
+  width: calc(100% - 40px);
+  margin: 55px 20px 0;
+}
+
+.basket-item {
+  &-wrapper {
+    display: flex;
+    height: 60px;
+    padding: 0 20px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-name {
+    font-size: 16px;
+  }
+
+  &-cost {
+    font-size: 18px;
+  }
+
+  &-action-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &-remove {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    margin: 0 -9px 0 0;
+    border: 0;
+    background-color: transparent;
+    font-size: 18px;
+    color: $black-color;
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      width: 10px;
+      margin: {
+        left: -5px;
+      }
+      border-bottom: 1px solid $black-color;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 9px;
+      left: 9px;
+      width: 25px;
+      height: 25px;
+      box-sizing: border-box;
+      border: 1px solid $accent-color;
+      border-radius: 10px;
+    }
+  }
+}
