@@ -12,8 +12,21 @@ class BasketWrap extends Component {
 
     }
 
-    handleRemoveProduct(key) {
-        UserApi.removeProductFromBasket(this.props.user.uid, key);
+    getKeyToRemove(id) {
+        let key = '';
+        for (let itemKey in this.props.user.items) {
+            if (this.props.user.items.hasOwnProperty(itemKey)) {
+                const item = this.props.user.items[itemKey];
+                if (item.id.toString() === id) {
+                    key = itemKey;
+                }
+            }
+        }
+        return key;
+    }
+
+    handleRemoveProduct(id) {
+        UserApi.removeProductFromBasket(this.props.user.uid, this.getKeyToRemove(id));
     }
 
     clearTab() {
@@ -23,7 +36,7 @@ class BasketWrap extends Component {
     render() {
         return (
             <Basket
-                items={this.props.user.items}
+                items={this.props.user.concatedItems}
                 handleRemoveProduct={this.handleRemoveProduct}
                 clearTab={this.clearTab}
                 />

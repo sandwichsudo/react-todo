@@ -4,10 +4,11 @@ const BasketItem = props => (
     <li>
         <div className="basket-item-wrapper">
             <div className="basket-item-info-wrapper">
+                <span className="basket-item-count">{ props.item.count }</span>
                 <span className="basket-item-name">{ props.item.prodName }</span>
             </div>
             <div className="basket-item-action-wrapper">
-                <span className="basket-item-cost">£ { Number(props.item.prodCost).toFixed(2) }</span>
+                <span className="basket-item-cost">£ { Number(props.item.prodCost * props.item.count).toFixed(2) }</span>
                 <button
                     aria-label="Remove"
                     className="basket-item-remove"
