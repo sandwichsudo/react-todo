@@ -90,4 +90,19 @@
   color: white;
   padding: 7px 10px;
   margin-right: 10px;
+  position: absolute;
+  top: -6px;
+}
+
+.basket-item-name {
+    padding-left: 40px;
+    max-width: 150px;
+    white-space: nowrap;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.basket-item-info-wrapper {
+    position: relative;
 }
