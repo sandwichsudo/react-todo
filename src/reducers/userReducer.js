@@ -5,6 +5,7 @@ import {
     LOGOUT_SUCCESS,
     CLEAR_TAB_SUCCESS
 } from '../actions/action-types';
+import ReactGA from 'react-ga';
 
 const initialUserState = {
   user: {
@@ -49,18 +50,38 @@ export default function(state = initialUserState, action) {
           stateCopy.user.items[key] = action.newProduct;
           stateCopy.total = Number(stateCopy.total) + Number(action.newProduct.prodCost);
           stateCopy.user.concatedItems = concatItems(stateCopy.user.items);
+          ReactGA.event({
+              category: 'Product',
+              action:'Add to tab',
+              label: action.newProduct.prodName,
+              value: Number(action.newProduct.prodCost) * 100
+          });
           return stateCopy;
       case REMOVE_PRODUCT_FROM_BASKET_SUCCESS: {
           const items = {};
+          let removedProduct = {};
           Object.entries(state.user.items).forEach((item) => {
-              if (action.key !== item[0]) {
-                  items[[item[0]]] = item[1];
+              // item is an array - 0: key, 1: product object
+              // items is an object with key:product
+              // we want to rebuild the list of items, filtering
+              // out the one with the key which is the same as that of the action
+              const key = item[0];
+              const product = item[1];
+              if (action.key !== key) {
+                  items[key] = product;
+              } else {
+                  removedProduct = product;
               }
           });
-
+          ReactGA.event({
+              category: 'Product',
+              action:'Remove from tab',
+              label: removedProduct.prodName,
+              value: -(Number(removedProduct.prodCost) * 100)
+          });
           return {
               ...state,
-              total: Object.keys(items).length,
+              total: Number(state.total) - Number(removedProduct.prodCost),
               user: {
                   ...state.user,
                   items,
@@ -72,6 +93,12 @@ export default function(state = initialUserState, action) {
           return Object.assign({}, state, { user: { items: {}}});
       case CLEAR_TAB_SUCCESS: {
           let stateCopy = Object.assign({}, state);
+
+          ReactGA.event({
+              category: 'Payment',
+              action:'Clear tab',
+              value: -(stateCopy.total * 100)
+          });
           stateCopy.user.items = {};
           stateCopy.user.concatedItems = {};
           stateCopy.total = 0;

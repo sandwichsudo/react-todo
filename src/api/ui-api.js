@@ -1,5 +1,6 @@
 import store from '../store';
 import { browserHistory } from 'react-router';
+import ReactGA from 'react-ga';
 
 import {
     viewLoadedSuccess,
@@ -32,6 +33,7 @@ const onRouteChange = (data) => {
     if (!title) {
         title = 'Shop';
     }
+    ReactGA.pageview(window.location.pathname);
     store.dispatch(routeChange(title));
 }
 

@@ -9,6 +9,7 @@ import {
     logoutSuccess,
     clearTabSuccess,
 } from '../actions/user-actions';
+import ReactGA from 'react-ga';
 
 const createUser = (user) => {
     user.items = [];
@@ -16,10 +17,16 @@ const createUser = (user) => {
     displayName = displayName.indexOf(' ') !== -1 ? displayName.split(' ')[0] : displayName;
     const newUser = { email, displayName, photoURL };
     firebase.database().ref(`users/${uid}`).set(newUser);
+    console.log(user);
+    const userProvider = user.providerData[0].providerId;
+    ReactGA.event({
+        category: 'Authentication',
+        action: 'Registration',
+        label: userProvider
+    });
 };
 
 const fetchUser = (userOb) => {
-
     let firebaseRef = firebase.database().ref(`users/${userOb.uid}`);
     console.log('fetching user');
     // check if it is a new user
@@ -30,6 +37,13 @@ const fetchUser = (userOb) => {
             createUser(userOb);
         } else {
             console.log('got user!');
+            console.log(userOb);
+            const userProvider = userOb.providerData[0].providerId;
+            ReactGA.event({
+                category: 'Registration',
+                action: 'Login',
+                label: userProvider
+            });
             UiApi.loaded();
             store.dispatch(userFetchSuccess(Object.assign({...userOb, ...user})));
         }
@@ -56,6 +70,11 @@ const logout = () => {
       // Sign-out successful.
       store.dispatch(logoutSuccess());
     }, (error) => {
+        ReactGA.event({
+            category: 'Error',
+            action: 'Logout',
+            label: 'Failed to log out'
+        });
       console.error(error);
     });
 }
@@ -66,6 +85,11 @@ const removeProductFromBasket = (uid, key) => {
             store.dispatch(removeProductFromBasketSuccess(uid, key));
         })
         .catch((e) => {
+            ReactGA.event({
+                category: 'Error',
+                action: 'Remove from tab',
+                label: 'Failed to remove product from tab'
+            });
             console.error(e);
         });
 };
@@ -78,6 +102,11 @@ const createUserFromPassword = (email, password) => {
         createUser(modifiedUserOb);
     })
     .catch(function(error) {
+        ReactGA.event({
+            category: 'Error',
+            action: 'Registration',
+            label: 'Failed to create user'
+        });
       console.error('Failed to create user.', error);
     });
 };
@@ -102,6 +131,11 @@ const clearTab = (total, uid) => {
         });
     })
     .catch((err) => {
+        ReactGA.event({
+            category: 'Error',
+            action: 'Clear tab',
+            label: 'Failed to clear tab'
+        });
         console.error(err);
     })
 };
