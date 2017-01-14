@@ -4,6 +4,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import store from './store';
 import UiApi from './api/ui-api';
+var ReactGA = require('react-ga');
+ReactGA.initialize('UA-90345277-1');
 
 var firebase = require('firebase/app');
 require("firebase/auth");
