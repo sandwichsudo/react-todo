@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatPrice } from '../../helpers/priceFormatting';
 
 // Using "Stateless Functional Components"
 export default function(props) {
@@ -10,7 +11,7 @@ export default function(props) {
                         <img className="product-image" width="90" height="90" src={props.productList[key].prodImg} alt="product"></img>
                         <div className="product-info">
                             <span className="product-name">{ props.productList[key].prodName }</span>
-                            <span className="cost">£ { Number(props.productList[key].prodCost).toFixed(2) } / Unit</span>
+                            <span className="cost">{ formatPrice(props.productList[key].prodCost) } / Unit</span>
                             <div className="product-button-wrap">
                                 <button className="secondary-button" onClick={ () => { props.handleSubmit(props.productList[key]) } }>
                                     Add

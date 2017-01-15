@@ -14,9 +14,10 @@ class BasketWrap extends Component {
 
     getKeyToRemove(id) {
         let key = '';
-        for (let itemKey in this.props.user.items) {
-            if (this.props.user.items.hasOwnProperty(itemKey)) {
-                const item = this.props.user.items[itemKey];
+        let items = this.props.user.teams[this.props.currentTeam].items;
+        for (let itemKey in items) {
+            if (items.hasOwnProperty(itemKey)) {
+                const item = items[itemKey];
                 if (item.id.toString() === id) {
                     key = itemKey;
                 }

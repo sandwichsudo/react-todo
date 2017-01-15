@@ -9,10 +9,11 @@ import {
     logoutSuccess,
     clearTabSuccess,
 } from '../actions/user-actions';
+import { formatPrice } from '../helpers/priceFormatting';
 import ReactGA from 'react-ga';
 
 const getUserItemsUrl = (uid, currentTeam) => {
-    return `users/${uid}/${currentTeam}/items`;
+    return `users/${uid}/teams/${currentTeam}/items`;
 }
 
 const createUser = (user) => {
@@ -20,7 +21,9 @@ const createUser = (user) => {
     console.log('Creating user');
     let { email, displayName, photoURL = '', uid } = user;
     displayName = displayName.indexOf(' ') !== -1 ? displayName.split(' ')[0] : displayName;
-    const newUser = { email, displayName, photoURL, teams: [ 'tvx-0001' ] };
+    const defaultTeam = 'tvx-0001';
+    const teams = { defaultTeam :{ items: {} }};
+    const newUser = { email, displayName, photoURL, teams, defaultTeam };
     firebase.database().ref(`users/${uid}`).set(newUser)
         .then(() => {
             const userProvider = user.providerData[0].providerId;
@@ -144,9 +147,8 @@ const clearTab = (total, uid, currentTeam) => {
     .remove()
     .then(() => {
         store.dispatch(clearTabSuccess());
-        const formattedTotal = Number(total).toFixed(2);
         UiApi.showNewNotification({
-            message:`Thanks for clearing £${formattedTotal} from your tab!`,
+            message:`Thanks for clearing ${formatPrice(total)} from your tab!`,
         });
     })
     .catch((err) => {

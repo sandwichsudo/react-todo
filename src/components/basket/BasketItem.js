@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { formatPrice } from '../../helpers/priceFormatting';
 const BasketItem = props => (
     <li>
         <div className="basket-item-wrapper">
@@ -8,7 +8,7 @@ const BasketItem = props => (
                 <span className="basket-item-name">{ props.item.prodName }</span>
             </div>
             <div className="basket-item-action-wrapper">
-                <span className="basket-item-cost">£ { Number(props.item.prodCost * props.item.count).toFixed(2) }</span>
+                <span className="basket-item-cost"> { formatPrice(props.item.prodCost * props.item.count) }</span>
                 <button
                     aria-label="Remove"
                     className="basket-item-remove"
