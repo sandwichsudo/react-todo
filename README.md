@@ -16,13 +16,15 @@ TODO:
 - [x] animation when loading
 - [x] add button to remove items from basket
 - [x] proper icons - fav icon
+- [ ] correct admins for a team model
+- [x] new user signs up and just sees loading screen
 - [ ] link up form inputs on login
 - [ ] barcode/product lookup integration (http://www.upcitemdb.com/api/explorer#!/lookup/get_trial_lookup)
 - [x] Nav - non admin screen not good
 - [x] Cache basic routes (working on web)
 - [x] Add 'Clear tab' button
 - [ ] Add activity log - product added to tab, product removed from tab, tab cleared, amount owed before and after.
-- [ ] Collapse individual product entries into same row
+- [x] Collapse individual product entries into same row
 - [ ] Offline screen
 - [ ] Work out how to cache database data for offline use:
 

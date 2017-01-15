@@ -13,17 +13,32 @@ import ReactGA from 'react-ga';
 
 const createUser = (user) => {
     user.items = [];
+    console.log('Creating user');
     let { email, displayName, photoURL = '', uid } = user;
     displayName = displayName.indexOf(' ') !== -1 ? displayName.split(' ')[0] : displayName;
-    const newUser = { email, displayName, photoURL };
-    firebase.database().ref(`users/${uid}`).set(newUser);
-    console.log(user);
-    const userProvider = user.providerData[0].providerId;
-    ReactGA.event({
-        category: 'Authentication',
-        action: 'Registration',
-        label: userProvider
-    });
+    const newUser = { email, displayName, photoURL, teams: [ 'tvx-001' ] };
+    firebase.database().ref(`users/${uid}`).set(newUser)
+        .then(() => {
+            const userProvider = user.providerData[0].providerId;
+            ReactGA.event({
+                category: 'Authentication',
+                action: 'Registration',
+                label: userProvider
+            });
+            store.dispatch(userFetchSuccess(Object.assign({...user, ...newUser})));
+            UiApi.loaded();
+            browserHistory.push('/');
+        })
+        .catch((e) => {
+            ReactGA.event({
+                category: 'Error',
+                action: 'Registration',
+                label: 'Failed to create new user'
+            });
+            browserHistory.push('/login');
+            UiApi.loaded();
+            console.error(e);
+        });
 };
 
 const fetchUser = (userOb) => {
@@ -46,8 +61,8 @@ const fetchUser = (userOb) => {
             });
             UiApi.loaded();
             store.dispatch(userFetchSuccess(Object.assign({...userOb, ...user})));
+            browserHistory.push('/');
         }
-        browserHistory.push('/');
     });
 };
 
