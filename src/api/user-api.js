@@ -22,7 +22,8 @@ const createUser = (user) => {
     let { email, displayName, photoURL = '', uid } = user;
     displayName = displayName.indexOf(' ') !== -1 ? displayName.split(' ')[0] : displayName;
     const defaultTeam = 'tvx-0001';
-    const teams = { defaultTeam :{ items: {} }};
+    let teams = {};
+    teams[defaultTeam] = { items: {} };
     const newUser = { email, displayName, photoURL, teams, defaultTeam };
     firebase.database().ref(`users/${uid}`).set(newUser)
         .then(() => {
