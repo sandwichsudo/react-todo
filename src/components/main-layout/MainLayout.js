@@ -61,6 +61,9 @@ class MainLayout extends Component {
                         <main className={"login-screen "+(this.props.loading ? "hidden" : "")}>
                             {this.props.children}
                         </main>
+                        <div className="main-container">
+                            <NotificationWrap />
+                        </div>
                     </div>
                 }
             </div>

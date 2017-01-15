@@ -10,14 +10,14 @@ export default function(props) {
                 <h2 className="subtitle">Hungry? login now</h2>
                 <label>
                     <span className="hidden-label">Email</span>
-                    <input className="input email-input" placeholder="Email"/>
+                    <input value={props.email} onChange={props.handleEmailChange} className="input email-input" placeholder="Email"/>
                 </label>
                 <label>
                     <span className="hidden-label">Password</span>
-                    <input type="password" className="input password-input" placeholder="Password"/>
+                    <input value={props.password} onChange={props.handlePasswordChange} type="text" className="input password-input" placeholder="Password"/>
                 </label>
                 <div className="button-wrap">
-                    <button type="button" onClick={props.emailPasswordLogin} className="primary-button">Create Test User</button>
+                    <button type="button" onClick={props.emailPasswordLogin} className="primary-button">Login</button>
                     <div className="divider"><span className="or">OR</span></div>
                     <button className="social-button primary-button" onClick={props.facebookLogin}>
                         <Facebook className="icon"></Facebook>

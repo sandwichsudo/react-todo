@@ -11,7 +11,7 @@ const initialUIState = {
   loading: true,
   notification: {},
   title: 'Tuck Shop',
-  profileMenuOpen: false
+  profileMenuOpen: false,
 }
 
 export default function(state = initialUIState, action) {

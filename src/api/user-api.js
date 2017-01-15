@@ -130,7 +130,11 @@ const createUserFromPassword = (email, password) => {
             action: 'Registration',
             label: 'Failed to create user'
         });
-      console.error('Failed to create user.', error);
+        UiApi.showNewNotification({
+            message: error.message,
+        });
+        UiApi.loaded();
+        console.error('Failed to create user.', error);
     });
 };
 

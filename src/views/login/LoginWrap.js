@@ -11,7 +11,10 @@ class LoginWrap extends Component {
         super(props);
         this.googleLogin = this.googleLogin.bind(this);
         this.facebookLogin = this.facebookLogin.bind(this);
-        this.state = { usualProvider: ''};
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.emailPasswordLogin = this.emailPasswordLogin.bind(this);
+        this.state = { usualProvider: '', password: '', email: '' };
     }
 
     componentWillMount() {
@@ -62,14 +65,19 @@ class LoginWrap extends Component {
 
     emailPasswordLogin() {
         UiApi.startLoading();
-
-        const email = `test.${Date.now()}@gmail.com`;
-        const password = 'Password!'
-        userApi.createUserFromPassword(email, password);
+        userApi.createUserFromPassword(this.state.email, this.state.password);
     }
 
     componentWillUnmount() {
         this.fireBaseListener && this.fireBaseListener();
+    }
+
+    handleEmailChange(event) {
+        this.setState({ email: event.target.value });
+    }
+
+    handlePasswordChange(event) {
+        this.setState({ password: event.target.value });
     }
 
     render() {
@@ -79,6 +87,10 @@ class LoginWrap extends Component {
                 usualProvider={this.state.usualProvider}
                 googleLogin={this.googleLogin}
                 facebookLogin={this.facebookLogin}
+                handlePasswordChange={this.handlePasswordChange}
+                handleEmailChange={this.handleEmailChange}
+                password={this.state.password}
+                email={this.state.email}
             />
         );
     }
