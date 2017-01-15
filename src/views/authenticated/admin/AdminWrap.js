@@ -46,7 +46,7 @@ class AdminWrap extends Component {
 
 
     calculateTotal(user) {
-        const items = user.items;
+        const items = user.teams ? user.teams[this.props.currentTeam].items : {};
         let total = 0;
         if (items) {
             for (const key in items) {

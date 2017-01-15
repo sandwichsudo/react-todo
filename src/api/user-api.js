@@ -148,7 +148,7 @@ const clearTab = (total, uid, currentTeam) => {
     .then(() => {
         store.dispatch(clearTabSuccess());
         UiApi.showNewNotification({
-            message:`Thanks for clearing ${formatPrice(total)} from your tab!`,
+            message:`Thanks for clearing ${formatPrice(total)} from your tab! Please put the cash in the box.`,
         });
     })
     .catch((err) => {

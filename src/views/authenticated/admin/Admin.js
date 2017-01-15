@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatPrice } from '../../../helpers/priceFormatting';
 
 // Using "Stateless Functional Components"
 export default function(props) {
@@ -38,7 +39,7 @@ export default function(props) {
                     <li key={ key } >
                          { props.calculateTotal(props.usersList[key]) !== 0 && <div className="list-item-wrapper">
                             <span className="name">{ props.usersList[key].displayName }</span>
-                            <span className="owes">£ { props.calculateTotal(props.usersList[key]).toFixed(2) }</span>
+                            <span className="owes">{ formatPrice(props.calculateTotal(props.usersList[key])) }</span>
                         </div>  }
                     </li>
                 ))
