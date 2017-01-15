@@ -6,7 +6,7 @@ import ProductsApi from '../../../api/products-api';
 class CatalogueWrap extends Component {
 
     componentDidMount() {
-       ProductsApi.getProducts();
+       ProductsApi.getProducts(this.props.currentTeam);
     }
 
     render() {
@@ -21,7 +21,8 @@ class CatalogueWrap extends Component {
 const mapStateToProps = function(store) {
   return {
      productList: store.productsReducer.productList,
-     user: store.userReducer.user
+     user: store.userReducer.user,
+     currentTeam: store.userReducer.currentTeam,
   };
 }
 

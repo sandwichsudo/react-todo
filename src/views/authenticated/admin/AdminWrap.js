@@ -35,7 +35,7 @@ class AdminWrap extends Component {
             id: Date.now()
         };
 
-        ProductsApi.addProduct(newItem);
+        ProductsApi.addProduct(newItem, this.props.currentTeam);
         this.setState((prevState) => {
             return {
                 prodName: '',
@@ -77,7 +77,8 @@ class AdminWrap extends Component {
 const mapStateToProps = function(store) {
   return {
      usersList: store.adminReducer.usersList,
-     user: store.userReducer.user
+     user: store.userReducer.user,
+     currentTeam: store.userReducer.currentTeam
   };
 }
 

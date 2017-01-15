@@ -7,7 +7,7 @@
               ".write": "auth.uid === $uid"
           }
       },
-      "products": {
+      "teams": {
         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
         ".read": "true"
       }

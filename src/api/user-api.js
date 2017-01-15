@@ -11,12 +11,16 @@ import {
 } from '../actions/user-actions';
 import ReactGA from 'react-ga';
 
+const getUserItemsUrl = (uid, currentTeam) => {
+    return `users/${uid}/${currentTeam}/items`;
+}
+
 const createUser = (user) => {
     user.items = [];
     console.log('Creating user');
     let { email, displayName, photoURL = '', uid } = user;
     displayName = displayName.indexOf(' ') !== -1 ? displayName.split(' ')[0] : displayName;
-    const newUser = { email, displayName, photoURL, teams: [ 'tvx-001' ] };
+    const newUser = { email, displayName, photoURL, teams: [ 'tvx-0001' ] };
     firebase.database().ref(`users/${uid}`).set(newUser)
         .then(() => {
             const userProvider = user.providerData[0].providerId;
@@ -94,8 +98,8 @@ const logout = () => {
     });
 }
 
-const removeProductFromBasket = (uid, key) => {
-    firebase.database().ref().child(`users/${uid}/items/${key}`).remove()
+const removeProductFromBasket = (uid, key, currentTeam) => {
+    firebase.database().ref().child(`${getUserItemsUrl(uid, currentTeam)}/${key}`).remove()
         .then(() => {
             store.dispatch(removeProductFromBasketSuccess(uid, key));
         })
@@ -126,8 +130,8 @@ const createUserFromPassword = (email, password) => {
     });
 };
 
-const addProductToBasket = (uid, newProduct) => {
-    let firebaseRef = firebase.database().ref().child(`users/${uid}/items`);
+const addProductToBasket = (uid, newProduct, currentTeam) => {
+    let firebaseRef = firebase.database().ref().child(getUserItemsUrl(uid, currentTeam));
     const key = firebaseRef.push(newProduct).key;
     store.dispatch(addProductToBasketSuccess(uid, newProduct, key));
     UiApi.showNewNotification({
@@ -135,8 +139,8 @@ const addProductToBasket = (uid, newProduct) => {
     });
 };
 
-const clearTab = (total, uid) => {
-    firebase.database().ref().child(`users/${uid}/items`)
+const clearTab = (total, uid, currentTeam) => {
+    firebase.database().ref().child(getUserItemsUrl(uid, currentTeam))
     .remove()
     .then(() => {
         store.dispatch(clearTabSuccess());

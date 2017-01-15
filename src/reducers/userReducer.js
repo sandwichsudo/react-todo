@@ -42,7 +42,7 @@ export default function(state = initialUserState, action) {
           }
           let userCopy = Object.assign({}, action.user);
           userCopy.concatedItems = concatItems(items);
-          return Object.assign({}, state, { user: userCopy, total });
+          return Object.assign({}, state, { user: userCopy, total, currentTeam: userCopy.teams[0] });
       case ADD_PRODUCT_TO_BASKET_SUCCESS:
           let stateCopy = Object.assign({}, state);
           stateCopy.user.items = stateCopy.user.items ? stateCopy.user.items : {};

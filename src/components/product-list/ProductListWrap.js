@@ -11,7 +11,7 @@ class ProductListWrap extends Component {
     }
 
     handleSubmit(product) {
-        UserApi.addProductToBasket(this.props.user.uid, product);
+        UserApi.addProductToBasket(this.props.user.uid, product, this.props.currentTeam);
     }
 
     render() {
@@ -27,6 +27,7 @@ const mapStateToProps = function(store) {
   return {
     productList: store.productsReducer.productList,
     user: store.userReducer.user,
+    currentTeam: store.userReducer.currentTeam,
   };
 }
 

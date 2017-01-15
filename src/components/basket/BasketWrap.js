@@ -26,11 +26,11 @@ class BasketWrap extends Component {
     }
 
     handleRemoveProduct(id) {
-        UserApi.removeProductFromBasket(this.props.user.uid, this.getKeyToRemove(id));
+        UserApi.removeProductFromBasket(this.props.user.uid, this.getKeyToRemove(id), this.props.currentTeam);
     }
 
     clearTab() {
-        UserApi.clearTab(this.props.total, this.props.user.uid);
+        UserApi.clearTab(this.props.total, this.props.user.uid, this.props.currentTeam);
     }
 
     render() {
@@ -47,7 +47,8 @@ const mapStateToProps = function(store) {
   return {
     productList: store.productsReducer.productList,
     user: store.userReducer.user,
-    total: store.userReducer.total
+    total: store.userReducer.total,
+    currentTeam: store.userReducer.currentTeam
   };
 }
 
