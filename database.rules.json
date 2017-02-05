@@ -1,14 +1,14 @@
 {
   "rules": {
       "users": {
-          ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+          ".read": "root.child('teams').child('tvx-0001').child('admin').val() == auth.uid",
           "$uid": {
               ".read": "auth.uid === $uid",
               ".write": "auth.uid === $uid"
           }
       },
       "teams": {
-        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+        ".write": "false",
         ".read": "true"
       }
   }
