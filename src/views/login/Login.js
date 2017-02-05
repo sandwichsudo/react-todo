@@ -14,7 +14,7 @@ export default function(props) {
                 </label>
                 <label>
                     <span className="hidden-label">Password</span>
-                    <input value={props.password} onChange={props.handlePasswordChange} type="text" className="input password-input" placeholder="Password"/>
+                    <input value={props.password} onChange={props.handlePasswordChange} type="password" className="input password-input" placeholder="Password"/>
                 </label>
                 <div className="button-wrap">
                     <button type="button" onClick={props.emailPasswordLogin} className="primary-button">Login</button>

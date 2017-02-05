@@ -8,7 +8,7 @@ var prodConfig = {
         messagingSenderId: "1024248977086"
     }
 }
-
+// same for dev and testing
 var devConfig = {
     GA:'UA-90345277-1',
     FIREBASE: {
