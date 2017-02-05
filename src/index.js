@@ -4,15 +4,15 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import store from './store';
 import UiApi from './api/ui-api';
+import config from './config/runtime-config';
 var ReactGA = require('react-ga');
-ReactGA.initialize('UA-90345277-1');
+ReactGA.initialize(config.GA);
 
 var firebase = require('firebase/app');
 require("firebase/auth");
 require("firebase/database");
 // Initialize Firebase
-import { firebaseConf } from './config/constants';
-firebase.initializeApp(firebaseConf);
+firebase.initializeApp(config.FIREBASE);
 
 import './App.scss';
 if ('serviceWorker' in navigator) {
