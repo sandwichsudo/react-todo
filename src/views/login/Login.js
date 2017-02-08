@@ -17,7 +17,7 @@ export default function(props) {
                     <input value={props.password} onChange={props.handlePasswordChange} type="password" className="input password-input" placeholder="Password"/>
                 </label>
                 <div className="button-wrap">
-                    <button type="button" onClick={props.emailPasswordLogin} className="primary-button">Login</button>
+                    <button type="button" onClick={props.emailPasswordLogin} className="primary-button">Sign Up / Login</button>
                     <div className="divider"><span className="or">OR</span></div>
                     <button className="social-button primary-button" onClick={props.facebookLogin}>
                         <Facebook className="icon"></Facebook>

@@ -124,17 +124,19 @@ const createUserFromPassword = (email, password) => {
         modifiedUserOb.displayName = modifiedUserOb.email.split('.')[0];
         createUser(modifiedUserOb);
     })
-    .catch(function(error) {
-        ReactGA.event({
-            category: 'Error',
-            action: 'Registration',
-            label: 'Failed to create user'
+    .catch((error) => {
+        firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
+            ReactGA.event({
+                category: 'Error',
+                action: 'Registration',
+                label: 'Failed to create user'
+            });
+            UiApi.showNewNotification({
+                message: error.message,
+            });
+            UiApi.loaded();
+            console.error('Failed to create user.', error);
         });
-        UiApi.showNewNotification({
-            message: error.message,
-        });
-        UiApi.loaded();
-        console.error('Failed to create user.', error);
     });
 };
 

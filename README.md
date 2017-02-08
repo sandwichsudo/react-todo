@@ -26,9 +26,9 @@ TODO:
 - [ ] Add activity log - product added to tab, product removed from tab, tab cleared, amount owed before and after.
 - [x] Collapse individual product entries into same row
 - [ ] Offline screen
-- [ ] sign in twice with same email tries to create another user
+- [x] sign in twice with same email tries to create another user
 - [ ] cannot remove from tab
-- [ ] better messaging for signup/login
+- [x] better messaging for signup/login
 - [ ] placeholders in email/password get cut off on safari
 - [ ] confirm 'clear tab' button
 - [ ] undo 'clear tab'
