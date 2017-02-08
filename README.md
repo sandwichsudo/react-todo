@@ -26,6 +26,16 @@ TODO:
 - [ ] Add activity log - product added to tab, product removed from tab, tab cleared, amount owed before and after.
 - [x] Collapse individual product entries into same row
 - [ ] Offline screen
+- [ ] sign in twice with same email tries to create another user
+- [ ] cannot remove from tab
+- [ ] better messaging for signup/login
+- [ ] placeholders in email/password get cut off on safari
+- [ ] confirm 'clear tab' button
+- [ ] undo 'clear tab'
+- [ ] add money to your tab upfront
+- [ ] private browsing mode in safari
+- [ ] Handle bad user creation - no data
+- [ ] Out of stock flag on product, and maybe an 'order more' button.
 - [ ] Work out how to cache database data for offline use:
 
 looking into caching firebase requests:
