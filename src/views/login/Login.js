@@ -8,7 +8,7 @@ export default function(props) {
             {<div>
                 <h1 className="title">Tuckshop</h1>
                 <h2 className="subtitle">Hungry? login now</h2>
-                <form>
+                <form onSubmit={props.emailPasswordLogin} >
                    <label>
                        <span className="hidden-label">Email</span>
                        <input value={props.email} onChange={props.handleEmailChange} className="input email-input" placeholder="Email"/>
@@ -18,7 +18,7 @@ export default function(props) {
                        <input value={props.password} onChange={props.handlePasswordChange} type="password" className="input password-input" placeholder="Password"/>
                     </label>
                     <div className="button-wrap">
-                       <button type="button" onClick={props.emailPasswordLogin} className="primary-button">Sign Up / Login</button>
+                       <button type="submit" className="primary-button">Sign Up / Login</button>
                     </div>
                 </form>
                 <div className="button-wrap">

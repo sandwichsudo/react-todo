@@ -63,7 +63,8 @@ class LoginWrap extends Component {
         firebase.auth().signInWithRedirect(provider);
     }
 
-    emailPasswordLogin() {
+    emailPasswordLogin(e) {
+        e.preventDefault();
         UiApi.startLoading();
         userApi.createUserFromPassword(this.state.email, this.state.password);
     }
