@@ -16,6 +16,10 @@ const getUserItemsUrl = (uid, currentTeam) => {
     return `users/${uid}/teams/${currentTeam}/items`;
 }
 
+const getUserUpvotedItemUrl = (uid, currentTeam, productId) => {
+    return `users/${uid}/teams/${currentTeam}/upvotedItems/${productId}`;
+}
+
 const createUser = (user) => {
     user.items = [];
     console.log('Creating user');
@@ -149,6 +153,20 @@ const addProductToBasket = (uid, newProduct, currentTeam) => {
     });
 };
 
+const upvoteRestock = (uid, product, currentTeam) => {
+    console.log(uid, product, currentTeam);
+    let firebaseRef = firebase.database().ref().child(getUserUpvotedItemUrl(uid, currentTeam, product.id));
+    firebaseRef.set(1);
+    ReactGA.event({
+        category: 'Product',
+        action:'Request restock',
+        label: product.prodName
+    });
+    UiApi.showNewNotification({
+        message:`Thanks, you voted to restock ${product.prodName}!`,
+    });
+};
+
 const clearTab = (total, uid, currentTeam) => {
     firebase.database().ref().child(getUserItemsUrl(uid, currentTeam))
     .remove()
@@ -176,5 +194,6 @@ export default {
     createUserFromPassword,
     addProductToBasket,
     removeProductFromBasket,
-    clearTab
+    clearTab,
+    upvoteRestock
 }

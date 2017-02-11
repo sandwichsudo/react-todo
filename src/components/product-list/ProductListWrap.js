@@ -8,17 +8,26 @@ class ProductListWrap extends Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleRestockRequest = this.handleRestockRequest.bind(this);
+
     }
 
     handleSubmit(product) {
         UserApi.addProductToBasket(this.props.user.uid, product, this.props.currentTeam);
     }
 
+    handleRestockRequest(product) {
+        console.log(product);
+        UserApi.upvoteRestock(this.props.user.uid, product, this.props.currentTeam);
+    }
+
+
     render() {
         return (
             <ProductList
                 productList={this.props.productList}
                 handleSubmit={this.handleSubmit}
+                handleRestockRequest={this.handleRestockRequest}
                 />
         );
     }

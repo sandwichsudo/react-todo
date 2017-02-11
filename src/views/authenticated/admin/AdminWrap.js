@@ -16,6 +16,7 @@ class AdminWrap extends Component {
 
     componentDidMount() {
        AdminApi.getUsers();
+       this.generateShoppingList();
     }
 
 
@@ -44,6 +45,46 @@ class AdminWrap extends Component {
         });
     }
 
+    generateShoppingList() {
+        const usersList = this.props.usersList;
+        this.productsToVotes = {};
+
+        for (var user in usersList) {
+            console.log('user', user);
+            if (usersList.hasOwnProperty(user)) {
+                const upvotedItems = usersList[user].teams['tvx-0001'].upvotedItems;
+                console.log(upvotedItems);
+                if (upvotedItems) {
+                    for (var itemId in upvotedItems) {
+                        if (upvotedItems.hasOwnProperty(itemId)) {
+                            if (!this.productsToVotes[itemId]) {
+                                this.productsToVotes[itemId] = { count:0 };
+                                console.log('this.productsToVotes', this.productsToVotes);
+                            }
+                            let currentCount = this.productsToVotes[itemId].count;
+                            this.productsToVotes[itemId].count = currentCount + 1;
+                        }
+                    }
+                }
+            }
+
+            for (var prodKey in this.props.productList) {
+                if (this.props.productList.hasOwnProperty(prodKey)) {
+                    let product = this.props.productList[prodKey];
+                    if (this.productsToVotes[product.id]) {
+                        this.productsToVotes[product.id].prodName = product.prodName;
+                    } else if (product.outOfStock) {
+                        this.productsToVotes[product.id] = {
+                            prodName: product.prodName,
+                            count: 0,
+                            outOfStock: true,
+                        }
+                    }
+                }
+            }
+        }
+
+    }
 
     calculateTotal(user) {
         const items = user.teams ? user.teams[this.props.currentTeam].items : {};
@@ -69,7 +110,8 @@ class AdminWrap extends Component {
                 prodCost={this.state.prodCost}
                 prodName={this.state.prodName}
                 user={this.props.user}
-
+                productsToVotes={this.productsToVotes}
+                productList={this.props.productList}
                 />
         );
     }
@@ -78,7 +120,8 @@ const mapStateToProps = function(store) {
   return {
      usersList: store.adminReducer.usersList,
      user: store.userReducer.user,
-     currentTeam: store.userReducer.currentTeam
+     currentTeam: store.userReducer.currentTeam,
+     productList: store.productsReducer.productList,
   };
 }
 

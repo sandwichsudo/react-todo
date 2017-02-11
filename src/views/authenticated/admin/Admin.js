@@ -20,6 +20,21 @@ export default function(props) {
             }
             </ul>
 
+            <div className="main-container">
+                <h2 className="in-app-title">Shopping list</h2>
+            </div>
+            <ul className="list admin-list"> { props.productsToVotes &&
+                Object.keys(props.productsToVotes).map(key => (
+                    <li key={ key } className={ (props.productsToVotes[key].outOfStock ? 'out-of-stock' : '')}>
+                        <div className="list-item-wrapper">
+                            <span className="name">{ props.productsToVotes[key].prodName }</span>
+                            <span className="owes">{ props.productsToVotes[key].count } vote</span>
+                        </div>
+                    </li>
+                ))
+            }
+            </ul>
+
         </div>
     );
 }

@@ -1,21 +1,23 @@
 .product-list {
   @extend .list;
-  .list-item-wrapper {
-     display: flex;
-  }
+
   .product-image, .product-info {
       display: inline-block;
       vertical-align: top;
   }
   .product-info {
       margin-left: 30px;
-      flex-grow: 1;
+      display: inline-block;
+      width: calc(100% - 110px);
   }
   .product-button-wrap {
-      margin-top: 20px;
+      text-align: right;
       width: 100%;
-        text-align: right;
-        display: block;
+      display: block;
+  }
+  .out-of-stock-wrap,
+  .product-button-wrap {
+      margin-top: 20px;
   }
   .product-name {
     display: block;
@@ -24,4 +26,8 @@
   .cost {
       display: block;
   }
+}
+
+.out-of-stock {
+   background-color: rgba(128, 128, 128, 0.11);
 }
