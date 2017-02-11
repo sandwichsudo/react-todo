@@ -124,12 +124,28 @@ const removeProductFromBasket = (uid, key, currentTeam) => {
 const createUserFromPassword = (email, password) => {
     firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((user) => {
+        console.log('Creating user');
         let modifiedUserOb = Object.assign({}, user);
         modifiedUserOb.displayName = modifiedUserOb.email.split('.')[0];
         createUser(modifiedUserOb);
     })
     .catch((error) => {
-        firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+            console.log('User recognised, logging in');
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .catch((error) => {
+                    ReactGA.event({
+                        category: 'Error',
+                        action: 'Login',
+                        label: 'Failed to login password user'
+                    });
+                    UiApi.showNewNotification({
+                        message: error.message,
+                    });
+                    UiApi.loaded();
+                    console.error('Failed to login user.', error);
+                });
+        } else {
             ReactGA.event({
                 category: 'Error',
                 action: 'Registration',
@@ -140,7 +156,8 @@ const createUserFromPassword = (email, password) => {
             });
             UiApi.loaded();
             console.error('Failed to create user.', error);
-        });
+        }
+
     });
 };
 
@@ -150,6 +167,8 @@ const addProductToBasket = (uid, newProduct, currentTeam) => {
     store.dispatch(addProductToBasketSuccess(uid, newProduct, key));
     UiApi.showNewNotification({
         message:`${newProduct.prodName} added to your tab!`,
+        isLink: true,
+        location: 'tab',
     });
 };
 

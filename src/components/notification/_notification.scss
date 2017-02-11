@@ -4,7 +4,7 @@
   padding: 15px 45px 15px 60px;
   border-radius: 2px;
   position: fixed;
-  bottom: 0;
+  bottom: 10px;
   z-index: $z-index-3;
   width: calc(100% - 130px);
   transition-property: all;
@@ -13,6 +13,10 @@
   &.off-screen {
       bottom: -100px;
   }
+
+}
+.notification-link {
+    text-decoration: none;
 }
 
 .notification-icon {
