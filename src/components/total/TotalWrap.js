@@ -8,7 +8,7 @@ class TotalWrap extends Component {
         return (
             <Total
                 productList={this.props.productList}
-                total={this.props.total}
+                balance={this.props.user.teams['tvx-0001'].balance}
                 />
         );
     }
@@ -17,7 +17,7 @@ class TotalWrap extends Component {
 const mapStateToProps = function(store) {
   return {
     productList: store.productsReducer.productList,
-    total: store.userReducer.total
+    user: store.userReducer.user,
   };
 }
 

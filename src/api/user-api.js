@@ -12,22 +12,30 @@ import {
 import { formatPrice } from '../helpers/priceFormatting';
 import ReactGA from 'react-ga';
 
-const getUserItemsUrl = (uid, currentTeam) => {
-    return `users/${uid}/teams/${currentTeam}/items`;
-}
+// const getUserItemsUrl = (uid, currentTeam) => {
+//     return `users/${uid}/teams/${currentTeam}/items`;
+// }
 
 const getUserUpvotedItemUrl = (uid, currentTeam, productId) => {
     return `users/${uid}/teams/${currentTeam}/upvotedItems/${productId}`;
 }
 
+const getUserTransactionHistoryUrl = (uid, currentTeam, productId) => {
+    return `users/${uid}/teams/${currentTeam}/transactionHistory`;
+}
+
+const getUserBalanceUrl = (uid, currentTeam) => {
+    return `users/${uid}/teams/${currentTeam}/balance`;
+}
+
 const createUser = (user) => {
-    user.items = [];
+    //user.items = [];
     console.log('Creating user');
     let { email, displayName, photoURL = '', uid } = user;
     displayName = displayName.indexOf(' ') !== -1 ? displayName.split(' ')[0] : displayName;
     const defaultTeam = 'tvx-0001';
     let teams = {};
-    teams[defaultTeam] = { items: {} };
+    teams[defaultTeam] = { balance: 0 };
     const newUser = { email, displayName, photoURL, teams, defaultTeam };
     firebase.database().ref(`users/${uid}`).set(newUser)
         .then(() => {
@@ -106,10 +114,30 @@ const logout = () => {
     });
 }
 
-const removeProductFromBasket = (uid, key, currentTeam) => {
-    firebase.database().ref().child(`${getUserItemsUrl(uid, currentTeam)}/${key}`).remove()
+const removeProductFromBasket = (uid, key, currentTeam, price, name) => {
+    firebase.database().ref().child(`${getUserTransactionHistoryUrl(uid, currentTeam)}/${key}`).remove()
         .then(() => {
-            store.dispatch(removeProductFromBasketSuccess(uid, key));
+            const productEvent = {
+                category: 'Product',
+                action:'Remove from tab',
+                label: name,
+                value: -Number(price)
+            };
+            console.log('removed product', productEvent);
+            ReactGA.event(productEvent);
+            store.dispatch(removeProductFromBasketSuccess(key, productEvent));
+            let firebaseRefBalance = firebase.database().ref().child(getUserBalanceUrl(uid, currentTeam));
+            firebaseRefBalance.once('value').then((snapshot) => {
+                const balance = snapshot.val();
+                const newBalance = balance - Number(price);
+                firebaseRefBalance.set(newBalance);
+                console.log('old balance', balance);
+                console.log('newProduct.prodCost', price);
+                console.log('new balance', newBalance);
+                event.oldBalance = balance;
+                event.newBalance = newBalance;
+                console.log(event);
+            });
         })
         .catch((e) => {
             ReactGA.event({
@@ -162,14 +190,38 @@ const createUserFromPassword = (email, password) => {
 };
 
 const addProductToBasket = (uid, newProduct, currentTeam) => {
-    let firebaseRef = firebase.database().ref().child(getUserItemsUrl(uid, currentTeam));
-    const key = firebaseRef.push(newProduct).key;
-    store.dispatch(addProductToBasketSuccess(uid, newProduct, key));
+    // let firebaseRef = firebase.database().ref().child(getUserItemsUrl(uid, currentTeam));
+    // const key = firebaseRef.push(newProduct).key;
+
     UiApi.showNewNotification({
-        message:`${newProduct.prodName} added to your tab!`,
+        message:`You bought a ${newProduct.prodName}! Click to see your activity`,
         isLink: true,
         location: 'tab',
     });
+    const event = {
+        category: 'Product',
+        action:'Add to tab',
+        label: newProduct.prodName,
+        value: -Number(newProduct.prodCost)
+    };
+
+    ReactGA.event(event);
+    let firebaseRefBalance = firebase.database().ref().child(getUserBalanceUrl(uid, currentTeam));
+    firebaseRefBalance.once('value').then((snapshot) => {
+        const balance = snapshot.val();
+        const newBalance = balance - Number(newProduct.prodCost);
+        firebaseRefBalance.set(newBalance);
+        console.log('old balance', balance);
+        console.log('newProduct.prodCost', newProduct.prodCost);
+        console.log('new balance', newBalance);
+        event.oldBalance = balance;
+        event.newBalance = newBalance;
+        console.log(event);
+        let firebaseRefTH = firebase.database().ref().child(getUserTransactionHistoryUrl(uid, currentTeam));
+        const transactionHistoryKey = firebaseRefTH.push(event).key;
+        store.dispatch(addProductToBasketSuccess(uid, event, transactionHistoryKey));
+    });
+
 };
 
 const upvoteRestock = (uid, product, currentTeam) => {
@@ -187,22 +239,32 @@ const upvoteRestock = (uid, product, currentTeam) => {
 };
 
 const clearTab = (total, uid, currentTeam) => {
-    firebase.database().ref().child(getUserItemsUrl(uid, currentTeam))
-    .remove()
-    .then(() => {
-        store.dispatch(clearTabSuccess());
-        UiApi.showNewNotification({
-            message:`Thanks for clearing ${formatPrice(total)} from your tab! Please put the cash in the box.`,
-        });
-    })
-    .catch((err) => {
-        ReactGA.event({
-            category: 'Error',
-            action: 'Clear tab',
-            label: 'Failed to clear tab'
-        });
-        console.error(err);
-    })
+    // firebase.database().ref().child(getUserItemsUrl(uid, currentTeam))
+    // .remove()
+    // .then(() => {
+    //     store.dispatch(clearTabSuccess());
+    //     const event = {
+    //         category: 'Payment',
+    //         action:'Clear tab',
+    //         value: -(total)
+    //     };
+    //     ReactGA.event(event);
+    //     UiApi.showNewNotification({
+    //         message:`Thanks for clearing ${formatPrice(total)} from your tab! Please put the cash in the box.`,
+    //     });
+    //
+    //     console.log(event);
+    //     let firebaseRef = firebase.database().ref().child(getUserTransactionHistoryUrl(uid, currentTeam));
+    //     const key = firebaseRef.push(event).key;
+    // })
+    // .catch((err) => {
+    //     ReactGA.event({
+    //         category: 'Error',
+    //         action: 'Clear tab',
+    //         label: 'Failed to clear tab'
+    //     });
+    //     console.error(err);
+    // })
 };
 
 export default {

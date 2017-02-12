@@ -12,26 +12,14 @@ class BasketWrap extends Component {
 
     }
 
-    getKeyToRemove(id) {
-        let key = '';
-        let items = this.props.user.teams[this.props.currentTeam].items;
-        for (let itemKey in items) {
-            if (items.hasOwnProperty(itemKey)) {
-                const item = items[itemKey];
-                if (item.id.toString() === id) {
-                    key = itemKey;
-                }
-            }
-        }
-        return key;
-    }
-
     handleRemoveProduct(id) {
-        UserApi.removeProductFromBasket(this.props.user.uid, this.getKeyToRemove(id), this.props.currentTeam);
+        const product = this.props.user.teams[this.props.currentTeam].transactionHistory[id];
+        UserApi.removeProductFromBasket(this.props.user.uid, id,
+            this.props.currentTeam, product.value, product.label);
     }
 
     clearTab() {
-        UserApi.clearTab(this.props.total, this.props.user.uid, this.props.currentTeam);
+    //    UserApi.clearTab(this.props.total, this.props.user.uid, this.props.currentTeam);
     }
 
     render() {
@@ -48,7 +36,6 @@ const mapStateToProps = function(store) {
   return {
     productList: store.productsReducer.productList,
     user: store.userReducer.user,
-    total: store.userReducer.total,
     currentTeam: store.userReducer.currentTeam
   };
 }

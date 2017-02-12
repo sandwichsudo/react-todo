@@ -5,9 +5,9 @@ import { formatPrice } from '../../helpers/priceFormatting';
 export default function(props) {
     return (
         <div className="total-wrapper">
-            <div className="total-header">Total</div>
+            <div className="total-header">Balance</div>
             <div className="total-value">
-               { formatPrice(props.total) }
+               { formatPrice(props.balance) }
            </div>
         </div>
     );

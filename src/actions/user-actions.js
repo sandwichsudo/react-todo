@@ -7,20 +7,20 @@ import {
     CLEAR_TAB_SUCCESS,
 } from '../actions/action-types';
 
-export function addProductToBasketSuccess(uid, newProduct, key) {
+export function addProductToBasketSuccess(uid, newProductEvent, key) {
     return {
         type: ADD_PRODUCT_TO_BASKET_SUCCESS,
         uid,
-        newProduct,
+        newProductEvent,
         key
     };
 }
 
-export function removeProductFromBasketSuccess(uid, key) {
+export function removeProductFromBasketSuccess(key, productEvent) {
     return {
         type: REMOVE_PRODUCT_FROM_BASKET_SUCCESS,
-        uid,
-        key
+        key,
+        productEvent,
     };
 }
 
