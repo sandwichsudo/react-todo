@@ -3,7 +3,6 @@ import {
     ADD_PRODUCT_TO_BASKET_SUCCESS,
     REMOVE_PRODUCT_FROM_BASKET_SUCCESS,
     LOGOUT_SUCCESS,
-    CLEAR_TAB_SUCCESS
 } from '../actions/action-types';
 import ReactGA from 'react-ga';
 
@@ -15,25 +14,6 @@ const initialUserState = {
           }
       }
   }
-}
-
-function concatItems(items) {
-    console.log('items to concat', items);
-    let filteredItems = {};
-    for (let itemKey in items) {
-        if (items.hasOwnProperty(itemKey)) {
-            const item = items[itemKey];
-            if (!filteredItems[item.id]) {
-                filteredItems[item.id] = item;
-                filteredItems[item.id].count = 1;
-            } else {
-                filteredItems[item.id].count += 1;
-            }
-        }
-    }
-    console.log('items concatenated', filteredItems);
-
-    return filteredItems;
 }
 
 export default function(state = initialUserState, action) {
@@ -50,7 +30,7 @@ export default function(state = initialUserState, action) {
           currentTeamCopy.transactionHistory = currentTeamCopy.transactionHistory ? currentTeamCopy.transactionHistory : {};
           const key = action.key;
           currentTeamCopy.transactionHistory[key] = action.newProductEvent;
-          currentTeamCopy.balance = currentTeamCopy.balance + action.newProductEvent.value;
+          currentTeamCopy.balance = Number(currentTeamCopy.balance) + Number(action.newProductEvent.value);
           const userCopy = Object.assign({}, state.user);
           userCopy.concatedItems = currentTeamCopy.transactionHistory;
           userCopy.teams[state.currentTeam] = currentTeamCopy;
@@ -62,7 +42,7 @@ export default function(state = initialUserState, action) {
       case REMOVE_PRODUCT_FROM_BASKET_SUCCESS: {
           let currentTeamCopy = Object.assign({}, state.user.teams[state.currentTeam]);
           delete currentTeamCopy.transactionHistory[action.key];
-          currentTeamCopy.balance = currentTeamCopy.balance + action.productEvent.value;
+          currentTeamCopy.balance = Number(currentTeamCopy.balance) + Number(action.productEvent.value);
           const userCopy = Object.assign({}, state.user);
           userCopy.concatedItems = currentTeamCopy.transactionHistory;
           userCopy.teams[state.currentTeam] = currentTeamCopy;
@@ -73,12 +53,6 @@ export default function(state = initialUserState, action) {
       }
       case LOGOUT_SUCCESS:
           return Object.assign({}, state, { user: {}});
-      case CLEAR_TAB_SUCCESS: {
-          let stateCopy = Object.assign({}, state);
-          stateCopy.user.teams[stateCopy.currentTeam].items = {};
-          stateCopy.user.concatedItems = {};
-          return stateCopy;
-      }
       default: return state;
   }
 }

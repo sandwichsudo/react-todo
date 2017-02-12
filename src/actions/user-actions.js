@@ -4,13 +4,11 @@ import {
     USER_AUTH_SUCCESS,
     USER_CREATED_SUCCESS,
     LOGOUT_SUCCESS,
-    CLEAR_TAB_SUCCESS,
 } from '../actions/action-types';
 
-export function addProductToBasketSuccess(uid, newProductEvent, key) {
+export function addProductToBasketSuccess(newProductEvent, key) {
     return {
         type: ADD_PRODUCT_TO_BASKET_SUCCESS,
-        uid,
         newProductEvent,
         key
     };
@@ -41,11 +39,5 @@ export function createUserSuccess(user) {
 export function logoutSuccess() {
     return {
         type: LOGOUT_SUCCESS,
-    };
-}
-
-export function clearTabSuccess() {
-    return {
-        type: CLEAR_TAB_SUCCESS,
     };
 }

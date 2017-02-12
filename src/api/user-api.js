@@ -7,9 +7,7 @@ import {
     removeProductFromBasketSuccess,
     userFetchSuccess,
     logoutSuccess,
-    clearTabSuccess,
 } from '../actions/user-actions';
-import { formatPrice } from '../helpers/priceFormatting';
 import ReactGA from 'react-ga';
 
 // const getUserItemsUrl = (uid, currentTeam) => {
@@ -129,7 +127,7 @@ const removeProductFromBasket = (uid, key, currentTeam, price, name) => {
             let firebaseRefBalance = firebase.database().ref().child(getUserBalanceUrl(uid, currentTeam));
             firebaseRefBalance.once('value').then((snapshot) => {
                 const balance = snapshot.val();
-                const newBalance = balance - Number(price);
+                const newBalance = Number(balance) - Number(price);
                 firebaseRefBalance.set(newBalance);
                 console.log('old balance', balance);
                 console.log('newProduct.prodCost', price);
@@ -209,7 +207,7 @@ const addProductToBasket = (uid, newProduct, currentTeam) => {
     let firebaseRefBalance = firebase.database().ref().child(getUserBalanceUrl(uid, currentTeam));
     firebaseRefBalance.once('value').then((snapshot) => {
         const balance = snapshot.val();
-        const newBalance = balance - Number(newProduct.prodCost);
+        const newBalance = Number(balance) - Number(newProduct.prodCost);
         firebaseRefBalance.set(newBalance);
         console.log('old balance', balance);
         console.log('newProduct.prodCost', newProduct.prodCost);
@@ -219,7 +217,7 @@ const addProductToBasket = (uid, newProduct, currentTeam) => {
         console.log(event);
         let firebaseRefTH = firebase.database().ref().child(getUserTransactionHistoryUrl(uid, currentTeam));
         const transactionHistoryKey = firebaseRefTH.push(event).key;
-        store.dispatch(addProductToBasketSuccess(uid, event, transactionHistoryKey));
+        store.dispatch(addProductToBasketSuccess(event, transactionHistoryKey));
     });
 
 };
@@ -238,34 +236,38 @@ const upvoteRestock = (uid, product, currentTeam) => {
     });
 };
 
-const clearTab = (total, uid, currentTeam) => {
-    // firebase.database().ref().child(getUserItemsUrl(uid, currentTeam))
-    // .remove()
-    // .then(() => {
-    //     store.dispatch(clearTabSuccess());
-    //     const event = {
-    //         category: 'Payment',
-    //         action:'Clear tab',
-    //         value: -(total)
-    //     };
-    //     ReactGA.event(event);
-    //     UiApi.showNewNotification({
-    //         message:`Thanks for clearing ${formatPrice(total)} from your tab! Please put the cash in the box.`,
-    //     });
-    //
-    //     console.log(event);
-    //     let firebaseRef = firebase.database().ref().child(getUserTransactionHistoryUrl(uid, currentTeam));
-    //     const key = firebaseRef.push(event).key;
-    // })
-    // .catch((err) => {
-    //     ReactGA.event({
-    //         category: 'Error',
-    //         action: 'Clear tab',
-    //         label: 'Failed to clear tab'
-    //     });
-    //     console.error(err);
-    // })
+const updateBalance = (uid, currentTeam, amountToAdd) => {
+    let firebaseRefBalance = firebase.database().ref().child(getUserBalanceUrl(uid, currentTeam));
+    return firebaseRefBalance.once('value').then((snapshot) => {
+        const balance = snapshot.val();
+        const newBalance = Number(balance) + Number(amountToAdd);
+        firebaseRefBalance.set(newBalance);
+    });
 };
+
+const createTransactionEvent = (action, productName, value) => {
+    return {
+        category: 'Product',
+        action: action,
+        label: productName,
+        value,
+    };
+}
+
+const addTransaction = (uid, currentTeam, event) => {
+    let firebaseRefTH = firebase.database().ref().child(getUserTransactionHistoryUrl(uid, currentTeam));
+    const key = firebaseRefTH.push(event).key;
+    store.dispatch(addProductToBasketSuccess(event, key));
+    browserHistory.push('/tab');
+};
+
+const addToBalance = (uid, currentTeam, amountToAdd) => {
+    updateBalance(uid, currentTeam, amountToAdd).then(() => {
+        const event = createTransactionEvent('Add credit', 'Credit', Number(amountToAdd).toFixed(0));
+        ReactGA.event(event);
+        addTransaction(uid, currentTeam, event);
+    });
+}
 
 export default {
     fetchUser,
@@ -275,6 +277,6 @@ export default {
     createUserFromPassword,
     addProductToBasket,
     removeProductFromBasket,
-    clearTab,
-    upvoteRestock
+    upvoteRestock,
+    addToBalance
 }

@@ -3,9 +3,16 @@
   padding: 0;
 }
 
-.clear-tab {
-  width: calc(100% - 40px);
-  margin: 55px 20px 0;
+.add-credit {
+   display: block;
+   width: calc(100% - 40px);
+   margin: 20px 20px 20px;
+   padding: 0;
+   text-align: center;
+}
+
+.add-credit-text {
+    line-height: 44px;
 }
 
 .basket-empty {

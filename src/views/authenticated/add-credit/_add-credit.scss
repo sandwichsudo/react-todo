@@ -1,0 +1,16 @@
+.credit-label {
+  position: relative;
+}
+
+.credit-input {
+    margin-left: 30px;
+    width: calc(100% - 31px);
+}
+
+.credit-label-text {
+    position: absolute;
+    font-size: 20px;
+    line-height: 47px;
+    color: $heading-text-color;
+    margin-left: 5px;
+}

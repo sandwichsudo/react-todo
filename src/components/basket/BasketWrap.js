@@ -8,8 +8,6 @@ class BasketWrap extends Component {
     constructor(props) {
         super(props);
         this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
-        this.clearTab = this.clearTab.bind(this);
-
     }
 
     handleRemoveProduct(id) {
@@ -18,16 +16,11 @@ class BasketWrap extends Component {
             this.props.currentTeam, product.value, product.label);
     }
 
-    clearTab() {
-    //    UserApi.clearTab(this.props.total, this.props.user.uid, this.props.currentTeam);
-    }
-
     render() {
         return (
             <Basket
                 items={this.props.user.concatedItems}
                 handleRemoveProduct={this.handleRemoveProduct}
-                clearTab={this.clearTab}
                 />
         );
     }

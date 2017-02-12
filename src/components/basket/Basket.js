@@ -1,11 +1,15 @@
 import React from 'react';
 import BasketItem from './BasketItem';
 import BasketEmpty from './BasketEmpty';
-
+import { Link } from 'react-router';
 const Basket = props => (
         <div>
             { !!Object.keys(props.items).length &&
                 <div>
+                    <Link to="/add-credit" className="button-wire add-credit"><span className="add-credit-text">Add credit</span></Link>
+                    <div className="main-container">
+                        <h2 className="in-app-title">Account activity</h2>
+                    </div>
                     <ul className="list"> {
                         Object.keys(props.items).map(key => (
                             <BasketItem
@@ -17,11 +21,6 @@ const Basket = props => (
                         ))
                     }
                     </ul>
-                    <button
-                        onClick={props.clearTab}
-                        className="button-wire clear-tab">
-                        Clear tab
-                    </button>
                 </div>
             }
             { !Object.keys(props.items).length &&
