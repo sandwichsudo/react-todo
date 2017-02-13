@@ -10,15 +10,11 @@ import {
 } from '../actions/user-actions';
 import ReactGA from 'react-ga';
 
-// const getUserItemsUrl = (uid, currentTeam) => {
-//     return `users/${uid}/teams/${currentTeam}/items`;
-// }
-
 const getUserUpvotedItemUrl = (uid, currentTeam, productId) => {
     return `users/${uid}/teams/${currentTeam}/upvotedItems/${productId}`;
 }
 
-const getUserTransactionHistoryUrl = (uid, currentTeam, productId) => {
+const getUserTransactionHistoryUrl = (uid, currentTeam) => {
     return `users/${uid}/teams/${currentTeam}/transactionHistory`;
 }
 
@@ -27,7 +23,6 @@ const getUserBalanceUrl = (uid, currentTeam) => {
 }
 
 const createUser = (user) => {
-    //user.items = [];
     console.log('Creating user');
     let { email, displayName, photoURL = '', uid } = user;
     displayName = displayName.indexOf(' ') !== -1 ? displayName.split(' ')[0] : displayName;
@@ -59,44 +54,6 @@ const createUser = (user) => {
         });
 };
 
-const fetchUser = (userOb) => {
-    let firebaseRef = firebase.database().ref(`users/${userOb.uid}`);
-    console.log('fetching user');
-    // check if it is a new user
-    firebaseRef.once('value').then((snapshot) => {
-        const user = snapshot.val();
-        if (!user) {
-            console.log(`no user with id ${userOb.uid} found, creating user`);
-            createUser(userOb);
-        } else {
-            console.log('got user!');
-            console.log(userOb);
-            const userProvider = userOb.providerData[0].providerId;
-            ReactGA.event({
-                category: 'Registration',
-                action: 'Login',
-                label: userProvider
-            });
-            UiApi.loaded();
-            store.dispatch(userFetchSuccess(Object.assign({...userOb, ...user})));
-            browserHistory.push('/');
-        }
-    });
-};
-
-const onAuth = () => {
-    console.log('Setting up listener for auth state change');
-    firebase.auth().onAuthStateChanged((userOb) => {
-        console.log('Auth state changed');
-        if (userOb) {
-            console.log('got user object from state change, authenticating..');
-            fetchUser(userOb);
-        } else {
-            console.log('null user object, sending to login');
-            browserHistory.push('/login');
-        }
-    });
-}
 
 const logout = () => {
     firebase.auth().signOut().then(() => {
@@ -266,6 +223,70 @@ const addToBalance = (uid, currentTeam, amountToAdd) => {
         const event = createTransactionEvent('Add credit', 'Credit', Number(amountToAdd).toFixed(0));
         ReactGA.event(event);
         addTransaction(uid, currentTeam, event);
+    });
+}
+
+
+const migrateUser = (uid, userTeam, items) => {
+    const transactionHistory = {};
+    let balance = 0;
+    for (var itemKey in items) {
+        if (items.hasOwnProperty(itemKey)) {
+            const item = items[itemKey];
+            const event = createTransactionEvent('Item migration', item.prodName, -Number(item.prodCost));
+            transactionHistory[itemKey] = event;
+            balance = balance - item.prodCost;
+        }
+    }
+    console.log(transactionHistory);
+    let firebaseRef = firebase.database().ref(getUserTransactionHistoryUrl(uid, userTeam));
+    firebaseRef.set(transactionHistory);
+    updateBalance(uid, userTeam, balance);
+}
+
+const fetchUser = (userOb) => {
+    let firebaseRef = firebase.database().ref(`users/${userOb.uid}`);
+    console.log('fetching user');
+    // check if it is a new user
+    firebaseRef.once('value').then((snapshot) => {
+        const user = snapshot.val();
+        if (!user) {
+            console.log(`no user with id ${userOb.uid} found, creating user`);
+            createUser(userOb);
+        } else {
+            console.log('got user!');
+            console.log(userOb);
+            const userTeam = user.defaultTeam;
+            const userItems = user.teams[userTeam].items;
+            console.log('userItems', userItems);
+            if (userItems) {
+                console.log('Migrating user');
+                migrateUser(userOb.uid, userTeam, userItems);
+            }
+            const userProvider = userOb.providerData[0].providerId;
+            ReactGA.event({
+                category: 'Registration',
+                action: 'Login',
+                label: userProvider
+            });
+            UiApi.loaded();
+            store.dispatch(userFetchSuccess(Object.assign({...userOb, ...user})));
+            browserHistory.push('/');
+        }
+    });
+};
+
+const onAuth = () => {
+    console.log('Setting up listener for auth state change');
+    firebase.auth().onAuthStateChanged((userOb) => {
+        console.log('Auth state changed');
+        if (userOb) {
+            console.log('got user object from state change, authenticating..');
+            fetchUser(userOb);
+        } else {
+            console.log('null user object, sending to login');
+            browserHistory.push('/login');
+        }
     });
 }
 

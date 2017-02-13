@@ -8,7 +8,7 @@ class TotalWrap extends Component {
         return (
             <Total
                 productList={this.props.productList}
-                balance={this.props.user.teams['tvx-0001'].balance}
+                balance={this.props.user.teams ? this.props.user.teams['tvx-0001'].balance : 0}
                 />
         );
     }
