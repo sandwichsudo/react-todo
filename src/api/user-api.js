@@ -3,8 +3,8 @@ import { browserHistory } from 'react-router';
 import store from '../store';
 import UiApi from './ui-api';
 import {
-    addProductToBasketSuccess,
-    removeProductFromBasketSuccess,
+    addTransactionSuccess,
+    removeTransactionSuccess,
     userFetchSuccess,
     logoutSuccess,
 } from '../actions/user-actions';
@@ -69,7 +69,7 @@ const logout = () => {
     });
 }
 
-const removeProductFromBasket = (uid, key, currentTeam, price, name) => {
+const removeTransactionFromHistory = (uid, key, currentTeam, price, name) => {
     firebase.database().ref().child(`${getUserTransactionHistoryUrl(uid, currentTeam)}/${key}`).remove()
         .then(() => {
             const productEvent = {
@@ -80,7 +80,7 @@ const removeProductFromBasket = (uid, key, currentTeam, price, name) => {
             };
             console.log('removed product', productEvent);
             ReactGA.event(productEvent);
-            store.dispatch(removeProductFromBasketSuccess(key, productEvent));
+            store.dispatch(removeTransactionSuccess(key, productEvent));
             let firebaseRefBalance = firebase.database().ref().child(getUserBalanceUrl(uid, currentTeam));
             firebaseRefBalance.once('value').then((snapshot) => {
                 const balance = snapshot.val();
@@ -144,14 +144,11 @@ const createUserFromPassword = (email, password) => {
     });
 };
 
-const addProductToBasket = (uid, newProduct, currentTeam) => {
-    // let firebaseRef = firebase.database().ref().child(getUserItemsUrl(uid, currentTeam));
-    // const key = firebaseRef.push(newProduct).key;
-
+const addTransactionToHistory = (uid, newProduct, currentTeam) => {
     UiApi.showNewNotification({
         message:`You bought a ${newProduct.prodName}! Click to see your activity`,
         isLink: true,
-        location: 'tab',
+        location: 'activity',
     });
     const event = {
         category: 'Product',
@@ -174,7 +171,7 @@ const addProductToBasket = (uid, newProduct, currentTeam) => {
         console.log(event);
         let firebaseRefTH = firebase.database().ref().child(getUserTransactionHistoryUrl(uid, currentTeam));
         const transactionHistoryKey = firebaseRefTH.push(event).key;
-        store.dispatch(addProductToBasketSuccess(event, transactionHistoryKey));
+        store.dispatch(addTransactionSuccess(event, transactionHistoryKey));
     });
 
 };
@@ -214,8 +211,8 @@ const createTransactionEvent = (action, productName, value) => {
 const addTransaction = (uid, currentTeam, event) => {
     let firebaseRefTH = firebase.database().ref().child(getUserTransactionHistoryUrl(uid, currentTeam));
     const key = firebaseRefTH.push(event).key;
-    store.dispatch(addProductToBasketSuccess(event, key));
-    browserHistory.push('/tab');
+    store.dispatch(addTransactionSuccess(event, key));
+    browserHistory.push('/activity');
 };
 
 const addToBalance = (uid, currentTeam, amountToAdd) => {
@@ -296,8 +293,8 @@ export default {
     onAuth,
     logout,
     createUserFromPassword,
-    addProductToBasket,
-    removeProductFromBasket,
+    addTransactionToHistory,
+    removeTransactionFromHistory,
     upvoteRestock,
     addToBalance
 }

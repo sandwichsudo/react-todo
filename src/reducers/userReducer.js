@@ -1,7 +1,7 @@
 import {
     USER_AUTH_SUCCESS,
-    ADD_PRODUCT_TO_BASKET_SUCCESS,
-    REMOVE_PRODUCT_FROM_BASKET_SUCCESS,
+    ADD_TRANSACTION_SUCCESS,
+    REMOVE_TRANSACTION_SUCCESS,
     LOGOUT_SUCCESS,
 } from '../actions/action-types';
 import ReactGA from 'react-ga';
@@ -25,12 +25,12 @@ export default function(state = initialUserState, action) {
           console.log('user', userCopy);
           return Object.assign({}, state, { user: userCopy, currentTeam: userCopy.defaultTeam });
       }
-      case ADD_PRODUCT_TO_BASKET_SUCCESS: {
+      case ADD_TRANSACTION_SUCCESS: {
           let currentTeamCopy = Object.assign({}, state.user.teams[state.currentTeam]);
           currentTeamCopy.transactionHistory = currentTeamCopy.transactionHistory ? currentTeamCopy.transactionHistory : {};
           const key = action.key;
-          currentTeamCopy.transactionHistory[key] = action.newProductEvent;
-          currentTeamCopy.balance = Number(currentTeamCopy.balance) + Number(action.newProductEvent.value);
+          currentTeamCopy.transactionHistory[key] = action.newTransactionEvent;
+          currentTeamCopy.balance = Number(currentTeamCopy.balance) + Number(action.newTransactionEvent.value);
           const userCopy = Object.assign({}, state.user);
           userCopy.concatedItems = currentTeamCopy.transactionHistory;
           userCopy.teams[state.currentTeam] = currentTeamCopy;
@@ -39,7 +39,7 @@ export default function(state = initialUserState, action) {
                 user: userCopy,
             };;
       }
-      case REMOVE_PRODUCT_FROM_BASKET_SUCCESS: {
+      case REMOVE_TRANSACTION_SUCCESS: {
           let currentTeamCopy = Object.assign({}, state.user.teams[state.currentTeam]);
           delete currentTeamCopy.transactionHistory[action.key];
           currentTeamCopy.balance = Number(currentTeamCopy.balance) + Number(action.productEvent.value);

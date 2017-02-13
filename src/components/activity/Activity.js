@@ -1,8 +1,8 @@
 import React from 'react';
-import BasketItem from './BasketItem';
-import BasketEmpty from './BasketEmpty';
+import ActivityItem from './ActivityItem';
+import ActivityEmpty from './ActivityEmpty';
 import { Link } from 'react-router';
-const Basket = props => (
+const Activity = props => (
         <div>
             { !!Object.keys(props.items).length &&
                 <div>
@@ -12,7 +12,7 @@ const Basket = props => (
                     </div>
                     <ul className="list"> {
                         Object.keys(props.items).map(key => (
-                            <BasketItem
+                            <ActivityItem
                                 item={props.items[key]}
                                 index={key}
                                 key={key}
@@ -24,19 +24,19 @@ const Basket = props => (
                 </div>
             }
             { !Object.keys(props.items).length &&
-                <BasketEmpty />
+                <ActivityEmpty />
             }
         </div>
 );
 
-Basket.propTypes = {
+Activity.propTypes = {
     items: React.PropTypes.object,
     handleRemoveProduct: React.PropTypes.func,
 };
 
-Basket.defaultProps = {
+Activity.defaultProps = {
     items: {},
     handleRemoveProduct: () => {},
 };
 
-export default Basket;
+export default Activity;

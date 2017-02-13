@@ -1,22 +1,22 @@
 import {
-    ADD_PRODUCT_TO_BASKET_SUCCESS,
-    REMOVE_PRODUCT_FROM_BASKET_SUCCESS,
+    ADD_TRANSACTION_SUCCESS,
+    REMOVE_TRANSACTION_SUCCESS,
     USER_AUTH_SUCCESS,
     USER_CREATED_SUCCESS,
     LOGOUT_SUCCESS,
 } from '../actions/action-types';
 
-export function addProductToBasketSuccess(newProductEvent, key) {
+export function addTransactionSuccess(newTransactionEvent, key) {
     return {
-        type: ADD_PRODUCT_TO_BASKET_SUCCESS,
-        newProductEvent,
+        type: ADD_TRANSACTION_SUCCESS,
+        newTransactionEvent,
         key
     };
 }
 
-export function removeProductFromBasketSuccess(key, productEvent) {
+export function removeTransactionSuccess(key, productEvent) {
     return {
-        type: REMOVE_PRODUCT_FROM_BASKET_SUCCESS,
+        type: REMOVE_TRANSACTION_SUCCESS,
         key,
         productEvent,
     };

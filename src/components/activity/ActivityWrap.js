@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import UserApi from '../../api/user-api';
-import Basket from './Basket';
+import Activity from './Activity';
 
-class BasketWrap extends Component {
+class ActivityWrap extends Component {
     constructor(props) {
         super(props);
         this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
@@ -12,13 +12,13 @@ class BasketWrap extends Component {
 
     handleRemoveProduct(id) {
         const product = this.props.user.teams[this.props.currentTeam].transactionHistory[id];
-        UserApi.removeProductFromBasket(this.props.user.uid, id,
+        UserApi.removeTransactionFromHistory(this.props.user.uid, id,
             this.props.currentTeam, product.value, product.label);
     }
 
     render() {
         return (
-            <Basket
+            <Activity
                 items={this.props.user.concatedItems}
                 handleRemoveProduct={this.handleRemoveProduct}
                 />
@@ -33,4 +33,4 @@ const mapStateToProps = function(store) {
   };
 }
 
-export default connect(mapStateToProps)(BasketWrap);
+export default connect(mapStateToProps)(ActivityWrap);

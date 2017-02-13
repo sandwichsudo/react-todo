@@ -3,7 +3,7 @@ import { Router, Route, browserHistory, Redirect } from 'react-router';
 import UiApi from './api/ui-api';
 
 // Pages
-import Basket from './views/authenticated/home/Home.js';
+import Activity from './views/authenticated/home/Home.js';
 import CatalogueWrap from './views/authenticated/catalogue/CatalogueWrap.js';
 import LoginWrap from './views/login/LoginWrap.js';
 import MainLayout from './components/main-layout/MainLayout.js';
@@ -17,7 +17,7 @@ export default (
 
           <Route path="/login" component={LoginWrap} />
           <Route path="/shop" component={CatalogueWrap} />
-          <Route path="/tab" component={Basket} />
+          <Route path="/activity" component={Activity} />
           <Route path="/admin" component={AdminWrap} />
           <Route path="/add-credit" component={AddCreditWrap} />
       </Route>

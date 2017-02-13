@@ -13,7 +13,7 @@ class ProductListWrap extends Component {
     }
 
     handleSubmit(product) {
-        UserApi.addProductToBasket(this.props.user.uid, product, this.props.currentTeam);
+        UserApi.addTransactionToHistory(this.props.user.uid, product, this.props.currentTeam);
     }
 
     handleRestockRequest(product) {
