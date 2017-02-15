@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
-var firebase = require('firebase/app');
 import userApi from '../../../api/user-api';
 import AddCredit from './AddCredit';
-import UiApi from '../../../api/ui-api';
 import { connect } from 'react-redux';
 
 class AddCreditWrap extends Component {

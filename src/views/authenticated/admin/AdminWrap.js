@@ -50,7 +50,6 @@ class AdminWrap extends Component {
         this.productsToVotes = {};
 
         for (var user in usersList) {
-            console.log('user', user);
             if (usersList.hasOwnProperty(user)) {
                 const upvotedItems = usersList[user].teams['tvx-0001'].upvotedItems;
                 console.log(upvotedItems);

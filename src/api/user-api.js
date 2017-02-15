@@ -232,13 +232,14 @@ const migrateUser = (uid, userTeam, items) => {
             const item = items[itemKey];
             const event = createTransactionEvent('Item migration', item.prodName, -Number(item.prodCost));
             transactionHistory[itemKey] = event;
-            balance = balance - item.prodCost;
+            balance =- item.prodCost;
         }
     }
     console.log(transactionHistory);
     let firebaseRef = firebase.database().ref(getUserTransactionHistoryUrl(uid, userTeam));
     firebaseRef.set(transactionHistory);
     updateBalance(uid, userTeam, balance);
+    return { transactionHistory, balance };
 }
 
 const fetchUser = (userOb) => {
@@ -255,10 +256,13 @@ const fetchUser = (userOb) => {
             console.log(userOb);
             const userTeam = user.defaultTeam;
             const userItems = user.teams[userTeam].items;
+            const transactionHistory = user.teams[userTeam].transactionHistory;
             console.log('userItems', userItems);
-            if (userItems) {
+            if (userItems && !transactionHistory) {
                 console.log('Migrating user');
-                migrateUser(userOb.uid, userTeam, userItems);
+                let { transactionHistory, balance } = migrateUser(userOb.uid, userTeam, userItems);
+                user.teams[userTeam].transactionHistory = transactionHistory;
+                user.teams[userTeam].balance = balance;
             }
             const userProvider = userOb.providerData[0].providerId;
             ReactGA.event({

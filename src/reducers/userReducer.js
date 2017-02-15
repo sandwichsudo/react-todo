@@ -4,7 +4,6 @@ import {
     REMOVE_TRANSACTION_SUCCESS,
     LOGOUT_SUCCESS,
 } from '../actions/action-types';
-import ReactGA from 'react-ga';
 
 const initialUserState = {
   user: {
@@ -37,7 +36,7 @@ export default function(state = initialUserState, action) {
           return {
                 ...state,
                 user: userCopy,
-            };;
+            };
       }
       case REMOVE_TRANSACTION_SUCCESS: {
           let currentTeamCopy = Object.assign({}, state.user.teams[state.currentTeam]);
