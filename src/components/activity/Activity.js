@@ -4,18 +4,18 @@ import ActivityEmpty from './ActivityEmpty';
 import { Link } from 'react-router';
 const Activity = props => (
         <div>
-            { !!Object.keys(props.items).length &&
+            { !!props.items.length &&
                 <div>
                     <Link to="/add-credit" className="button-wire add-credit"><span className="add-credit-text">Add credit</span></Link>
                     <div className="main-container">
                         <h2 className="in-app-title">Account activity</h2>
                     </div>
                     <ul className="list"> {
-                        Object.keys(props.items).map(key => (
+                        props.items.map(item => (
                             <ActivityItem
-                                item={props.items[key]}
-                                index={key}
-                                key={key}
+                                item={item}
+                                index={item.key}
+                                key={item.key}
                                 handleRemoveProduct={props.handleRemoveProduct}
                             />
                         ))
@@ -23,19 +23,19 @@ const Activity = props => (
                     </ul>
                 </div>
             }
-            { !Object.keys(props.items).length &&
+            { !props.items.length &&
                 <ActivityEmpty />
             }
         </div>
 );
 
 Activity.propTypes = {
-    items: React.PropTypes.object,
+    items: React.PropTypes.array,
     handleRemoveProduct: React.PropTypes.func,
 };
 
 Activity.defaultProps = {
-    items: {},
+    items: [],
     handleRemoveProduct: () => {},
 };
 

@@ -22,6 +22,20 @@ const getUserBalanceUrl = (uid, currentTeam) => {
     return `users/${uid}/teams/${currentTeam}/balance`;
 }
 
+const getUserItemMigrationUrl = (uid, currentTeam) => {
+    return `users/${uid}/teams/${currentTeam}/migratedItems`;
+}
+
+const createTransactionEvent = (action, productName, value) => {
+    return {
+        category: 'Product',
+        action: action,
+        label: productName,
+        time: Date.now(),
+        value,
+    };
+}
+
 const createUser = (user) => {
     console.log('Creating user');
     let { email, displayName, photoURL = '', uid } = user;
@@ -29,7 +43,8 @@ const createUser = (user) => {
     const defaultTeam = 'tvx-0001';
     let teams = {};
     teams[defaultTeam] = { balance: 0 };
-    const newUser = { email, displayName, photoURL, teams, defaultTeam };
+    const newUser = { email, displayName, photoURL, teams, defaultTeam,
+        migratedItems: true };
     firebase.database().ref(`users/${uid}`).set(newUser)
         .then(() => {
             const userProvider = user.providerData[0].providerId;
@@ -72,12 +87,7 @@ const logout = () => {
 const removeTransactionFromHistory = (uid, key, currentTeam, price, name) => {
     firebase.database().ref().child(`${getUserTransactionHistoryUrl(uid, currentTeam)}/${key}`).remove()
         .then(() => {
-            const productEvent = {
-                category: 'Product',
-                action:'Remove from tab',
-                label: name,
-                value: -Number(price)
-            };
+            const productEvent = createTransactionEvent('Remove from tab', name,  -Number(price));
             console.log('removed product', productEvent);
             ReactGA.event(productEvent);
             store.dispatch(removeTransactionSuccess(key, productEvent));
@@ -150,12 +160,7 @@ const addTransactionToHistory = (uid, newProduct, currentTeam) => {
         isLink: true,
         location: 'activity',
     });
-    const event = {
-        category: 'Product',
-        action:'Add to tab',
-        label: newProduct.prodName,
-        value: -Number(newProduct.prodCost)
-    };
+    const event = createTransactionEvent('Add to tab', newProduct.prodName, -Number(newProduct.prodCost));
 
     ReactGA.event(event);
     let firebaseRefBalance = firebase.database().ref().child(getUserBalanceUrl(uid, currentTeam));
@@ -180,11 +185,8 @@ const upvoteRestock = (uid, product, currentTeam) => {
     console.log(uid, product, currentTeam);
     let firebaseRef = firebase.database().ref().child(getUserUpvotedItemUrl(uid, currentTeam, product.id));
     firebaseRef.set(1);
-    ReactGA.event({
-        category: 'Product',
-        action:'Request restock',
-        label: product.prodName
-    });
+
+    ReactGA.event(createTransactionEvent('Request restock', product.prodName, 1));
     UiApi.showNewNotification({
         message:`Thanks, you voted to restock ${product.prodName}!`,
     });
@@ -199,14 +201,11 @@ const updateBalance = (uid, currentTeam, amountToAdd) => {
     });
 };
 
-const createTransactionEvent = (action, productName, value) => {
-    return {
-        category: 'Product',
-        action: action,
-        label: productName,
-        value,
-    };
-}
+const setMigratedFlag = (uid, currentTeam) => {
+    firebase.database().ref()
+        .child(getUserItemMigrationUrl(uid, currentTeam))
+            .set(true);
+};
 
 const addTransaction = (uid, currentTeam, event) => {
     let firebaseRefTH = firebase.database().ref().child(getUserTransactionHistoryUrl(uid, currentTeam));
@@ -232,13 +231,14 @@ const migrateUser = (uid, userTeam, items) => {
             const item = items[itemKey];
             const event = createTransactionEvent('Item migration', item.prodName, -Number(item.prodCost));
             transactionHistory[itemKey] = event;
-            balance =- item.prodCost;
+            balance -= item.prodCost;
         }
     }
     console.log(transactionHistory);
     let firebaseRef = firebase.database().ref(getUserTransactionHistoryUrl(uid, userTeam));
     firebaseRef.set(transactionHistory);
     updateBalance(uid, userTeam, balance);
+    setMigratedFlag(uid, userTeam);
     return { transactionHistory, balance };
 }
 
@@ -256,9 +256,9 @@ const fetchUser = (userOb) => {
             console.log(userOb);
             const userTeam = user.defaultTeam;
             const userItems = user.teams[userTeam].items;
-            const transactionHistory = user.teams[userTeam].transactionHistory;
+            const migratedUserItems = user.teams[userTeam].migratedItems;
             console.log('userItems', userItems);
-            if (userItems && !transactionHistory) {
+            if (!migratedUserItems) {
                 console.log('Migrating user');
                 let { transactionHistory, balance } = migrateUser(userOb.uid, userTeam, userItems);
                 user.teams[userTeam].transactionHistory = transactionHistory;

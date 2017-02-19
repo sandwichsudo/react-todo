@@ -15,12 +15,36 @@ const initialUserState = {
   }
 }
 
+function compare(a,b) {
+  if (a.time > b.time)
+    return -1;
+  if (a.time < b.time)
+    return 1;
+  return 0;
+}
+
+function arrayifyTransactions (transactionHistory) {
+    const transactionArray = [];
+    for (var key in transactionHistory) {
+        if (transactionHistory.hasOwnProperty(key)) {
+            transactionHistory[key].key = key;
+            transactionArray.push(transactionHistory[key]);
+        }
+    }
+    console.log('unsorted', transactionArray);
+
+    transactionArray.sort(compare);
+    console.log('sorted', transactionArray);
+
+    return transactionArray;
+}
+
 export default function(state = initialUserState, action) {
   switch(action.type) {
       case USER_AUTH_SUCCESS: {
           let items = action.user.teams ? action.user.teams[action.user.defaultTeam].transactionHistory: {};
           let userCopy = Object.assign({}, action.user);
-          userCopy.concatedItems = items;
+          userCopy.concatedItems = arrayifyTransactions(items);
           console.log('user', userCopy);
           return Object.assign({}, state, { user: userCopy, currentTeam: userCopy.defaultTeam });
       }
@@ -31,7 +55,7 @@ export default function(state = initialUserState, action) {
           currentTeamCopy.transactionHistory[key] = action.newTransactionEvent;
           currentTeamCopy.balance = Number(currentTeamCopy.balance) + Number(action.newTransactionEvent.value);
           const userCopy = Object.assign({}, state.user);
-          userCopy.concatedItems = currentTeamCopy.transactionHistory;
+          userCopy.concatedItems = arrayifyTransactions(currentTeamCopy.transactionHistory);
           userCopy.teams[state.currentTeam] = currentTeamCopy;
           return {
                 ...state,
@@ -43,7 +67,7 @@ export default function(state = initialUserState, action) {
           delete currentTeamCopy.transactionHistory[action.key];
           currentTeamCopy.balance = Number(currentTeamCopy.balance) + Number(action.productEvent.value);
           const userCopy = Object.assign({}, state.user);
-          userCopy.concatedItems = currentTeamCopy.transactionHistory;
+          userCopy.concatedItems = arrayifyTransactions(currentTeamCopy.transactionHistory);
           userCopy.teams[state.currentTeam] = currentTeamCopy;
           return  {
                 ...state,
