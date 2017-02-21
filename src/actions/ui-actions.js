@@ -5,6 +5,8 @@ import {
     CLOSE_NOTIFICATION,
     ROUTE_CHANGE,
     TOGGLE_PROFILE_MENU,
+    STOP_LOADING_ITEM,
+    START_LOADING_ITEM,
 } from '../actions/action-types';
 
 export function viewLoadedSuccess() {
@@ -42,5 +44,19 @@ export function routeChange(title) {
 export function toggleProfileMenu() {
     return {
         type: TOGGLE_PROFILE_MENU,
+    };
+}
+
+export function startInlineLoading(key) {
+    return {
+        type: START_LOADING_ITEM,
+        key,
+    };
+}
+
+export function stopInlineLoading(key) {
+    return {
+        type: STOP_LOADING_ITEM,
+        key,
     };
 }

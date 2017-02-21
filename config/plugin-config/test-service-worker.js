@@ -1,6 +1,6 @@
 module.exports = {
-    cacheId: 'my-project-name',
-    filename: 'my-service-worker.js',
+    cacheId: 'tuckshop-test',
+    filename: 'tuckshop-test-service-worker.js',
     maximumFileSizeToCacheInBytes: 4194304,
     runtimeCaching: [{
         urlPattern: /https?:\/\/fonts.+/,

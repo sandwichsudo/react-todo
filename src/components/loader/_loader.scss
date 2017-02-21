@@ -111,3 +111,17 @@ $bubbles-duration: 1.5s;
 .bubble {
     opacity: 0;
 }
+
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
+.spinning {
+    animation: spin 1s linear infinite;
+    transform-origin: center;
+}
+
+.spinner-loader {
+    color: $dark-green-color;
+}

@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Loader from './Loader';
+import CupLoader from './CupLoader';
+import InlineLoader from './InlineLoader';
 
 class LoaderWrap extends Component {
     render() {
         return (
-            <Loader
+            <div>
+                { this.props.inlineLoader && <InlineLoader
                 loading={this.props.loading}
-                />
+                />}
+                { !this.props.inlineLoader && <CupLoader
+                loading={this.props.loading}
+                /> }
+            </div>
         );
     }
 }

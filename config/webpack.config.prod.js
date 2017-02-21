@@ -9,7 +9,7 @@ var url = require('url');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
 var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-var serviceWorkerConfig = require('./plugin-config/service-worker');
+var serviceWorkerConfig = require('./plugin-config/prod-service-worker');
 
 function ensureSlash(path, needsSlash) {
   var hasSlash = path.endsWith('/');

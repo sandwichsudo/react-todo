@@ -29,7 +29,7 @@ const mapStateToProps = function(store) {
   return {
     productList: store.productsReducer.productList,
     user: store.userReducer.user,
-    currentTeam: store.userReducer.currentTeam
+    currentTeam: store.userReducer.currentTeam,
   };
 }
 

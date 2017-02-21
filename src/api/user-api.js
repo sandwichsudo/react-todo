@@ -39,7 +39,12 @@ const createTransactionEvent = (action, productName, value) => {
 const createUser = (user) => {
     console.log('Creating user');
     let { email, displayName, photoURL = '', uid } = user;
-    displayName = displayName.indexOf(' ') !== -1 ? displayName.split(' ')[0] : displayName;
+    if (displayName && displayName.indexOf(' ') !== -1) {
+        displayName = displayName.split(' ')[0];
+    }
+    else {
+        displayName = email.split('@')[0];
+    }
     const defaultTeam = 'tvx-0001';
     let teams = {};
     teams[defaultTeam] = { balance: 0 };
@@ -85,6 +90,8 @@ const logout = () => {
 }
 
 const removeTransactionFromHistory = (uid, key, currentTeam, price, name) => {
+    console.log('Removing item with key: ', key);
+    UiApi.startLoading(key);
     firebase.database().ref().child(`${getUserTransactionHistoryUrl(uid, currentTeam)}/${key}`).remove()
         .then(() => {
             const productEvent = createTransactionEvent('Remove from tab', name,  -Number(price));
@@ -102,6 +109,18 @@ const removeTransactionFromHistory = (uid, key, currentTeam, price, name) => {
                 event.oldBalance = balance;
                 event.newBalance = newBalance;
                 console.log(event);
+                UiApi.loaded(key);
+            }).catch((err) => {
+                ReactGA.event({
+                    category: 'Error',
+                    action: 'Update balance',
+                    label: 'Failed to update balance'
+                });
+                console.error(err);
+                UiApi.loaded(key);
+                UiApi.showNewNotification({
+                    message: err,
+                });
             });
         })
         .catch((e) => {
@@ -111,6 +130,10 @@ const removeTransactionFromHistory = (uid, key, currentTeam, price, name) => {
                 label: 'Failed to remove product from tab'
             });
             console.error(e);
+            UiApi.loaded(key);
+            UiApi.showNewNotification({
+                message: e,
+            });
         });
 };
 

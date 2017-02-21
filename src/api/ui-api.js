@@ -9,14 +9,24 @@ import {
     closeNotification,
     routeChange,
     toggleProfileMenu,
+    startInlineLoading,
+    stopInlineLoading,
 } from '../actions/ui-actions';
 
-const loaded = () => {
-    store.dispatch(viewLoadedSuccess());
+const loaded = (key) => {
+    if (key) {
+        store.dispatch(stopInlineLoading(key));
+    } else {
+        store.dispatch(viewLoadedSuccess());
+    }
 }
 
-const startLoading = () => {
-    store.dispatch(startViewLoading());
+const startLoading = (key) => {
+    if (key) {
+        store.dispatch(startInlineLoading(key));
+    } else {
+        store.dispatch(startViewLoading());
+    }
 }
 
 const hideNotification = () => {

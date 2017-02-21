@@ -4,11 +4,14 @@ import {
     NEW_NOTIFICATION,
     CLOSE_NOTIFICATION,
     ROUTE_CHANGE,
-    TOGGLE_PROFILE_MENU
+    TOGGLE_PROFILE_MENU,
+    STOP_LOADING_ITEM,
+    START_LOADING_ITEM,
 } from '../actions/action-types';
 
 const initialUIState = {
   loading: true,
+  inlineLoading: new Set(),
   notification: {},
   title: 'Tuck Shop',
   profileMenuOpen: false,
@@ -25,6 +28,19 @@ export default function(state = initialUIState, action) {
            let stateCopy = Object.assign({}, state);
            stateCopy.loading = true;
            return stateCopy;
+      }
+      case STOP_LOADING_ITEM:{
+          let inlineLoading = state.inlineLoading;
+          console.log('In stop Loading items:', inlineLoading);
+
+          inlineLoading.delete(action.key);
+          return { ...state, inlineLoading};
+      }
+      case START_LOADING_ITEM:{
+           let inlineLoading = state.inlineLoading;
+           console.log('in Loading items:', inlineLoading);
+           inlineLoading.add(action.key);
+           return { ...state, inlineLoading};
       }
       case NEW_NOTIFICATION:{
            let stateCopy = Object.assign({}, state);
