@@ -6,7 +6,10 @@ export default function(props) {
             {<div>
                 <div className="main-container">
                     <h2 className="in-app-title">{'How much credit do you want to add?'}</h2>
-
+                    <p className="add-credit-text">To add credit to your account, put the cash in the TuckShop box and
+                    enter the amount in here.</p>
+                    <p className="add-credit-text">It gets credited to your account, so you
+                    never need to worry about exact change.</p>
                     <form onSubmit={props.handelSubmit} >
                        <label className="credit-label">
                            <span className="credit-label-text">£</span>

@@ -2,11 +2,13 @@ import React from 'react';
 import { formatPrice } from '../../helpers/priceFormatting';
 import LoaderWrap from '../loader/LoaderWrap.js';
 import { connect } from 'react-redux';
-
-const BasketItem = props => (
+import sweet from './sweet.png';
+const ActivityItem = props => (
     <li>
         <div className="basket-item-wrapper">
             <div className="basket-item-info-wrapper">
+                { props.item.label !== "Credit"  && <img className="basket-item-img" alt="snack" src={sweet} height="30" width="30"></img> }
+                { props.item.label === "Credit" && <span className="basket-item-img basket-item-money" >£</span> }
                 <span className="basket-item-name">{ props.item.label ? props.item.label : props.item.action }</span>
             </div>
             <div className="basket-item-action-wrapper">
@@ -30,14 +32,14 @@ const BasketItem = props => (
     </li>
 )
 
-BasketItem.propTypes = {
+ActivityItem.propTypes = {
     index: React.PropTypes.string,
     item: React.PropTypes.object,
     handleRemoveProduct: React.PropTypes.func,
     inlineLoading: React.PropTypes.object,
 };
 
-BasketItem.defaultProps = {
+ActivityItem.defaultProps = {
     index: null,
     item: {},
     handleRemoveProduct: () => {},
@@ -50,4 +52,4 @@ const mapStateToProps = function(store) {
   };
 }
 
-export default connect(mapStateToProps)(BasketItem);
+export default connect(mapStateToProps)(ActivityItem);

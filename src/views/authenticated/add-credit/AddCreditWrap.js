@@ -8,7 +8,7 @@ class AddCreditWrap extends Component {
         super(props);
         this.handelSubmit = this.handelSubmit.bind(this);
         this.handleCreditChange = this.handleCreditChange.bind(this);
-        this.state = { creditAmount: 0 };
+        this.state = { creditAmount: '' };
     }
 
     handelSubmit(e) {

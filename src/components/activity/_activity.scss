@@ -11,13 +11,20 @@
    text-align: center;
 }
 
-.add-credit-text {
+.add-credit-button-text {
     line-height: 44px;
 }
 
-.basket-empty {
+.activity-empty-subtext {
+    color: $color-steel-two;
+    font-size: 14px;
+    text-align: center;
+        width: 300px;
+}
+
+.activity-empty {
   display: flex;
-  height: calc(100vh - (48px + 60px + 53px));
+  height: calc(100vh - (48px + 60px + 53px + 140px));
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -25,6 +32,7 @@
   &-text {
     margin: {
       top: 1em;
+      bottom: 1em;
     }
     font-size: 16px;
     letter-spacing: 0.1em;
@@ -93,14 +101,20 @@
   }
 }
 
-.basket-item-count {
-  border-radius: 10px;
-  background: $accent-color;
-  color: white;
-  padding: 7px 10px;
+.basket-item-img {
   margin-right: 10px;
   position: absolute;
   top: -6px;
+}
+
+.basket-item-money {
+    color: white;
+    background: $accent-color;
+    border-radius: 26px;
+    padding: 5px 10px;
+    font-weight: bold;
+    line-height: 20px;
+    width: 10px;
 }
 
 .basket-item-name {

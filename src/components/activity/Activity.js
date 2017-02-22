@@ -4,9 +4,9 @@ import ActivityEmpty from './ActivityEmpty';
 import { Link } from 'react-router';
 const Activity = props => (
         <div>
+            <Link to="/add-credit" className="button-wire add-credit"><span className="add-credit-button-text">Add credit</span></Link>
             { !!props.items.length &&
                 <div>
-                    <Link to="/add-credit" className="button-wire add-credit"><span className="add-credit-text">Add credit</span></Link>
                     <div className="main-container">
                         <h2 className="in-app-title">Account activity</h2>
                     </div>
@@ -24,7 +24,9 @@ const Activity = props => (
                 </div>
             }
             { !props.items.length &&
-                <ActivityEmpty />
+                <div className="main-container">
+                    <ActivityEmpty />
+                </div>
             }
         </div>
 );

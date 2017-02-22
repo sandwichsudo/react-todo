@@ -3,7 +3,7 @@ import React from 'react';
 //export default props => (
 export default function() {
     return (
-    <div className="basket-empty">
+    <div className="activity-empty">
       <svg width="56px" height="86px" viewBox="0 0 56 86">
           <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
               <g id="Tuckshop_Empty-tab" transform="translate(-160.000000, -256.000000)">
@@ -22,6 +22,7 @@ export default function() {
               </g>
           </g>
       </svg>
-      <span className="basket-empty-text">your tab is empty</span>
+      <span className="activity-empty-text">Ready to go!</span>
+      <span className="activity-empty-subtext">When you buy a snack, or add credit to your account, you'll see it appear here.</span>
     </div>
 )};
