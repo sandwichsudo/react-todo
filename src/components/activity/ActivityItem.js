@@ -11,15 +11,16 @@ const BasketItem = props => (
             </div>
             <div className="basket-item-action-wrapper">
                 <span className="basket-item-cost"> { formatPrice(props.item.value) }</span>
-                { props.inlineLoading.has(props.index) &&
+                { !props.inlineLoading.has(props.index) &&
                     <button
                     aria-label="Remove"
                     className="basket-item-remove"
                     onClick={ () => props.handleRemoveProduct(props.index) }
                 >
             </button> }
-
-                    <LoaderWrap inlineLoader="true"/> 
+            { props.inlineLoading.has(props.index) &&
+                    <LoaderWrap inlineLoader="true"/>
+                    }
             </div>
         </div>
     </li>
@@ -36,7 +37,7 @@ BasketItem.defaultProps = {
     index: null,
     item: {},
     handleRemoveProduct: () => {},
-    inlineLoading: [],
+    inlineLoading: {},
 };
 
 const mapStateToProps = function(store) {

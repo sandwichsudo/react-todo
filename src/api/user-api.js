@@ -92,6 +92,7 @@ const logout = () => {
 const removeTransactionFromHistory = (uid, key, currentTeam, price, name) => {
     console.log('Removing item with key: ', key);
     UiApi.startLoading(key);
+
     firebase.database().ref().child(`${getUserTransactionHistoryUrl(uid, currentTeam)}/${key}`).remove()
         .then(() => {
             const productEvent = createTransactionEvent('Remove from tab', name,  -Number(price));
@@ -135,6 +136,7 @@ const removeTransactionFromHistory = (uid, key, currentTeam, price, name) => {
                 message: e,
             });
         });
+
 };
 
 const createUserFromPassword = (email, password) => {

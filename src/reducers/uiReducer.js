@@ -30,17 +30,18 @@ export default function(state = initialUIState, action) {
            return stateCopy;
       }
       case STOP_LOADING_ITEM:{
-          let inlineLoading = state.inlineLoading;
-          console.log('In stop Loading items:', inlineLoading);
+          let inlineLoadingCopy = new Set(state.inlineLoading);
+          //console.log('In stop Loading items:', stateCopy.inlineLoading);
 
-          inlineLoading.delete(action.key);
-          return { ...state, inlineLoading};
+          inlineLoadingCopy.delete(action.key);
+          return { ...state, inlineLoading: inlineLoadingCopy};
       }
       case START_LOADING_ITEM:{
-           let inlineLoading = state.inlineLoading;
-           console.log('in Loading items:', inlineLoading);
-           inlineLoading.add(action.key);
-           return { ...state, inlineLoading};
+          let inlineLoadingCopy = new Set(state.inlineLoading);
+
+          // console.log('in Loading items:', stateCopy.inlineLoading);
+           inlineLoadingCopy.add(action.key);
+           return { ...state, inlineLoading: inlineLoadingCopy};
       }
       case NEW_NOTIFICATION:{
            let stateCopy = Object.assign({}, state);
