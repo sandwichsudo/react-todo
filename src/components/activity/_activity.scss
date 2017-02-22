@@ -55,7 +55,7 @@
     align-items: center;
   }
 
-  &-remove {
+  &-remove, &-disabled {
     position: relative;
     width: 44px;
     height: 44px;
@@ -65,17 +65,6 @@
     background-color: transparent;
     font-size: 18px;
     color: $black-color;
-
-    &:before {
-      content: "";
-      position: absolute;
-      left: 50%;
-      width: 10px;
-      margin: {
-        left: -5px;
-      }
-      border-bottom: 1px solid $black-color;
-    }
 
     &:after {
       content: "";
@@ -88,6 +77,19 @@
       border: 1px solid $accent-color;
       border-radius: 10px;
     }
+  }
+
+  &-remove {
+      &:before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        width: 10px;
+        margin: {
+          left: -5px;
+        }
+        border-bottom: 1px solid $black-color;
+      }
   }
 }
 

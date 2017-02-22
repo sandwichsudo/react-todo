@@ -15,6 +15,7 @@ const initialUIState = {
   notification: {},
   title: 'Tuck Shop',
   profileMenuOpen: false,
+  notificationTimer: null,
 }
 
 export default function(state = initialUIState, action) {
@@ -46,6 +47,8 @@ export default function(state = initialUIState, action) {
       case NEW_NOTIFICATION:{
            let stateCopy = Object.assign({}, state);
            stateCopy.notification = action.notification;
+           stateCopy.notificationTimer = action.notificationTimer;
+           console.log('stateCopy', stateCopy);
            return stateCopy;
       }
       case CLOSE_NOTIFICATION:{

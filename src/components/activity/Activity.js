@@ -2,7 +2,6 @@ import React from 'react';
 import ActivityItem from './ActivityItem';
 import ActivityEmpty from './ActivityEmpty';
 import { Link } from 'react-router';
-import { connect } from 'react-redux';
 const Activity = props => (
         <div>
             { !!props.items.length &&

@@ -15,7 +15,7 @@ export default {
             return response.val();
         });
     },
-    addProduct: (newProduct, currentTeam) => {
+    addProduct: (newProduct, currentTeam, notificationTimer) => {
         newProduct.prodImg = "https://img.tesco.com/Groceries/pi/326/5010478789326/IDShot_225x225.jpg";
         let firebaseRef = firebase.database().ref().child(getProductsUrl(currentTeam));
         firebaseRef.push(newProduct);

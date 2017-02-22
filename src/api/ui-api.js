@@ -33,9 +33,14 @@ const hideNotification = () => {
     store.dispatch(closeNotification());
 }
 
-const showNewNotification = (notification) => {
-    store.dispatch(showNotification(notification));
-    window.setTimeout(hideNotification, 3000);
+const showNewNotification = (notification, oldTimer) => {
+    if (oldTimer) {
+        console.log('clearing timeout ', oldTimer);
+        window.clearTimeout(oldTimer);
+    }
+    const notificationTimer = window.setTimeout(hideNotification, 3000);
+    console.log('notificationTimer', notificationTimer);
+    store.dispatch(showNotification(notification, notificationTimer));
 }
 
 const onRouteChange = (data) => {

@@ -19,8 +19,12 @@ const BasketItem = props => (
                 >
             </button> }
             { props.inlineLoading.has(props.index) &&
+                <button
+                disabled="disabled"
+                className="basket-item-disabled">
                     <LoaderWrap inlineLoader="true"/>
-                    }
+                </button>
+            }
             </div>
         </div>
     </li>

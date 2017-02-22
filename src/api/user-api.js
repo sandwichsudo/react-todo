@@ -179,12 +179,13 @@ const createUserFromPassword = (email, password) => {
     });
 };
 
-const addTransactionToHistory = (uid, newProduct, currentTeam) => {
+const addTransactionToHistory = (uid, newProduct, currentTeam,
+        notificationTimer) => {
     UiApi.showNewNotification({
         message:`You bought a ${newProduct.prodName}! Click to see your activity`,
         isLink: true,
         location: 'activity',
-    });
+    }, notificationTimer);
     const event = createTransactionEvent('Add to tab', newProduct.prodName, -Number(newProduct.prodCost));
 
     ReactGA.event(event);

@@ -21,10 +21,12 @@ export function startViewLoading() {
     };
 }
 
-export function showNotification(notification) {
+export function showNotification(notification,
+        notificationTimer) {
     return {
         type: NEW_NOTIFICATION,
         notification,
+        notificationTimer,
     };
 }
 

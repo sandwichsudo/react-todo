@@ -120,7 +120,7 @@ const mapStateToProps = function(store) {
      usersList: store.adminReducer.usersList,
      user: store.userReducer.user,
      currentTeam: store.userReducer.currentTeam,
-     productList: store.productsReducer.productList,
+     productList: store.productsReducer.productList
   };
 }
 
