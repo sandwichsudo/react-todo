@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import UserApi from '../../api/user-api';
 import Activity from './Activity';
-
+import { formatPrice } from '../../helpers/priceFormatting';
 class ActivityWrap extends Component {
     constructor(props) {
         super(props);
@@ -12,8 +12,16 @@ class ActivityWrap extends Component {
 
     handleRemoveProduct(id) {
         const product = this.props.user.teams[this.props.currentTeam].transactionHistory[id];
-        UserApi.removeTransactionFromHistory(this.props.user.uid, id,
+        let cost = formatPrice(Math.abs(product.value));
+        let message = `Sure? This will restore ${cost} to your balance.`;
+        if (product.label==="Credit") {
+            message = `Sure? This will remove ${cost} from your balance.`;
+        }
+        let result = confirm(message);
+        if (result) {
+            UserApi.removeTransactionFromHistory(this.props.user.uid, id,
             this.props.currentTeam, product.value, product.label);
+        }
     }
 
     render() {
