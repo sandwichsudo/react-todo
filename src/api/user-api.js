@@ -9,6 +9,7 @@ import {
     logoutSuccess,
 } from '../actions/user-actions';
 import ReactGA from 'react-ga';
+import { formatPrice } from '../helpers/priceFormatting';
 
 const getUserUpvotedItemUrl = (uid, currentTeam, productId) => {
     return `users/${uid}/teams/${currentTeam}/upvotedItems/${productId}`;
@@ -181,11 +182,6 @@ const createUserFromPassword = (email, password) => {
 
 const addTransactionToHistory = (uid, newProduct, currentTeam,
         notificationTimer) => {
-    UiApi.showNewNotification({
-        message:`You bought a ${newProduct.prodName}! Click to see your activity`,
-        isLink: true,
-        location: 'activity',
-    }, notificationTimer);
     const event = createTransactionEvent('Add to tab', newProduct.prodName, -Number(newProduct.prodCost));
 
     ReactGA.event(event);
@@ -203,6 +199,11 @@ const addTransactionToHistory = (uid, newProduct, currentTeam,
         let firebaseRefTH = firebase.database().ref().child(getUserTransactionHistoryUrl(uid, currentTeam));
         const transactionHistoryKey = firebaseRefTH.push(event).key;
         store.dispatch(addTransactionSuccess(event, transactionHistoryKey));
+        UiApi.showNewNotification({
+            message:`You bought a ${newProduct.prodName}! Your new balance is ${formatPrice(newBalance)}. Click to see your activity`,
+            isLink: true,
+            location: 'activity',
+        }, notificationTimer);
     });
 
 };
