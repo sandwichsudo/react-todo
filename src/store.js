@@ -18,6 +18,6 @@ const reducers = combineReducers({
 });
 
 const logger = reduxLogger();
-const store = createStore(reducers, applyMiddleware(logger));
+const store = createStore(reducers);
 
 export default store;

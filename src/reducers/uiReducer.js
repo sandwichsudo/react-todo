@@ -7,6 +7,7 @@ import {
     TOGGLE_PROFILE_MENU,
     STOP_LOADING_ITEM,
     START_LOADING_ITEM,
+    TOGGLE_SHOW_OLDER_ITEMS,
 } from '../actions/action-types';
 
 const initialUIState = {
@@ -16,6 +17,7 @@ const initialUIState = {
   title: 'Tuck Shop',
   profileMenuOpen: false,
   notificationTimer: null,
+  showOlderItems: false,
 }
 
 export default function(state = initialUIState, action) {
@@ -64,6 +66,11 @@ export default function(state = initialUIState, action) {
       case TOGGLE_PROFILE_MENU: {
           let stateCopy = Object.assign({}, state);
           stateCopy.profileMenuOpen = !state.profileMenuOpen;
+          return stateCopy;
+      }
+      case TOGGLE_SHOW_OLDER_ITEMS: {
+          let stateCopy = Object.assign({}, state);
+          stateCopy.showOlderItems = !state.showOlderItems;
           return stateCopy;
       }
       default: return state;

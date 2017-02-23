@@ -7,6 +7,7 @@ import {
     TOGGLE_PROFILE_MENU,
     STOP_LOADING_ITEM,
     START_LOADING_ITEM,
+    TOGGLE_SHOW_OLDER_ITEMS,
 } from '../actions/action-types';
 
 export function viewLoadedSuccess() {
@@ -60,5 +61,11 @@ export function stopInlineLoading(key) {
     return {
         type: STOP_LOADING_ITEM,
         key,
+    };
+}
+
+export function toggleShowOlderItems() {
+    return {
+        type: TOGGLE_SHOW_OLDER_ITEMS,
     };
 }

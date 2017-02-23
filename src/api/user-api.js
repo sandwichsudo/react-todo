@@ -10,32 +10,11 @@ import {
 } from '../actions/user-actions';
 import ReactGA from 'react-ga';
 import { formatPrice } from '../helpers/priceFormatting';
+import createEvent from '../helpers/createEvent';
+import createUrl from '../helpers/createUrl';
+import { arrayifyTransactions } from '../helpers/transformers';
 
-const getUserUpvotedItemUrl = (uid, currentTeam, productId) => {
-    return `users/${uid}/teams/${currentTeam}/upvotedItems/${productId}`;
-}
-
-const getUserTransactionHistoryUrl = (uid, currentTeam) => {
-    return `users/${uid}/teams/${currentTeam}/transactionHistory`;
-}
-
-const getUserBalanceUrl = (uid, currentTeam) => {
-    return `users/${uid}/teams/${currentTeam}/balance`;
-}
-
-const getUserItemMigrationUrl = (uid, currentTeam) => {
-    return `users/${uid}/teams/${currentTeam}/migratedItems`;
-}
-
-const createTransactionEvent = (action, productName, value) => {
-    return {
-        category: 'Product',
-        action: action,
-        label: productName,
-        time: Date.now(),
-        value,
-    };
-}
+const MAX_TRANSACTIONS = 500;
 
 const createUser = (user) => {
     console.log('Creating user');
@@ -48,9 +27,8 @@ const createUser = (user) => {
     }
     const defaultTeam = 'tvx-0001';
     let teams = {};
-    teams[defaultTeam] = { balance: 0 };
-    const newUser = { email, displayName, photoURL, teams, defaultTeam,
-        migratedItems: true };
+    teams[defaultTeam] = { balance: 0, migratedItems: true };
+    const newUser = { email, displayName, photoURL, teams, defaultTeam };
     firebase.database().ref(`users/${uid}`).set(newUser)
         .then(() => {
             const userProvider = user.providerData[0].providerId;
@@ -94,13 +72,16 @@ const removeTransactionFromHistory = (uid, key, currentTeam, price, name) => {
     console.log('Removing item with key: ', key);
     UiApi.startLoading(key);
 
-    firebase.database().ref().child(`${getUserTransactionHistoryUrl(uid, currentTeam)}/${key}`).remove()
+    firebase.database().ref().child(`${createUrl.getUserTransactionHistoryUrl(uid, currentTeam)}/${key}`).remove()
         .then(() => {
-            const productEvent = createTransactionEvent('Remove from tab', name,  -Number(price));
+            const productEvent = createEvent
+                .createTransactionEvent('Remove from tab', name,
+                    -Number(price));
             console.log('removed product', productEvent);
             ReactGA.event(productEvent);
             store.dispatch(removeTransactionSuccess(key, productEvent));
-            let firebaseRefBalance = firebase.database().ref().child(getUserBalanceUrl(uid, currentTeam));
+            let firebaseRefBalance = firebase.database().ref().child(createUrl
+                    .getUserBalanceUrl(uid, currentTeam));
             firebaseRefBalance.once('value').then((snapshot) => {
                 const balance = snapshot.val();
                 const newBalance = Number(balance) - Number(price);
@@ -182,21 +163,18 @@ const createUserFromPassword = (email, password) => {
 
 const addTransactionToHistory = (uid, newProduct, currentTeam,
         notificationTimer) => {
-    const event = createTransactionEvent('Add to tab', newProduct.prodName, -Number(newProduct.prodCost));
-
+    const event = createEvent.createTransactionEvent('Add to tab', newProduct.prodName, -Number(newProduct.prodCost));
     ReactGA.event(event);
-    let firebaseRefBalance = firebase.database().ref().child(getUserBalanceUrl(uid, currentTeam));
+    let firebaseRefBalance = firebase.database().ref().child(createUrl
+            .getUserBalanceUrl(uid, currentTeam));
     firebaseRefBalance.once('value').then((snapshot) => {
         const balance = snapshot.val();
         const newBalance = Number(balance) - Number(newProduct.prodCost);
         firebaseRefBalance.set(newBalance);
-        console.log('old balance', balance);
-        console.log('newProduct.prodCost', newProduct.prodCost);
-        console.log('new balance', newBalance);
         event.oldBalance = balance;
         event.newBalance = newBalance;
         console.log(event);
-        let firebaseRefTH = firebase.database().ref().child(getUserTransactionHistoryUrl(uid, currentTeam));
+        let firebaseRefTH = firebase.database().ref().child(createUrl.getUserTransactionHistoryUrl(uid, currentTeam));
         const transactionHistoryKey = firebaseRefTH.push(event).key;
         store.dispatch(addTransactionSuccess(event, transactionHistoryKey));
         UiApi.showNewNotification({
@@ -210,17 +188,18 @@ const addTransactionToHistory = (uid, newProduct, currentTeam,
 
 const upvoteRestock = (uid, product, currentTeam) => {
     console.log(uid, product, currentTeam);
-    let firebaseRef = firebase.database().ref().child(getUserUpvotedItemUrl(uid, currentTeam, product.id));
+    let firebaseRef = firebase.database().ref().child(createUrl.getUserUpvotedItemUrl(uid, currentTeam, product.id));
     firebaseRef.set(1);
 
-    ReactGA.event(createTransactionEvent('Request restock', product.prodName, 1));
+    ReactGA.event(createEvent.createTransactionEvent('Request restock', product.prodName, 1));
     UiApi.showNewNotification({
         message:`Thanks, you voted to restock ${product.prodName}!`,
     });
 };
 
 const updateBalance = (uid, currentTeam, amountToAdd) => {
-    let firebaseRefBalance = firebase.database().ref().child(getUserBalanceUrl(uid, currentTeam));
+    let firebaseRefBalance = firebase.database().ref().child(createUrl
+            .getUserBalanceUrl(uid, currentTeam));
     return firebaseRefBalance.once('value').then((snapshot) => {
         const balance = snapshot.val();
         const newBalance = Number(balance) + Number(amountToAdd);
@@ -230,12 +209,12 @@ const updateBalance = (uid, currentTeam, amountToAdd) => {
 
 const setMigratedFlag = (uid, currentTeam) => {
     firebase.database().ref()
-        .child(getUserItemMigrationUrl(uid, currentTeam))
+        .child(createUrl.getUserItemMigrationUrl(uid, currentTeam))
             .set(true);
 };
 
 const addTransaction = (uid, currentTeam, event) => {
-    let firebaseRefTH = firebase.database().ref().child(getUserTransactionHistoryUrl(uid, currentTeam));
+    let firebaseRefTH = firebase.database().ref().child(createUrl.getUserTransactionHistoryUrl(uid, currentTeam));
     const key = firebaseRefTH.push(event).key;
     store.dispatch(addTransactionSuccess(event, key));
     browserHistory.push('/activity');
@@ -243,12 +222,36 @@ const addTransaction = (uid, currentTeam, event) => {
 
 const addToBalance = (uid, currentTeam, amountToAdd) => {
     updateBalance(uid, currentTeam, amountToAdd).then(() => {
-        const event = createTransactionEvent('Add credit', 'Credit', Number(amountToAdd).toFixed(0));
+        const event = createEvent.createTransactionEvent('Add credit', 'Credit', Number(amountToAdd).toFixed(0));
         ReactGA.event(event);
         addTransaction(uid, currentTeam, event);
     });
 }
 
+const archiveTransactions = (uid, currentTeam, transactionHistory) => {
+    // do this when there are more than MAX_TRANSACTIONS
+    // on login
+    if (transactionHistory) {
+        const numberOfTransactions = Object.keys(transactionHistory).length;
+        console.log(`User has ${numberOfTransactions}`);
+        if (numberOfTransactions > MAX_TRANSACTIONS) {
+            let sortedTransactions = arrayifyTransactions(transactionHistory);
+            // get archivable transaction
+            const deleteableTransactions = sortedTransactions.slice(MAX_TRANSACTIONS);
+            console.log('Deleting old transactions', deleteableTransactions);
+            for (var i = 0; i < deleteableTransactions.length; i++) {
+                const transaction = deleteableTransactions[i];
+                delete transactionHistory[transaction.key];
+            }
+            const firebaseRef = firebase.database().ref()
+                .child(createUrl.getUserTransactionHistoryUrl(uid, currentTeam));
+            firebaseRef.set(transactionHistory);
+            console.log(transactionHistory);
+            return transactionHistory;
+        }
+        return transactionHistory;
+    }
+}
 
 const migrateUser = (uid, userTeam, items) => {
     const transactionHistory = {};
@@ -256,13 +259,13 @@ const migrateUser = (uid, userTeam, items) => {
     for (var itemKey in items) {
         if (items.hasOwnProperty(itemKey)) {
             const item = items[itemKey];
-            const event = createTransactionEvent('Item migration', item.prodName, -Number(item.prodCost));
+            const event = createEvent.createTransactionEvent('Item migration', item.prodName, -Number(item.prodCost));
             transactionHistory[itemKey] = event;
             balance -= item.prodCost;
         }
     }
     console.log(transactionHistory);
-    let firebaseRef = firebase.database().ref(getUserTransactionHistoryUrl(uid, userTeam));
+    let firebaseRef = firebase.database().ref(createUrl.getUserTransactionHistoryUrl(uid, userTeam));
     firebaseRef.set(transactionHistory);
     updateBalance(uid, userTeam, balance);
     setMigratedFlag(uid, userTeam);
@@ -291,6 +294,9 @@ const fetchUser = (userOb) => {
                 user.teams[userTeam].transactionHistory = transactionHistory;
                 user.teams[userTeam].balance = balance;
             }
+            user.teams[userTeam].transactionHistory =
+                archiveTransactions(userOb.uid, userTeam,
+                    user.teams[userTeam].transactionHistory);
             const userProvider = userOb.providerData[0].providerId;
             ReactGA.event({
                 category: 'Registration',

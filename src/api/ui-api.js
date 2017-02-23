@@ -11,6 +11,7 @@ import {
     toggleProfileMenu,
     startInlineLoading,
     stopInlineLoading,
+    toggleShowOlderItems,
 } from '../actions/ui-actions';
 
 const loaded = (key) => {
@@ -56,11 +57,16 @@ const onToggleProfileMenu = () => {
     store.dispatch(toggleProfileMenu());
 }
 
+const onToggleShowOlderItems = () => {
+    store.dispatch(toggleShowOlderItems());
+}
+
 export default {
     loaded,
     startLoading,
     showNewNotification,
     hideNotification,
     onRouteChange,
-    onToggleProfileMenu
+    onToggleProfileMenu,
+    onToggleShowOlderItems,
 }
