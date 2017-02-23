@@ -11,9 +11,9 @@ export default function(props) {
             <ul className="list admin-list"> { props.usersList &&
                 Object.keys(props.usersList).map(key => (
                     <li key={ key } >
-                         { props.calculateTotal(props.usersList[key]) !== 0 && <div className="list-item-wrapper">
+                         { props.usersList[key].teams[props.currentTeam].balance < 0 && <div className="list-item-wrapper">
                             <span className="name">{ props.usersList[key].displayName }</span>
-                            <span className="owes">{ formatPrice(props.calculateTotal(props.usersList[key])) }</span>
+                            <span className="owes">{ formatPrice(props.usersList[key].teams[props.currentTeam].balance) }</span>
                         </div>  }
                     </li>
                 ))

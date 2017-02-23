@@ -7,7 +7,6 @@ import ProductsApi from '../../../api/products-api';
 class AdminWrap extends Component {
     constructor(props) {
         super(props);
-        this.calculateTotal = this.calculateTotal.bind(this);
         this.handleProdNameChange = this.handleProdNameChange.bind(this);
         this.handleProdCostChange = this.handleProdCostChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -85,23 +84,9 @@ class AdminWrap extends Component {
 
     }
 
-    calculateTotal(user) {
-        const items = user.teams ? user.teams[this.props.currentTeam].items : {};
-        let total = 0;
-        if (items) {
-            for (const key in items) {
-                if (items.hasOwnProperty(key)) {
-                    total+= Number(items[key].prodCost);
-                }
-            }
-        }
-        return total;
-    }
-
     render() {
         return (
             <Admin
-                calculateTotal={this.calculateTotal}
                 usersList={this.props.usersList}
                 handleSubmit={this.handleSubmit}
                 handleProdCostChange={this.handleProdCostChange}
@@ -111,6 +96,7 @@ class AdminWrap extends Component {
                 user={this.props.user}
                 productsToVotes={this.productsToVotes}
                 productList={this.props.productList}
+                currentTeam={this.props.currentTeam}
                 />
         );
     }
