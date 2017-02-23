@@ -8,7 +8,7 @@
           }
       },
       "teams": {
-        ".write": "false",
+        ".write": "root.child('teams').child('tvx-0001').child('admin').val() == auth.uid",
         ".read": "true"
       }
   }
