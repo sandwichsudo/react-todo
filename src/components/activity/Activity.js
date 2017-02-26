@@ -21,12 +21,12 @@ const Activity = props => (
                         ))
                     }
                     </ul>
-                    { props.olderItems.length !=0 && !props.showOlderItems &&
+                    { props.olderItems.length !==0 && !props.showOlderItems &&
                         <div className="main-container"><button  className="button-wire"
                             onClick={ () => { props.toggleShowOlderItems() } }
                             >Show older items</button></div>
                     }
-                    { props.olderItems.length !=0 && props.showOlderItems && <ul className="list"> {
+                    { props.olderItems.length !==0 && props.showOlderItems && <ul className="list"> {
                         props.olderItems.map(item => (
                             <ActivityItem
                                 item={item}

@@ -13,6 +13,8 @@ import {
     stopInlineLoading,
     toggleShowOlderItems,
 } from '../actions/ui-actions';
+import { createTransactionEvent } from '../helpers/createEvent';
+import { TRIMMED_LOCAL_TRANSACTIONS } from '../config/constants';
 
 const loaded = (key) => {
     if (key) {
@@ -59,6 +61,9 @@ const onToggleProfileMenu = () => {
 
 const onToggleShowOlderItems = () => {
     store.dispatch(toggleShowOlderItems());
+    const event = createTransactionEvent('Show more transactions',
+        'All products', TRIMMED_LOCAL_TRANSACTIONS)
+    ReactGA.event(event);
 }
 
 export default {

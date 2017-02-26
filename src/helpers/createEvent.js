@@ -7,5 +7,5 @@ module.exports = {
             time: Date.now(),
             value,
         };
-    },
+    }
 }
