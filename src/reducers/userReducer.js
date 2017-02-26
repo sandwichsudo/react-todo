@@ -5,6 +5,7 @@ import {
     LOGOUT_SUCCESS,
 } from '../actions/action-types';
 import { arrayifyTransactions } from '../helpers/transformers';
+import { TRIMMED_LOCAL_TRANSACTIONS } from '../config/constants';
 const initialUserState = {
   user: {
       teams: {
@@ -15,15 +16,13 @@ const initialUserState = {
   }
 }
 
-const TRIMMED_LOCAL_TRANSACTIONS = 20;
-
 export default function(state = initialUserState, action) {
   switch(action.type) {
       case USER_AUTH_SUCCESS: {
           let items = action.user.teams ? action.user.teams[action.user.defaultTeam].transactionHistory: {};
           let userCopy = Object.assign({}, action.user);
           const sortedItems = arrayifyTransactions(items);
-          userCopy.concatedItems = sortedItems.slice(1, TRIMMED_LOCAL_TRANSACTIONS);
+          userCopy.concatedItems = sortedItems.slice(0, TRIMMED_LOCAL_TRANSACTIONS);
           userCopy.olderItems = sortedItems.slice(TRIMMED_LOCAL_TRANSACTIONS);
           console.log('user', userCopy);
           return Object.assign({}, state, { user: userCopy, currentTeam: userCopy.defaultTeam });
@@ -36,7 +35,7 @@ export default function(state = initialUserState, action) {
           currentTeamCopy.balance = Number(currentTeamCopy.balance) + Number(action.newTransactionEvent.value);
           const userCopy = Object.assign({}, state.user);
           const sortedItems = arrayifyTransactions(currentTeamCopy.transactionHistory);
-          userCopy.concatedItems = sortedItems.slice(1, TRIMMED_LOCAL_TRANSACTIONS);
+          userCopy.concatedItems = sortedItems.slice(0, TRIMMED_LOCAL_TRANSACTIONS);
           userCopy.olderItems = sortedItems.slice(TRIMMED_LOCAL_TRANSACTIONS);
           userCopy.teams[state.currentTeam] = currentTeamCopy;
           return {
@@ -50,7 +49,7 @@ export default function(state = initialUserState, action) {
           currentTeamCopy.balance = Number(currentTeamCopy.balance) + Number(action.productEvent.value);
           const userCopy = Object.assign({}, state.user);
           const sortedItems = arrayifyTransactions(currentTeamCopy.transactionHistory);
-          userCopy.concatedItems = sortedItems.slice(1, TRIMMED_LOCAL_TRANSACTIONS);
+          userCopy.concatedItems = sortedItems.slice(0, TRIMMED_LOCAL_TRANSACTIONS);
           userCopy.olderItems = sortedItems.slice(TRIMMED_LOCAL_TRANSACTIONS);
           userCopy.teams[state.currentTeam] = currentTeamCopy;
           return  {

@@ -12,9 +12,6 @@ import ReactGA from 'react-ga';
 import { formatPrice } from '../helpers/priceFormatting';
 import createEvent from '../helpers/createEvent';
 import createUrl from '../helpers/createUrl';
-import { arrayifyTransactions } from '../helpers/transformers';
-
-const MAX_TRANSACTIONS = 500;
 
 const createUser = (user) => {
     console.log('Creating user');

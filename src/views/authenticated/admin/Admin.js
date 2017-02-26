@@ -1,9 +1,7 @@
 import React from 'react';
 import { formatPrice } from '../../../helpers/priceFormatting';
 
-// Using "Stateless Functional Components"
-export default function(props) {
-    return (
+const Admin = (props) => (
         <div>
               <div className="main-container">
               <h1 className="in-app-title">Add items to the shop</h1>
@@ -36,7 +34,8 @@ export default function(props) {
             <ul className="list admin-list"> { props.usersList &&
                 Object.keys(props.usersList).map(key => (
                     <li key={ key } >
-                         { props.usersList[key].teams[props.currentTeam].balance < 0 && <div className="list-item-wrapper">
+                         { props.usersList[key] && props.usersList[key].teams && props.usersList[key].teams[props.currentTeam] &&
+                             props.usersList[key].teams[props.currentTeam].balance < 0 && <div className="list-item-wrapper">
                             <span className="name">{ props.usersList[key].displayName }</span>
                             <span className="owes">{ formatPrice(props.usersList[key].teams[props.currentTeam].balance) }</span>
                         </div>  }
@@ -62,4 +61,27 @@ export default function(props) {
 
         </div>
     );
-}
+
+Admin.propTypes = {
+    productsToVotes: React.PropTypes.object,
+    usersList: React.PropTypes.object,
+    handleSubmit: React.PropTypes.func,
+    handleProdNameChange: React.PropTypes.func,
+    handleCostNameChange: React.PropTypes.func,
+    prodCost: React.PropTypes.string,
+    prodName: React.PropTypes.string,
+    currentTeam: React.PropTypes.string,
+};
+
+Admin.defaultProps = {
+    productsToVotes: null,
+    usersList: null,
+    handleSubmit: () => {},
+    handleProdNameChange: () => {},
+    handleProdCostChange: () => {},
+    prodCost: '',
+    prodName: '',
+    currentTeam: '',
+};
+
+export default Admin;
