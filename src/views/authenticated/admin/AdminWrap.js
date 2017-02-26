@@ -46,21 +46,25 @@ class AdminWrap extends Component {
 
     generateShoppingList() {
         const usersList = this.props.usersList;
+        console.log('usersList', usersList);
         this.productsToVotes = {};
 
         for (var user in usersList) {
             if (usersList.hasOwnProperty(user)) {
-                const upvotedItems = usersList[user].teams['tvx-0001'].upvotedItems;
-                console.log(upvotedItems);
-                if (upvotedItems) {
-                    for (var itemId in upvotedItems) {
-                        if (upvotedItems.hasOwnProperty(itemId)) {
-                            if (!this.productsToVotes[itemId]) {
-                                this.productsToVotes[itemId] = { count:0 };
-                                console.log('this.productsToVotes', this.productsToVotes);
+                if (usersList[user].teams && usersList[user].teams['tvx-0001'])
+                {
+                    const upvotedItems = usersList[user].teams['tvx-0001'].upvotedItems;
+                    console.log(upvotedItems);
+                    if (upvotedItems) {
+                        for (var itemId in upvotedItems) {
+                            if (upvotedItems.hasOwnProperty(itemId)) {
+                                if (!this.productsToVotes[itemId]) {
+                                    this.productsToVotes[itemId] = { count:0 };
+                                    console.log('this.productsToVotes', this.productsToVotes);
+                                }
+                                let currentCount = this.productsToVotes[itemId].count;
+                                this.productsToVotes[itemId].count = currentCount + 1;
                             }
-                            let currentCount = this.productsToVotes[itemId].count;
-                            this.productsToVotes[itemId].count = currentCount + 1;
                         }
                     }
                 }
