@@ -5,13 +5,16 @@ module.exports = {
     getUserTransactionHistoryUrl: (uid, currentTeam) => {
         return `users/${uid}/teams/${currentTeam}/transactionHistory`;
     },
-    getUserArchiveTransactionHistoryUrl: (uid, currentTeam) => {
-        return `users/${uid}/teams/${currentTeam}/transactionArchive`;
+    getUserItemsHistoryUrl: (uid, currentTeam) => {
+        return `users/${uid}/teams/${currentTeam}/items`;
     },
     getUserBalanceUrl: (uid, currentTeam) => {
         return `users/${uid}/teams/${currentTeam}/balance`;
     },
     getUserItemMigrationUrl: (uid, currentTeam) => {
-        return `users/${uid}/teams/${currentTeam}/migratedItems`;
+        return `users/${uid}/accountInfo/migratedItems`;
+    },
+    getUserAccountInfo: (uid) => {
+        return `users/${uid}/accountInfo`;
     }
 }

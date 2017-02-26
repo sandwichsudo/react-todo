@@ -27,8 +27,9 @@ const createUser = (user) => {
     }
     const defaultTeam = 'tvx-0001';
     let teams = {};
-    teams[defaultTeam] = { balance: 0, migratedItems: true };
-    const newUser = { email, displayName, photoURL, teams, defaultTeam };
+    teams[defaultTeam] = { balance: 0 };
+    const accountInfo = { email, displayName, photoURL, migratedItems: true };
+    const newUser = { accountInfo, teams, defaultTeam };
     firebase.database().ref(`users/${uid}`).set(newUser)
         .then(() => {
             const userProvider = user.providerData[0].providerId;
@@ -247,19 +248,50 @@ const migrateUser = (uid, userTeam, items) => {
     return { transactionHistory, balance };
 }
 
+const itemMigrationCheck = (uid, userTeam) => {
+    // check for migrating items and fetch TransactionHistory
+    firebase.database().ref()
+        .child(createUrl.getUserItemsHistoryUrl(uid, userTeam))
+        .once('value').then((snapshot) => {
+            const userItems = snapshot.val();
+        });
+    const userItems = user.teams[userTeam].items;
+    const migratedUserItems = user.teams[userTeam].migratedItems;
+    console.log('userItems', userItems);
+    if (!migratedUserItems) {
+        console.log('Migrating user');
+        let { transactionHistory, balance } = migrateUser(userOb.uid, userTeam, userItems);
+        user.teams[userTeam].transactionHistory = transactionHistory;
+        user.teams[userTeam].balance = balance;
+    }
+    return currentTeam;
+}
+
 const fetchUser = (userOb) => {
-    let firebaseRef = firebase.database().ref(`users/${userOb.uid}`);
+    let firebaseRef = firebase.database().ref(`users/${userOb.uid}/accountInfo`);
     console.log('fetching user');
     // check if it is a new user
     firebaseRef.once('value').then((snapshot) => {
-        const user = snapshot.val();
-        if (!user) {
+        const accountInfo = snapshot.val();
+        if (!accountInfo) {
             console.log(`no user with id ${userOb.uid} found, creating user`);
             createUser(userOb);
         } else {
             console.log('got user!');
-            console.log(userOb);
-            const userTeam = user.defaultTeam;
+            console.log(accountInfo);
+
+            // check for migrating items and fetch TransactionHistory
+            const userTeam = accountInfo.defaultTeam;
+
+            firebase.database().ref()
+                .child(createUrl.getUserItemMigrationUrl(uid, currentTeam))
+                .once('value').then((snapshot) => {
+                    const hasMigratedItems = snapshot.val();
+                    if (hasMigratedItems) {
+                        itemMigrationCheck(uid, currentTeam);
+                    }
+                });
+
             const userItems = user.teams[userTeam].items;
             const migratedUserItems = user.teams[userTeam].migratedItems;
             console.log('userItems', userItems);
