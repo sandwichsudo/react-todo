@@ -228,31 +228,6 @@ const addToBalance = (uid, currentTeam, amountToAdd) => {
     });
 }
 
-const archiveTransactions = (uid, currentTeam, transactionHistory) => {
-    // do this when there are more than MAX_TRANSACTIONS
-    // on login
-    if (transactionHistory) {
-        const numberOfTransactions = Object.keys(transactionHistory).length;
-        console.log(`User has ${numberOfTransactions}`);
-        if (numberOfTransactions > MAX_TRANSACTIONS) {
-            let sortedTransactions = arrayifyTransactions(transactionHistory);
-            // get archivable transaction
-            const deleteableTransactions = sortedTransactions.slice(MAX_TRANSACTIONS);
-            console.log('Deleting old transactions', deleteableTransactions);
-            for (var i = 0; i < deleteableTransactions.length; i++) {
-                const transaction = deleteableTransactions[i];
-                delete transactionHistory[transaction.key];
-            }
-            const firebaseRef = firebase.database().ref()
-                .child(createUrl.getUserTransactionHistoryUrl(uid, currentTeam));
-            firebaseRef.set(transactionHistory);
-            console.log(transactionHistory);
-            return transactionHistory;
-        }
-        return transactionHistory;
-    }
-}
-
 const migrateUser = (uid, userTeam, items) => {
     const transactionHistory = {};
     let balance = 0;
@@ -294,9 +269,6 @@ const fetchUser = (userOb) => {
                 user.teams[userTeam].transactionHistory = transactionHistory;
                 user.teams[userTeam].balance = balance;
             }
-            user.teams[userTeam].transactionHistory =
-                archiveTransactions(userOb.uid, userTeam,
-                    user.teams[userTeam].transactionHistory);
             const userProvider = userOb.providerData[0].providerId;
             ReactGA.event({
                 category: 'Registration',
