@@ -21,11 +21,12 @@ export function removeTransactionSuccess(key, productEvent) {
         productEvent,
     };
 }
-
-export function userFetchSuccess(user) {
+export function userFetchSuccess(user, transactionHistory, balance) {
     return {
         type: USER_AUTH_SUCCESS,
-        user
+        user,
+        transactionHistory,
+        balance,
     };
 }
 

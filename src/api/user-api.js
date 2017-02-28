@@ -25,8 +25,8 @@ const createUser = (user) => {
     const defaultTeam = 'tvx-0001';
     let teams = {};
     teams[defaultTeam] = { balance: 0 };
-    const accountInfo = { email, displayName, photoURL, migratedItems: true };
-    const newUser = { accountInfo, teams, defaultTeam };
+    const accountInfo = { email, displayName, photoURL, defaultTeam, migratedItems: true };
+    const newUser = { accountInfo, teams };
     firebase.database().ref(`users/${uid}`).set(newUser)
         .then(() => {
             const userProvider = user.providerData[0].providerId;
@@ -245,23 +245,26 @@ const migrateUser = (uid, userTeam, items) => {
     return { transactionHistory, balance };
 }
 
-const itemMigrationCheck = (uid, userTeam) => {
-    // check for migrating items and fetch TransactionHistory
-    firebase.database().ref()
+const migrateItems = (uid, userTeam) => {
+    return firebase.database().ref()
         .child(createUrl.getUserItemsHistoryUrl(uid, userTeam))
         .once('value').then((snapshot) => {
             const userItems = snapshot.val();
+            console.log('Migrating user');
+            return migrateUser(uid, userTeam, userItems);
         });
-    const userItems = user.teams[userTeam].items;
-    const migratedUserItems = user.teams[userTeam].migratedItems;
-    console.log('userItems', userItems);
-    if (!migratedUserItems) {
-        console.log('Migrating user');
-        let { transactionHistory, balance } = migrateUser(userOb.uid, userTeam, userItems);
-        user.teams[userTeam].transactionHistory = transactionHistory;
-        user.teams[userTeam].balance = balance;
-    }
-    return currentTeam;
+}
+
+const finishedFetchingUser = (userProvider, accountInfo, userOb, transactionHistory, balance) => {
+    ReactGA.event({
+        category: 'Registration',
+        action: 'Login',
+        label: userProvider
+    });
+    UiApi.loaded();
+    const user = {...userOb, ...accountInfo };
+    store.dispatch(userFetchSuccess(user, transactionHistory, balance));
+    browserHistory.push('/');
 }
 
 const fetchUser = (userOb) => {
@@ -276,37 +279,29 @@ const fetchUser = (userOb) => {
         } else {
             console.log('got user!');
             console.log(accountInfo);
-
-            // check for migrating items and fetch TransactionHistory
-            const userTeam = accountInfo.defaultTeam;
-
-            firebase.database().ref()
-                .child(createUrl.getUserItemMigrationUrl(uid, currentTeam))
-                .once('value').then((snapshot) => {
-                    const hasMigratedItems = snapshot.val();
-                    if (hasMigratedItems) {
-                        itemMigrationCheck(uid, currentTeam);
-                    }
-                });
-
-            const userItems = user.teams[userTeam].items;
-            const migratedUserItems = user.teams[userTeam].migratedItems;
-            console.log('userItems', userItems);
-            if (!migratedUserItems) {
-                console.log('Migrating user');
-                let { transactionHistory, balance } = migrateUser(userOb.uid, userTeam, userItems);
-                user.teams[userTeam].transactionHistory = transactionHistory;
-                user.teams[userTeam].balance = balance;
-            }
             const userProvider = userOb.providerData[0].providerId;
-            ReactGA.event({
-                category: 'Registration',
-                action: 'Login',
-                label: userProvider
-            });
-            UiApi.loaded();
-            store.dispatch(userFetchSuccess(Object.assign({...userOb, ...user})));
-            browserHistory.push('/');
+            const currentTeam = accountInfo.defaultTeam;
+            // check for migrating items and fetch TransactionHistory
+
+            if (!accountInfo.migratedItems) {
+                migrateItems(userOb.uid, currentTeam).then((data) => {
+                    finishedFetchingUser(userProvider, accountInfo, userOb,
+                        data.transactionHistory, data.balance);
+                });
+            } else {
+                firebase.database().ref(createUrl
+                    .getUserTransactionHistoryUrl(userOb.uid, currentTeam))
+                    .once('value').then((snapshot) => {
+                    const transactionHistory = snapshot.val();
+                    console.log('got transactionHistory', transactionHistory);
+                    firebase.database().ref(createUrl.getUserBalanceUrl(userOb.uid, currentTeam))
+                        .once('value').then((snapshot) => {
+                            const balance = snapshot.val();
+                            console.log('got balance', balance);
+                            finishedFetchingUser(userProvider, accountInfo, userOb, transactionHistory, balance);
+                    });
+                });
+            }
         }
     });
 };

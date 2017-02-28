@@ -14,7 +14,7 @@ class ActivityWrap extends Component {
     }
 
     handleRemoveProduct(id) {
-        const product = this.props.user.teams[this.props.currentTeam].transactionHistory[id];
+        const product = this.props.transactionHistory[id];
         let cost = formatPrice(Math.abs(product.value));
         let message = `Sure? This will restore ${cost} to your balance.`;
         if (product.label==="Credit") {
@@ -49,6 +49,7 @@ const mapStateToProps = function(store) {
     user: store.userReducer.user,
     currentTeam: store.userReducer.currentTeam,
     showOlderItems: store.uiReducer.showOlderItems,
+    transactionHistory: store.userReducer.transactionHistory,
   };
 }
 

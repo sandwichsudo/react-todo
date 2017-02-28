@@ -7,54 +7,53 @@ import {
 import { arrayifyTransactions } from '../helpers/transformers';
 import { TRIMMED_LOCAL_TRANSACTIONS } from '../config/constants';
 const initialUserState = {
-  user: {
-      teams: {
-          'tvx-0001' : {
-              balance: 0,
-          }
-      }
-  }
+  user: {},
+  transactionHistory: {},
+  balance:0,
+  currentTeam: 'tvx-0001',
 }
 
 export default function(state = initialUserState, action) {
   switch(action.type) {
       case USER_AUTH_SUCCESS: {
-          let items = action.user.teams ? action.user.teams[action.user.defaultTeam].transactionHistory: {};
           let userCopy = Object.assign({}, action.user);
+          let items = action.transactionHistory;
           const sortedItems = arrayifyTransactions(items);
           userCopy.concatedItems = sortedItems.slice(0, TRIMMED_LOCAL_TRANSACTIONS);
           userCopy.olderItems = sortedItems.slice(TRIMMED_LOCAL_TRANSACTIONS);
           console.log('user', userCopy);
-          return Object.assign({}, state, { user: userCopy, currentTeam: userCopy.defaultTeam });
+          return Object.assign({}, state, { user: userCopy, balance: action.balance,
+            transactionHistory: items });
       }
       case ADD_TRANSACTION_SUCCESS: {
-          let currentTeamCopy = Object.assign({}, state.user.teams[state.currentTeam]);
-          currentTeamCopy.transactionHistory = currentTeamCopy.transactionHistory ? currentTeamCopy.transactionHistory : {};
+          let stateCopy = Object.assign({}, state);
           const key = action.key;
-          currentTeamCopy.transactionHistory[key] = action.newTransactionEvent;
-          currentTeamCopy.balance = Number(currentTeamCopy.balance) + Number(action.newTransactionEvent.value);
+          stateCopy.transactionHistory[key] = action.newTransactionEvent;
+          const newBalance = Number(stateCopy.balance) + Number(action.newTransactionEvent.value);
           const userCopy = Object.assign({}, state.user);
-          const sortedItems = arrayifyTransactions(currentTeamCopy.transactionHistory);
+          const sortedItems = arrayifyTransactions(stateCopy.transactionHistory);
           userCopy.concatedItems = sortedItems.slice(0, TRIMMED_LOCAL_TRANSACTIONS);
           userCopy.olderItems = sortedItems.slice(TRIMMED_LOCAL_TRANSACTIONS);
-          userCopy.teams[state.currentTeam] = currentTeamCopy;
           return {
                 ...state,
                 user: userCopy,
+                balance: newBalance,
+                transactionHistory: stateCopy.transactionHistory,
             };
       }
       case REMOVE_TRANSACTION_SUCCESS: {
-          let currentTeamCopy = Object.assign({}, state.user.teams[state.currentTeam]);
-          delete currentTeamCopy.transactionHistory[action.key];
-          currentTeamCopy.balance = Number(currentTeamCopy.balance) + Number(action.productEvent.value);
+          let stateCopy = Object.assign({}, state);
+          delete stateCopy.transactionHistory[action.key];
+          const newBalance = Number(stateCopy.balance) + Number(action.productEvent.value);
           const userCopy = Object.assign({}, state.user);
-          const sortedItems = arrayifyTransactions(currentTeamCopy.transactionHistory);
+          const sortedItems = arrayifyTransactions(stateCopy.transactionHistory);
           userCopy.concatedItems = sortedItems.slice(0, TRIMMED_LOCAL_TRANSACTIONS);
           userCopy.olderItems = sortedItems.slice(TRIMMED_LOCAL_TRANSACTIONS);
-          userCopy.teams[state.currentTeam] = currentTeamCopy;
           return  {
                 ...state,
                 user: userCopy,
+                balance: newBalance,
+                transactionHistory: stateCopy.transactionHistory,
             };
       }
       case LOGOUT_SUCCESS:
