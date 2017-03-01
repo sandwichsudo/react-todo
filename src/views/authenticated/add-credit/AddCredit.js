@@ -13,7 +13,8 @@ export default function(props) {
                     <form onSubmit={props.handelSubmit} >
                        <label className="credit-label">
                            <span className="credit-label-text">£</span>
-                           <input value={props.creditAmount} onChange={props.handleCreditChange} className="input credit-input" type="number" step="0.01" placeholder="e.g 1.20"/>
+                           <input value={props.creditAmount} onChange={props.handleCreditChange} className="input credit-input"
+                               type="number" step="0.01" min="0.01" max="100" placeholder="e.g 1.20"/>
                         </label>
                         <div className="button-wrap">
                            <button type="submit" className="primary-button">Add credit</button>

@@ -35,8 +35,6 @@ const createUser = (user) => {
                 action: 'Registration',
                 label: userProvider
             });
-            store.dispatch(userFetchSuccess(Object.assign({...user, ...newUser})));
-            UiApi.loaded();
             browserHistory.push('/');
         })
         .catch((e) => {
@@ -263,7 +261,8 @@ const finishedFetchingUser = (userProvider, accountInfo, userOb, transactionHist
     });
     UiApi.loaded();
     const user = {...userOb, ...accountInfo };
-    store.dispatch(userFetchSuccess(user, transactionHistory, balance));
+    const th = transactionHistory ? transactionHistory : {};
+    store.dispatch(userFetchSuccess(user, th, balance));
     browserHistory.push('/');
 }
 

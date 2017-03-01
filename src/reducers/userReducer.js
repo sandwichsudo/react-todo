@@ -18,11 +18,14 @@ export default function(state = initialUserState, action) {
       case USER_AUTH_SUCCESS: {
           let userCopy = Object.assign({}, action.user);
           let items = action.transactionHistory;
+          console.log('transactionHistory', items);
           const sortedItems = arrayifyTransactions(items);
           userCopy.concatedItems = sortedItems.slice(0, TRIMMED_LOCAL_TRANSACTIONS);
           userCopy.olderItems = sortedItems.slice(TRIMMED_LOCAL_TRANSACTIONS);
           console.log('user', userCopy);
-          return Object.assign({}, state, { user: userCopy, balance: action.balance,
+          const balance = Number(action.balance);
+          console.log('balance', balance);
+          return Object.assign({}, state, { user: userCopy, balance: balance,
             transactionHistory: items });
       }
       case ADD_TRANSACTION_SUCCESS: {
@@ -57,7 +60,7 @@ export default function(state = initialUserState, action) {
             };
       }
       case LOGOUT_SUCCESS:
-          return Object.assign({}, state, { user: {}});
+          return Object.assign({}, state, initialUserState);
       default: return state;
   }
 }
