@@ -16,37 +16,45 @@ TODO:
 - [x] animation when loading
 - [x] add button to remove items from basket
 - [x] proper icons - fav icon
-- [ ] correct admins for a team model
 - [x] new user signs up and just sees loading screen
-- [ ] link up form inputs on login
-- [ ] barcode/product lookup integration (http://www.upcitemdb.com/api/explorer#!/lookup/get_trial_lookup)
+- [x] link up form inputs on login
 - [x] Nav - non admin screen not good
 - [x] Cache basic routes (working on web)
 - [x] Add 'Clear tab' button
-- [ ] Add activity log - product added to tab, product removed from tab, tab cleared, amount owed before and after.
+- [x] Add activity log - product added to tab, product removed from tab, tab cleared, amount owed before and after.
 - [x] Collapse individual product entries into same row
-- [ ] Offline screen
+- [x] Out of stock flag on product, and maybe an 'order more' button.
 - [x] sign in twice with same email tries to create another user
-- [ ] cannot remove from tab
+- [x] cannot remove from tab
 - [x] better messaging for signup/login
+- [x] add money to your tab upfront
+- [ ] only fetch last 50 items
+- [ ] sort on fetch items
+- [ ] bug where shopping list only appears on second load
+- [ ] better voting for products
+- [ ] add product types to enable filtering
+- [ ] product filtering
+- [ ] notifications to increase use involement
+- [ ] 'about' screen to explain the tuckshop better
 - [ ] placeholders in email/password get cut off on safari
-- [ ] confirm 'clear tab' button
-- [ ] undo 'clear tab'
-- [ ] add money to your tab upfront
+- [ ] confirm remove item screen
 - [ ] private browsing mode in safari
 - [ ] Handle bad user creation - no data
-- [ ] Out of stock flag on product, and maybe an 'order more' button.
-- [ ] Work out how to cache database data for offline use:
+- [ ] firebase does offline automatically - move the redux events and test
+- [ ] barcode/product lookup integration (http://www.upcitemdb.com/api/explorer#!/lookup/get_trial_lookup)
+- [ ] support multiple admins for a team
+- [ ] support entering a team to join
+- [ ] host images in storage
+- [ ] improve product entry - add images
+- [ ] better placeholder images
+- [ ] explain adding credit better.
 
-looking into caching firebase requests:
 
--could add 'isOffline' to ui store so that we can show messages when the user tries to do things currently unsupported in offline mode.
-
-Looks like the main issue on mobile is the onAuth change state doesn't trigger, so you're stuck with no user object. need to explore caching the redux store. https://github.com/rt2zz/redux-persist
-
-Could then cache the products list.
-
-Question is how we would sync the cached versions with firebase. And when? Would probably need an 'offline changes' store which would keep track of 'stuff to add' and 'stuff to remove'
+I want to raise money for charity through this
+because not everyone tops up, will have to add the percentage to each product cost - can do this through the spreadsheet
+Will need to add a baseCost property to help work out money raised. may also have a 'donation' property to reflect this. probably don't need both, but better safe than sorry.
+will need to have a team total for money raised that everyone can edit.
+would like to let people vote for the charity
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
