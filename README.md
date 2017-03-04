@@ -29,8 +29,7 @@ TODO:
 - [x] better messaging for signup/login
 - [x] add money to your tab upfront
 - [x] only fetch last 50 items
-- [ ] sort on fetch items
-- [ ] bug where shopping list only appears on second load
+- [x] bug where shopping list only appears on second load
 - [ ] better voting for products
 - [ ] add product types to enable filtering
 - [ ] product filtering

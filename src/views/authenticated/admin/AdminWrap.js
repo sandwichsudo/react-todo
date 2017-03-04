@@ -13,7 +13,7 @@ class AdminWrap extends Component {
         this.state = { prodCost: '', prodName: '' };
     }
 
-    componentDidMount() {
+    componentWillMount() {
        AdminApi.getUsers();
        this.generateShoppingList();
     }
