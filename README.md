@@ -28,7 +28,7 @@ TODO:
 - [x] cannot remove from tab
 - [x] better messaging for signup/login
 - [x] add money to your tab upfront
-- [ ] only fetch last 50 items
+- [x] only fetch last 50 items
 - [ ] sort on fetch items
 - [ ] bug where shopping list only appears on second load
 - [ ] better voting for products

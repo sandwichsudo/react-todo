@@ -290,6 +290,7 @@ const fetchUser = (userOb) => {
             } else {
                 firebase.database().ref(createUrl
                     .getUserTransactionHistoryUrl(userOb.uid, currentTeam))
+                    .limitToFirst(50)
                     .once('value').then((snapshot) => {
                     const transactionHistory = snapshot.val();
                     console.log('got transactionHistory', transactionHistory);
