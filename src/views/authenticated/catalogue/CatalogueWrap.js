@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import ProductsApi from '../../../api/products-api';
 
 class CatalogueWrap extends Component {
-
-    componentDidMount() {
-       ProductsApi.getProducts(this.props.currentTeam);
+    componentWillMount() {
+        ProductsApi.getProducts(this.props.currentTeam,
+            this.props.params.category);
+                console.log('category:', this.props.params.category);
     }
 
     render() {
@@ -18,6 +19,21 @@ class CatalogueWrap extends Component {
         );
     }
 }
+
+CatalogueWrap.propTypes = {
+    currentTeam: React.PropTypes.string,
+    category: React.PropTypes.string,
+    productList: React.PropTypes.object,
+    user: React.PropTypes.object,
+};
+
+CatalogueWrap.defaultProps = {
+    currentTeam: "",
+    category: "",
+    productList: {},
+    user: {},
+};
+
 const mapStateToProps = function(store) {
   return {
      productList: store.productsReducer.productList,

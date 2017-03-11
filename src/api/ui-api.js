@@ -47,7 +47,9 @@ const showNewNotification = (notification, oldTimer) => {
 }
 
 const onRouteChange = (data) => {
-    let title = browserHistory.getCurrentLocation().pathname.replace('/', '');
+    const items = browserHistory.getCurrentLocation().pathname.split('/');
+    const itemsLength = items.length;
+    let title = items[itemsLength-1];
     if (!title) {
         title = 'Shop';
     }

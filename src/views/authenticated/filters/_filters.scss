@@ -1,0 +1,38 @@
+.filter-drinks {
+  background: url('./views/authenticated/filters/drinks.png');
+}
+.filter-savouries {
+  background: url('./views/authenticated/filters/savouries.png');
+}
+.filter-sweets {
+  background: url('./views/authenticated/filters/sweets.png');
+}
+.filter-all {
+  background: url('./views/authenticated/filters/all.png');
+}
+
+
+.filter-link {
+  line-height: 117px;
+  height: 117px;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 100%;
+  display: block;
+  font-family: Lato;
+	font-size: 22px;
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+	letter-spacing: 5.5px;
+	text-align: center;
+	color: white;
+}
+
+
+.filter-list {
+    background-color: #35749a;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}

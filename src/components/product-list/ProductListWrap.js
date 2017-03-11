@@ -9,7 +9,6 @@ class ProductListWrap extends Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleRestockRequest = this.handleRestockRequest.bind(this);
-
     }
 
     handleSubmit(product) {

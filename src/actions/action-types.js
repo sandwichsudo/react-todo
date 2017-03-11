@@ -7,7 +7,6 @@ export const REMOVE_TRANSACTION_SUCCESS = 'REMOVE_TRANSACTION_SUCCESS';
 
 // product actions
 export const PRODUCT_LIST_SUCCESS = 'PRODUCT_LIST_SUCCESS';
-export const ADD_PRODUCT = 'ADD_PRODUCT';
 
 //ui actions
 export const VIEW_LOADED = 'VIEW_LOADED';
