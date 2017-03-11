@@ -7,6 +7,7 @@ export default function(props) {
             <li><Link className="filter-link filter-all" to="/products/all">All</Link></li>
             <li><Link className="filter-link filter-sweets" to="/products/sweets">Sweets</Link></li>
             <li><Link className="filter-link filter-savouries" to="/products/savouries">Savouries</Link></li>
+            <li><Link className="filter-link filter-lighter" to="/products/lighter">Lighter</Link></li>
             <li><Link className="filter-link filter-drinks" to="/products/drinks">Drinks</Link></li>
         </ul>
     );
