@@ -19,7 +19,11 @@ export default function(props) {
             put money in the cash box up front so stock could be bought.</p>
             <p>V3 with the TuckShop self-sustaining, it needed a new mission.
             Raising money for charity seemed like a good goal. That's where we are now :) </p>
-        <h2 id="which-charity">What charity are we supporting? </h2>
+        <h2>How are we raising money for charity?</h2>
+        <p>When stock is bought, a small markup is added, based on the base price of
+             the item and it's popularity. When a stock take is done, a portion of
+            the float is put aside to donate to a charity.</p>
+        <h2>What charity are we supporting? </h2>
         <p>For the first few months, I'll be donating money raised to the <a href="http://www.specialeffect.org.uk/">Special Effect</a>, a
             UK based charity which helps people with disabilities enjoy
             playing video games. In future, I hope to add features to the app
