@@ -27,7 +27,7 @@ export default function(props) {
         <p>For the first few months, I'll be donating money raised to <a href="http://www.specialeffect.org.uk/">Special Effect</a>, a
             UK based charity which helps people with disabilities to
             play video games. They do amazing work, often with people with
-            extreamly limited mobility, helping them play and interact with the
+            extremely limited mobility, helping them play and interact with the
             people around them. In future, I hope to add features to the app
             to let people choose the charity we donate to.
             </p>
