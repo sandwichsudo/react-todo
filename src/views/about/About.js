@@ -24,12 +24,14 @@ export default function(props) {
              the item and it's popularity. When a stock take is done, a portion of
             the float is put aside to donate to a charity.</p>
         <h2>What charity are we supporting? </h2>
-        <p>For the first few months, I'll be donating money raised to the <a href="http://www.specialeffect.org.uk/">Special Effect</a>, a
-            UK based charity which helps people with disabilities enjoy
-            playing video games. In future, I hope to add features to the app
+        <p>For the first few months, I'll be donating money raised to <a href="http://www.specialeffect.org.uk/">Special Effect</a>, a
+            UK based charity which helps people with disabilities to
+            play video games. They do amazing work, often with people with
+            extreamly limited mobility, helping them play and interact with the
+            people around them. In future, I hope to add features to the app
             to let people choose the charity we donate to.
             </p>
-            <h2>Feedback, suggestions, complaints.</h2>
+            <h2>Feedback, suggestions, issues.</h2>
             <p>There are a few ways you can get involved:</p>
             <ul>
                 <li>Send an email to <a href="gilly.ames@travelex.com">Gilly Ames</a>, or slack to @games</li>
