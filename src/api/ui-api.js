@@ -12,6 +12,7 @@ import {
     startInlineLoading,
     stopInlineLoading,
     toggleShowOlderItems,
+    closeProfileMenu,
 } from '../actions/ui-actions';
 import { createTransactionEvent } from '../helpers/createEvent';
 import { TRIMMED_LOCAL_TRANSACTIONS } from '../config/constants';
@@ -55,6 +56,7 @@ const onRouteChange = (data) => {
     }
     ReactGA.pageview(window.location.pathname);
     store.dispatch(routeChange(title));
+    store.dispatch(closeProfileMenu());
 }
 
 const onToggleProfileMenu = () => {
@@ -64,7 +66,7 @@ const onToggleProfileMenu = () => {
 const onToggleShowOlderItems = () => {
     store.dispatch(toggleShowOlderItems());
     const event = createTransactionEvent('Show more transactions',
-        'All products', TRIMMED_LOCAL_TRANSACTIONS)
+        'All products', TRIMMED_LOCAL_TRANSACTIONS, 0)
     ReactGA.event(event);
 }
 

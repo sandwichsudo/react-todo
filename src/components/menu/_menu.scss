@@ -5,6 +5,9 @@
     font-size: 18px;
     width: 100%;
     padding: 18px;
+    text-decoration: none;
+    text-align: center;
+    box-sizing: border-box;
     &:hover {
         background-color: $hover-state-color;
         color: $accent-color;

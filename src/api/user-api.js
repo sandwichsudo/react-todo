@@ -2,6 +2,7 @@ var firebase = require('firebase/app');
 import { browserHistory } from 'react-router';
 import store from '../store';
 import UiApi from './ui-api';
+import ProductsApi from './products-api';
 import {
     addTransactionSuccess,
     removeTransactionSuccess,
@@ -64,26 +65,28 @@ const logout = () => {
     });
 }
 
-const removeTransactionFromHistory = (uid, key, currentTeam, price, name) => {
+const removeTransactionFromHistory = (uid, key, currentTeam, product) => {
     console.log('Removing item with key: ', key);
     UiApi.startLoading(key);
 
     firebase.database().ref().child(`${createUrl.getUserTransactionHistoryUrl(uid, currentTeam)}/${key}`).remove()
         .then(() => {
             const productEvent = createEvent
-                .createTransactionEvent('Remove from tab', name,
-                    -Number(price));
+                .createTransactionEvent('Remove from tab', product.name,
+                    -Number(product.value), Number(product.donation));
             console.log('removed product', productEvent);
+            const donationValue = Number(product.donation);
+            ProductsApi.updateDonation(currentTeam, donationValue);
             ReactGA.event(productEvent);
             store.dispatch(removeTransactionSuccess(key, productEvent));
             let firebaseRefBalance = firebase.database().ref().child(createUrl
                     .getUserBalanceUrl(uid, currentTeam));
             firebaseRefBalance.once('value').then((snapshot) => {
                 const balance = snapshot.val();
-                const newBalance = Number(balance) - Number(price);
+                const newBalance = Number(balance) - Number(product.value);
                 firebaseRefBalance.set(newBalance);
                 console.log('old balance', balance);
-                console.log('newProduct.prodCost', price);
+                console.log('newProduct.prodCost', product.value);
                 console.log('new balance', newBalance);
                 event.oldBalance = balance;
                 event.newBalance = newBalance;
@@ -159,7 +162,9 @@ const createUserFromPassword = (email, password) => {
 
 const addTransactionToHistory = (uid, newProduct, currentTeam,
         notificationTimer) => {
-    const event = createEvent.createTransactionEvent('Add to tab', newProduct.prodName, -Number(newProduct.prodCost));
+    const event = createEvent
+        .createTransactionEvent('Add to tab', newProduct.prodName,
+            -Number(newProduct.prodCost), -Number(newProduct.donation));
     ReactGA.event(event);
     let firebaseRefBalance = firebase.database().ref().child(createUrl
             .getUserBalanceUrl(uid, currentTeam));
@@ -169,6 +174,7 @@ const addTransactionToHistory = (uid, newProduct, currentTeam,
         firebaseRefBalance.set(newBalance);
         event.oldBalance = balance;
         event.newBalance = newBalance;
+        ProductsApi.updateDonation(currentTeam, Number(newProduct.donation));
         console.log(event);
         let firebaseRefTH = firebase.database().ref().child(createUrl.getUserTransactionHistoryUrl(uid, currentTeam));
         const transactionHistoryKey = firebaseRefTH.push(event).key;
@@ -187,7 +193,7 @@ const upvoteRestock = (uid, product, currentTeam) => {
     let firebaseRef = firebase.database().ref().child(createUrl.getUserUpvotedItemUrl(uid, currentTeam, product.id));
     firebaseRef.set(1);
 
-    ReactGA.event(createEvent.createTransactionEvent('Request restock', product.prodName, 1));
+    ReactGA.event(createEvent.createTransactionEvent('Request restock', product.prodName, 1, 0));
     UiApi.showNewNotification({
         message:`Thanks, you voted to restock ${product.prodName}!`,
     });
@@ -218,7 +224,7 @@ const addTransaction = (uid, currentTeam, event) => {
 
 const addToBalance = (uid, currentTeam, amountToAdd) => {
     updateBalance(uid, currentTeam, amountToAdd).then(() => {
-        const event = createEvent.createTransactionEvent('Add credit', 'Credit', Number(amountToAdd).toFixed(0));
+        const event = createEvent.createTransactionEvent('Add credit', 'Credit', Number(amountToAdd).toFixed(0), 0);
         ReactGA.event(event);
         addTransaction(uid, currentTeam, event);
     });
@@ -230,7 +236,9 @@ const migrateUser = (uid, userTeam, items) => {
     for (var itemKey in items) {
         if (items.hasOwnProperty(itemKey)) {
             const item = items[itemKey];
-            const event = createEvent.createTransactionEvent('Item migration', item.prodName, -Number(item.prodCost));
+            const event = createEvent
+                .createTransactionEvent('Item migration',
+                    item.prodName, -Number(item.prodCost), 0);
             transactionHistory[itemKey] = event;
             balance -= item.prodCost;
         }
@@ -280,6 +288,7 @@ const fetchUser = (userOb) => {
             console.log(accountInfo);
             const userProvider = userOb.providerData[0].providerId;
             const currentTeam = accountInfo.defaultTeam;
+            ProductsApi.getDonation(currentTeam);
             // check for migrating items and fetch TransactionHistory
 
             if (!accountInfo.migratedItems) {

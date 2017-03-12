@@ -8,6 +8,7 @@ import {
     STOP_LOADING_ITEM,
     START_LOADING_ITEM,
     TOGGLE_SHOW_OLDER_ITEMS,
+    CLOSE_PROFILE_MENU,
 } from '../actions/action-types';
 
 const initialUIState = {
@@ -66,6 +67,11 @@ export default function(state = initialUIState, action) {
       case TOGGLE_PROFILE_MENU: {
           let stateCopy = Object.assign({}, state);
           stateCopy.profileMenuOpen = !state.profileMenuOpen;
+          return stateCopy;
+      }
+      case CLOSE_PROFILE_MENU: {
+          let stateCopy = Object.assign({}, state);
+          stateCopy.profileMenuOpen = false;
           return stateCopy;
       }
       case TOGGLE_SHOW_OLDER_ITEMS: {

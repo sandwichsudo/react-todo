@@ -23,7 +23,7 @@ class ActivityWrap extends Component {
         let result = confirm(message);
         if (result) {
             UserApi.removeTransactionFromHistory(this.props.user.uid, id,
-            this.props.currentTeam, product.value, product.label);
+            this.props.currentTeam, product);
         }
     }
 

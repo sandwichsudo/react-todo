@@ -1,10 +1,15 @@
 var firebase = require('firebase/app');
 import store from '../store';
-import { productListSuccess, productAddSuccess } from '../actions/product-actions';
+import { productListSuccess, productAddSuccess,
+    fetchCharityDonationSuccess, updateCharityDonation } from '../actions/product-actions';
 import UiApi from './ui-api';
 
 const getProductsUrl = (currentTeam) => {
     return `teams/${currentTeam}/products`;
+}
+
+const getDonationUrl = (currentTeam) => {
+    return `teams/${currentTeam}/donation`;
 }
 
 const filterByCategory = (val, category) => {
@@ -24,6 +29,15 @@ const filterByCategory = (val, category) => {
     }
     return val;
 }
+
+const getDonation = (currentTeam) => {
+    let firebaseRef = firebase.database().ref().child(getDonationUrl(currentTeam));
+    return firebaseRef.once('value').then(response => {
+        const donation = response.val();
+        store.dispatch(fetchCharityDonationSuccess(donation));
+        return donation;
+    });
+};
 
 export default {
     getProducts: (currentTeam, category) => {
@@ -45,4 +59,12 @@ export default {
             message:`${newProduct.prodName} added to shop!`,
         });
     },
+    updateDonation: (currentTeam, charityDonationUpdate) => {
+        getDonation(currentTeam).then((donation) => {
+            firebase.database().ref().child(getDonationUrl(currentTeam))
+                .set(charityDonationUpdate+donation);
+            store.dispatch(updateCharityDonation(charityDonationUpdate));
+        });
+    },
+    getDonation,
 }

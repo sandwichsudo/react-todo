@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Catalogue from './Catalogue';
+import CharityBalanceWrap from '../../../components/charity-balance/CharityBalanceWrap';
+
 import { connect } from 'react-redux';
 import ProductsApi from '../../../api/products-api';
 
@@ -12,10 +14,13 @@ class CatalogueWrap extends Component {
 
     render() {
         return (
-            <Catalogue
-                productList={this.props.productList}
-                user={this.props.user}
-                />
+            <div>
+                <CharityBalanceWrap/>
+                <Catalogue
+                    productList={this.props.productList}
+                    user={this.props.user}
+                    />
+            </div>
         );
     }
 }
