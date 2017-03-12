@@ -35,7 +35,7 @@ export default function(props) {
             <p>There are a few ways you can get involved:</p>
             <ul>
                 <li>Send an email to <a href="gilly.ames@travelex.com">Gilly Ames</a>, or slack to @games</li>
-                <li>Raise an issue on <a href="https://github.com/sandwichsudo/react-todo/issues">React-ToDo GitHub</a>.</li>
+                <li>Raise an issue on <a href="https://github.com/sandwichsudo/tuckshop/issues">TuckShop GitHub</a>.</li>
             </ul>
 
         </div>
