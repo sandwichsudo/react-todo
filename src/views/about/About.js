@@ -34,7 +34,7 @@ export default function(props) {
             <h2>Feedback, suggestions, issues.</h2>
             <p>There are a few ways you can get involved:</p>
             <ul>
-                <li>Send an email to <a href="gilly.ames@travelex.com">Gilly Ames</a>, or slack to @games</li>
+                <li>Send an email to <a href="mailto:gilly.ames@travelex.com?subject=TuckShop">Gilly Ames</a>, or slack to @games</li>
                 <li>Raise an issue on <a href="https://github.com/sandwichsudo/tuckshop/issues">TuckShop GitHub</a>.</li>
             </ul>
 
