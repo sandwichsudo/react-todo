@@ -23,6 +23,6 @@ export default function() {
           </g>
       </svg>
       <span className="activity-empty-text">Ready to go!</span>
-      <span className="activity-empty-subtext">When you buy a snack, or add credit to your account, you'll see it appear here.</span>
+      <span className="activity-empty-subtext">When you buy a snack, or add cash to your account, you'll see it appear here.</span>
     </div>
 )};

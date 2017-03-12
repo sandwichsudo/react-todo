@@ -5,11 +5,12 @@ export default function(props) {
         <div className="form-wrap">
             {<div>
                 <div className="main-container">
-                    <h2 className="in-app-title">{'How much credit do you want to add?'}</h2>
-                    <p className="add-credit-text">To add credit to your account, put the cash in the TuckShop box and
-                    enter the amount in here.</p>
-                    <p className="add-credit-text">It gets credited to your account, so you
-                    never need to worry about exact change.</p>
+                    <h2 className="in-app-title">Add cash to your account</h2>
+                    <ol className="add-credit-list">
+                        <li className="add-credit-item"><span className="add-credit-text">Put the cash in the cash box.</span></li>
+                        <li className="add-credit-item"><span className="add-credit-text">Enter the amount below to add it to your account.</span></li>
+                    </ol>
+
                     <form onSubmit={props.handelSubmit} >
                        <label className="credit-label">
                            <span className="credit-label-text">£</span>
@@ -17,7 +18,7 @@ export default function(props) {
                                type="number" step="0.01" min="0.01" max="100" placeholder="e.g 1.20"/>
                         </label>
                         <div className="button-wrap">
-                           <button type="submit" className="primary-button">Add credit</button>
+                           <button type="submit" className="primary-button">Add cash</button>
                         </div>
                     </form>
                 </div>

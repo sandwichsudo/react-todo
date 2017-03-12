@@ -17,7 +17,7 @@ class ActivityWrap extends Component {
         const product = this.props.transactionHistory[id];
         let cost = formatPrice(Math.abs(product.value));
         let message = `Sure? This will restore ${cost} to your balance.`;
-        if (product.label==="Credit") {
+        if (product.label==="Credit" || product.label==="Cash") {
             message = `Sure? This will remove ${cost} from your balance.`;
         }
         let result = confirm(message);

@@ -8,14 +8,48 @@
     margin-bottom: 30px;
 }
 
-.add-credit-text {
-    color: $color-steel-two;
-}
-
 .credit-label-text {
     position: absolute;
     font-size: 20px;
     line-height: 47px;
     color: $heading-text-color;
     margin-left: 5px;
+
+}
+
+.add-credit-list {
+	counter-reset: credit-counter;
+    list-style: none;
+}
+.add-credit-item:before {
+	content: counter(credit-counter);
+	counter-increment: credit-counter;
+    border-radius: 20px;
+    width: 18px;
+    height: 20px;
+    padding: 7px;
+    color: $primary-color;
+    font-weight: bold;
+    position: absolute;
+    left: 18px;
+    text-align: center;
+    border: solid 1px $primary-color;
+    display: inline-block;
+    vertical-align: sub;
+}
+
+.add-credit-item {
+    color: $color-steel-two;
+    height: 40px;
+    padding-left: 10px;
+}
+
+.add-credit-text {
+    vertical-align: sub;
+    display: inline-block;
+}
+
+.money-icon {
+    margin-right: 5px;
+    font-size: 14px;
 }

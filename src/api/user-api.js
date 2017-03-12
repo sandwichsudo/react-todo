@@ -224,7 +224,7 @@ const addTransaction = (uid, currentTeam, event) => {
 
 const addToBalance = (uid, currentTeam, amountToAdd) => {
     updateBalance(uid, currentTeam, amountToAdd).then(() => {
-        const event = createEvent.createTransactionEvent('Add credit', 'Credit', Number(amountToAdd).toFixed(0), 0);
+        const event = createEvent.createTransactionEvent('Add cash', 'Cash', Number(amountToAdd).toFixed(0), 0);
         ReactGA.event(event);
         addTransaction(uid, currentTeam, event);
     });

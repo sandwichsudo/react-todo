@@ -7,8 +7,8 @@ const ActivityItem = props => (
     <li>
         <div className="basket-item-wrapper">
             <div className="basket-item-info-wrapper">
-                { props.item.label !== "Credit"  && <img className="basket-item-img" alt="snack" src={sweet} height="30" width="30"></img> }
-                { props.item.label === "Credit" && <span className="basket-item-img basket-item-money" >£</span> }
+                { props.item.label !== "Credit" && props.item.label !== "Cash"  && <img className="basket-item-img" alt="snack" src={sweet} height="30" width="30"></img> }
+                { (props.item.label === "Credit" || props.item.label === "Cash")  && <span className="basket-item-img basket-item-money" >£</span> }
                 <span className="basket-item-name">{ props.item.label ? props.item.label : props.item.action }</span>
             </div>
             <div className="basket-item-action-wrapper">

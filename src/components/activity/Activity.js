@@ -4,7 +4,7 @@ import ActivityEmpty from './ActivityEmpty';
 import { Link } from 'react-router';
 const Activity = props => (
         <div>
-            <Link to="/add-credit" className="button-wire add-credit"><span className="add-credit-button-text">Add credit</span></Link>
+            <Link to="/add-credit" className="button-wire add-credit"><span className="add-credit-button-text">Add Cash</span></Link>
             { !!props.items.length &&
                 <div>
                     <div className="main-container">
