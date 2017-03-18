@@ -29,7 +29,7 @@ class MainLayout extends Component {
 
     render() {
         return (
-            <div>
+            <div className="application">
                 <LoaderWrap/>
                 {this.props.user.email &&
                     <div>

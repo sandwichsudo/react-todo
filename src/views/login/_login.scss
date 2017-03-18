@@ -1,10 +1,14 @@
 .login-screen {
   padding: 27px;
   height: 100%;
-  position: absolute;
   background: url("./views/login/tuck-shop-bg.svg")
-    repeat 0 0;
+    repeat -27px 0;
   background-size: 375px 613px;
+  margin: 0 auto;
+  max-width: 450px;
+  @media (min-width: $app-max-width) {
+     background: none;
+  }
   &:before {
       content: "";
       background: $accent-color;

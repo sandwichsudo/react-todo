@@ -1,5 +1,6 @@
 .primary-aside {
     position: fixed;
+    max-width: $app-max-width;
     bottom: 0;
     z-index: $z-index-2;
     width: 100%;
