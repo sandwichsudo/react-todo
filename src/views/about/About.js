@@ -12,7 +12,7 @@ export default function(props) {
                 be easy to track down where any missing money went. But because
                 everything was so cheap, people had to build up a big tab to make it
                 worth paying it off. The suggestion came that people should be able
-                to pay off an arbitary about from their tab.
+                to pay off an arbitary amount from their tab.
             </p>
             <p>V2 introduced the idea that you add 'Credit' to your account, in a
             pay-as-you-go style model. This worked much better, as people could
@@ -21,9 +21,10 @@ export default function(props) {
             Raising money for charity seemed like a good goal. That's where we are now :) </p>
         <h2>How are we raising money for charity?</h2>
         <p>When stock is bought, a small markup is added, based on the base price of
-             the item and it's popularity. When a stock take is done, a portion of
-            the float is put aside to donate to a charity.</p>
-        <h2>What charity are we supporting? </h2>
+             the item and its popularity. This forms a donation per item.
+             When a stock take is done, profit generated
+             from the donations is donated charity.</p>
+         <h2>Which charity are we supporting? </h2>
         <p>For the first few months, I'll be donating money raised to <a href="http://www.specialeffect.org.uk/">Special Effect</a>, a
             UK based charity which helps people with disabilities to
             play video games. They do amazing work, often with people with
