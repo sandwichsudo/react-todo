@@ -71,11 +71,12 @@ const removeTransactionFromHistory = (uid, key, currentTeam, product) => {
 
     firebase.database().ref().child(`${createUrl.getUserTransactionHistoryUrl(uid, currentTeam)}/${key}`).remove()
         .then(() => {
+            const donation = product.donation ? product.donation : 0;
             const productEvent = createEvent
                 .createTransactionEvent('Remove from tab', product.name,
-                    -Number(product.value), Number(product.donation));
+                    -Number(product.value), Number(donation));
             console.log('removed product', productEvent);
-            const donationValue = Number(product.donation);
+            const donationValue = Number(donation);
             ProductsApi.updateDonation(currentTeam, donationValue);
             ReactGA.event(productEvent);
             store.dispatch(removeTransactionSuccess(key, productEvent));
