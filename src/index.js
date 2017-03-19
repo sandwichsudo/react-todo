@@ -11,6 +11,7 @@ ReactGA.initialize(config.GA);
 var firebase = require('firebase/app');
 require("firebase/auth");
 require("firebase/database");
+require("firebase/storage");
 // Initialize Firebase
 firebase.initializeApp(config.FIREBASE);
 

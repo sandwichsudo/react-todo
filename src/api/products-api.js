@@ -1,7 +1,8 @@
 var firebase = require('firebase/app');
 import store from '../store';
 import { productListSuccess, productAddSuccess,
-    fetchCharityDonationSuccess, updateCharityDonation } from '../actions/product-actions';
+    fetchCharityDonationSuccess,
+    updateCharityDonation, updateProductUrls } from '../actions/product-actions';
 import UiApi from './ui-api';
 
 const getProductsUrl = (currentTeam) => {
@@ -39,15 +40,35 @@ const getDonation = (currentTeam) => {
     });
 };
 
+const getProductUrls = (products) => {
+    // Get a reference to the storage service, which is used to create references in your storage bucket
+    const storage = firebase.storage();
+    const urlPromises = [];
+    for (let productKey in products) {
+        if (products.hasOwnProperty(productKey)) {
+            // Create a storage reference from our storage service
+            urlPromises.push(storage.ref(`tvx-0001/${productKey}.jpg`)
+                .getDownloadURL());
+        }
+    }
+    return Promise.all(urlPromises).then((urls) => {
+        store.dispatch(updateProductUrls(urls));
+    });
+}
+
 export default {
     getProducts: (currentTeam, category) => {
         UiApi.startLoading();
         let firebaseRef = firebase.database().ref().child(getProductsUrl(currentTeam));
         return firebaseRef.once('value').then(response => {
+            const products = response.val();
+            const filteredProducts = filterByCategory(products, category);
             store.dispatch(productListSuccess(
-                filterByCategory(response.val(), category)
+                filteredProducts
             ));
-            UiApi.loaded();
+            getProductUrls(filteredProducts).then(() => {    
+                UiApi.loaded();
+            });
         });
     },
     addProduct: (newProduct, currentTeam, notificationTimer) => {

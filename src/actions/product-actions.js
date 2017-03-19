@@ -1,5 +1,5 @@
 import { PRODUCT_LIST_SUCCESS, CHARITY_DONATION_FETCH_SUCCESS,
-    UPDATE_CHARITY_DONATION } from '../actions/action-types';
+    UPDATE_CHARITY_DONATION, UPDATE_PRODUCT_URLS } from '../actions/action-types';
 
 export function productListSuccess(productList) {
   return {
@@ -17,5 +17,11 @@ export function updateCharityDonation(charityDonationUpdate) {
     return {
       type: UPDATE_CHARITY_DONATION,
       charityDonationUpdate
+    };
+}
+export function updateProductUrls(productUrls) {
+    return {
+      type: UPDATE_PRODUCT_URLS,
+      productUrls
     };
 }
