@@ -6,8 +6,8 @@ import { Link } from 'react-router';
 // Using "Stateless Functional Components"
 export default function(props) {
     return (
-        <div>
-        { !props.notification.isLink && <p className={"notification "+(props.notification && props.notification.message ? '' : 'off-screen')}>
+        <div className={"notification-wrap "+(props.notification && props.notification.message ? '' : 'off-screen')}>
+        { !props.notification.isLink && <p className="notification">
             <MdDone className="notification-icon"/>
             {props.notification.message}
             <button
@@ -21,7 +21,7 @@ export default function(props) {
         { props.notification.isLink &&
             <Link to={"/" + props.notification.location}
                 onClick={props.onCloseButtonClicked}
-                className={"notification notification-link"+(props.notification && props.notification.message ? '' : 'off-screen')}>
+                className={"notification notification-link"}>
             <MdDone className="notification-icon"/>
             {props.notification.message}
         </Link> }

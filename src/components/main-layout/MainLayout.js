@@ -48,8 +48,8 @@ class MainLayout extends Component {
                                             </nav>
                                         }
                                         {this.props.children}
+                                        <NotificationWrap />
                                 </div>
-                                <NotificationWrap />
                             </main>
                         </div>
                     </div>
@@ -57,9 +57,11 @@ class MainLayout extends Component {
                 {!this.props.user.email &&
                     <div className={"login-screen " + (this.props.loading ? "hidden" : "")}>
                         <main>
-                            {this.props.children}
+                            <div>
+                                {this.props.children}
+                                <NotificationWrap />
+                            </div>
                         </main>
-                        <NotificationWrap />
                     </div>
                 }
             </div>

@@ -1,3 +1,4 @@
+$login-width: 450px;
 .login-wrap {
     height: 100%;
     background: url("./views/login/tuck-shop-bg.svg")
@@ -6,13 +7,20 @@
     @media (min-width: $app-max-width) {
        background: none;
     }
+
+    .notification-wrap {
+        width: calc(100% - 60px);
+        max-width: $login-width;
+        background: $error-color;
+        margin: 0;
+    }
 }
 
 .login-screen {
   padding: 27px;
 
   margin: 0 auto;
-  max-width: 450px;
+  max-width: $login-width;
 
   &:before {
       content: "";
